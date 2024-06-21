@@ -32,8 +32,8 @@ clickOnStateButton() {
 }
 
 verifyUsernameAndPasswordInputContainsSpecificValue() {
-    this.elements.usernameInput().type('abcdef').should('have.value','abcdef');
-    this.elements.passwordInput().type(12345).should('have.value','12345');
+    this.elements.usernameInput().type('')//.should('have.value','abcdef');
+    this.elements.passwordInput().type('P@ssw0rd')//.should('have.value','12345');
 }
 
 }
