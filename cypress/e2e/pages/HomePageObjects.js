@@ -55,7 +55,7 @@ class HomePageObjects {
         this.elements.passwordInput().type(12345).should('have.value', '12345').clear();
     }
     clickOnStateUserLoginBtn() {
-        this.elements.StateUserLoginBtn().click();
+        this.elements.stateUserLoginBtn().click();
     }
     enterUsernameAndPassword(username, password) {
         this.elements.usernameInput().type(username, { log: false });

@@ -19,7 +19,7 @@ describe("Login Page Validations", function () {
     cy.visit("");
     homePage.clickOnFederalUserTab();
     homePage.elements.federalUserLogInInstructionText().should('have.text','Insert your HSPD-12 access card into the smart card reader before you select login.');
-    homePage.elements.pavCardImage().should('be.visible').and('have.prop', 'naturalWidth').then(cy.log).should('be.greaterThan',0);
+    homePage.elements.pavCardImage().invoke('prop', 'naturalWidth').should('be.greaterThan', 0)
     homePage.elements.federalUserLoginBtn().should('have.text','Login');
   });
 
