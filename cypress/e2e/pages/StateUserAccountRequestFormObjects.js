@@ -57,7 +57,7 @@ class StateUserAccountRequestFormObjects {
 
     // Step 3 Page Elements
     AcknowledgeText: () =>  cy.get(".styles_pageSetupBox63__LLf_t > :nth-child(3)").contains("All new state users must acknowledge and submit the following statement of user responsibilities for ensuring appropriate security of NYTD data and of the NYTD system."), //Acknowledgement text for state users
-    SecurityStatementLabel: () => cy.get("h3").contains("State User Security Compliance Statement"), //Security compliance statement header
+    SecurityStatementLabel: () => cy.get("h3"), //Security compliance statement header for page 3
     SecurityAgreementText: () =>  cy.get('.styles_pageSetupBox63__LLf_t > :nth-child(7)'), //Agreement text above list
     AgreementListElement1: () => cy.get('li').eq(2), //First list item in the agreement list
     AgreementListElement2: () => cy.get('li').eq(3), //Second list item in the agreement list
@@ -76,6 +76,12 @@ class StateUserAccountRequestFormObjects {
     DateText: () => cy.get('[for="date-today"]').contains("Date *"), //Date text above date input field
     DateField: () => cy.get('[id="date-today"]'), //Shows current date
     ErrorAlert: () => cy.get('[data-testid="alert"]').contains("Please check your entries and try again"), //Error alert for missing fields
+
+    SAOAcknowledgeAlert: () => cy.get('.styles_marginBottom75px__sz8iZ > .usa-alert__body'), //Acknowledgement text alert for SAOs in page 2
+    SAOAcknowledgeText: () => cy.get('.styles_pageSetupBox63__LLf_t > :nth-child(3)'), //Acknowledgement text for SAOs on page 3
+    SAOListHeader: () => cy.get('.styles_userAgreement__C7AH3'), //List text header for SAO
+    SAONote: () => cy.get('.styles_noWrap__A9KlA'), //Additional note below the list for SAO
+    SAOExtraLi: () => cy.get('.styles_responsibilitiesList__D2xf3 > :nth-child(8)'), //New list item for SAO in the agreement list
 
     // Step 4 Page Elements
 
@@ -113,6 +119,11 @@ class StateUserAccountRequestFormObjects {
     this.clickOnCancelModalDiscardBtn();
 
     homePage.elements.loginInstructionsMsg().contains("Please enter your Username and Password and select Login to begin using the NYTD portal");
+  }
+
+  navigateToStep1() {
+    cy.visit("");
+    this.clickOnRequestAccountLink();
   }
 
   navigateToStep2() {
