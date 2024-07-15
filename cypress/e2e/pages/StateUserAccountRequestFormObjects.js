@@ -1,11 +1,10 @@
 import HomePageObjects from "../pages/HomePageObjects";
 const homePage = new HomePageObjects();
+import CommonPageObjects from "./CommonPageObjects";
+const commonObjects = new CommonPageObjects();
 class StateUserAccountRequestFormObjects {
     
   elements = {
-    // Login Page Elements
-    requestAccountLink: () => cy.get('[data-testid="request_account"]'), //Request link under log in
-
     // Step 1 Page Elements
     colorBar1: () => cy.get('[data-testid="color_bar1"]'), //First color bar at the top
     colorBar2: () => cy.get('[data-testid="color_bar2"]'), //Second color bar at the top
@@ -21,7 +20,6 @@ class StateUserAccountRequestFormObjects {
     progressBarText3: () => cy.get('[data-testid="progress_bar_text3"]'), //Text for third step in the color bar
     progressBarText4: () => cy.get('[data-testid="progress_bar_text4"]'), //Text for fourth step in the color bar
     cancelBtn: () => cy.get('[class="styles_cancelButton__3OfxS"]'), //Cancel button at the bottom left
-    cancelRequestBtn: () => cy.get('[class="nytd-button--tertiary"]').contains("Cancel Request"), //Cancel Request button at the bottom left.
     label: () => cy.get('[data-testid="label"]'),  //label for radio buttons
     StateUserRadioBtn: () => cy.get('[data-testid="radio"]').contains("State User Account"), //Radio button for State User Account
     FederalUserRadioBtn: () => cy.get('[data-testid="radio"]').contains("Federal User Account"), //Radio button for Federal User Account
@@ -36,10 +34,7 @@ class StateUserAccountRequestFormObjects {
     ContinueBtn: () => cy.get('[data-testid="button"]').contains("Continue"), //Continue button at the bottom right
     ErrorMsg: () => cy.get('[data-testid="errorMessage"]'), //Error message for fields that are empty when continuing
 
-    CancelModalHeader: () => cy.get('[id="areYouSureTitle"]'), //Cancel modal header text
-    CancelModalText: () => cy.get('[class="style_flexContainer__3X3nW"]'), //  Cancel modal body text
-    CancelModalDiscardBtn: () => cy.get('[data-testid="button"]').contains("Discard Changes"), //Cancel modal discard button
-    CancelModalContinueBtn: () => cy.get('[id="no_button"]'), //Cancel modal cancel button
+    
 
     // Step 2 Page Elements
     UserTitleLabel: () => cy.get('[data-testid="label"]').contains("User Title *"), //User Title label for text input
@@ -104,31 +99,9 @@ class StateUserAccountRequestFormObjects {
     ReturnHomeBtn: () => cy.get('[data-testid="request_account_success_modal_button"]'), //Button of the modal after submitting the request
   };
 
-  ModalCancelRequest() {
-    this.clickOnCancelRequestBtn();
-
-    // Confirm modal
-    this.elements.CancelModalHeader().should("have.text", "Unsaved Changes");
-    this.elements.CancelModalText().should("have.text","You have unsaved edits. Are you sure you want to cancel this account request?");
-
-    // Cancel request
-    this.clickOnCancelModal();
-
-    this.clickOnCancelRequestBtn();
-
-    this.clickOnCancelModalDiscardBtn();
-
-    homePage.elements.loginInstructionsMsg().contains("Please enter your Username and Password and select Login to begin using the NYTD portal");
-  }
-
-  navigateToStep1() {
-    cy.visit("");
-    this.clickOnRequestAccountLink();
-  }
-
   navigateToStep2() {
     cy.visit("");
-    this.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
     this.clickOnStandardUserRoleRadioBtn();
     this.selectTestStateDropdown();
@@ -138,7 +111,7 @@ class StateUserAccountRequestFormObjects {
 
   navigateToStep3() {
     cy.visit("");
-    this.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
     this.clickOnStandardUserRoleRadioBtn();
     this.selectTestStateDropdown();
@@ -154,7 +127,7 @@ class StateUserAccountRequestFormObjects {
 
   navigateToStep4() {
     cy.visit("");
-    this.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
     this.clickOnStandardUserRoleRadioBtn();
     this.selectTestStateDropdown();
@@ -169,11 +142,7 @@ class StateUserAccountRequestFormObjects {
     this.CheckSecurityAgreementCheckbox();
     this.TypeNameIntoNameInput();
     this.clickOnContinueBtn();
-  }
-
-  clickOnRequestAccountLink() {
-    this.elements.requestAccountLink().invoke("removeAttr", "target", "_blank").click();
-  }
+  }  
 
   clickOnStateUserRadioBtn() {
     this.elements.StateUserRadioBtn().invoke("removeAttr", "target", "_blank").click();
@@ -181,10 +150,6 @@ class StateUserAccountRequestFormObjects {
 
   clickOnCancelBtn() {
     this.elements.cancelBtn().invoke("removeAttr", "target", "_blank").click();
-  }
-
-  clickOnCancelRequestBtn() {
-    this.elements.cancelRequestBtn().invoke("removeAttr", "target", "_blank").click();
   }
 
   clickOnStandardUserRoleRadioBtn() {
@@ -209,14 +174,6 @@ class StateUserAccountRequestFormObjects {
 
   clickOnContinueBtn() {
     this.elements.ContinueBtn().invoke("removeAttr", "target", "_blank").click();
-  }
-
-  clickOnCancelModal() {
-    this.elements.CancelModalContinueBtn().invoke("removeAttr", "target", "_blank").click();
-  }
-
-  clickOnCancelModalDiscardBtn() {
-    this.elements.CancelModalDiscardBtn().invoke("removeAttr", "target", "_blank").click();
   }
 
   typeTitleInUserTitle() {

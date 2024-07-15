@@ -2,6 +2,8 @@ import StateUserAccountRequestFormObjects from "../pages/StateUserAccountRequest
 const stateUserAccountRequestForm = new StateUserAccountRequestFormObjects();
 import HomePageObjects from "../pages/HomePageObjects";
 const homePage = new HomePageObjects();
+import CommonPageObjects from "../pages/CommonPageObjects";
+const commonObjects = new CommonPageObjects();
 const rgbCurrent = "rgb(99, 186, 176)";
 const rgbBlank = "rgb(221, 226, 232)";
 const rgbComplete = "rgb(22, 46, 81)";
@@ -10,22 +12,22 @@ describe("State User Account Request Validations", function () {
   it("State User Account Request Form Page 1", function () {
     // Confirm page 1 elements appear
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
 
     stateUserAccountRequestForm.elements.nytdIcon().invoke('prop', 'naturalWidth').should('be.greaterThan', 0);
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbCurrent);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbBlank);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbBlank);
     stateUserAccountRequestForm.elements.colorBar4().should("have.css", "background-color", rgbBlank);
-    stateUserAccountRequestForm.elements.progressBarText1().contains("Request Type");
-    stateUserAccountRequestForm.elements.progressBarText2().contains("Personal User Information");
-    stateUserAccountRequestForm.elements.progressBarText3().contains("Security Compliance");
-    stateUserAccountRequestForm.elements.progressBarText4().contains("Review and Submit");
+    stateUserAccountRequestForm.elements.progressBarText1().should("have.text", "Request Type");
+    stateUserAccountRequestForm.elements.progressBarText2().should("have.text", "Personal User Information");  
+    stateUserAccountRequestForm.elements.progressBarText3().should("have.text", "Security Compliance");
+    stateUserAccountRequestForm.elements.progressBarText4().should("have.text", "Review and Submit");
 
-    stateUserAccountRequestForm.elements.header().contains("User Account Request Form");
-    stateUserAccountRequestForm.elements.stepHeader().contains("Request Type");
-    stateUserAccountRequestForm.elements.Alert().contains("Asterisks (*) in field names are used to denote required fields.");
-    stateUserAccountRequestForm.elements.label().contains("Request Type *");
+    stateUserAccountRequestForm.elements.header().should("contain", "User Account Request Form");
+    stateUserAccountRequestForm.elements.stepHeader().should("have.text", "Request Type");
+    stateUserAccountRequestForm.elements.Alert().should("have.text", "Asterisks (*) in field names are used to denote required fields.");
+    stateUserAccountRequestForm.elements.label().should("have.text", "Request Type *");
     stateUserAccountRequestForm.elements.StateUserRadioBtn().should("have.text", "State User Account");
     stateUserAccountRequestForm.elements.FederalUserRadioBtn().should("have.text", "Federal User Account");
 
@@ -34,13 +36,13 @@ describe("State User Account Request Validations", function () {
 
   it("Cancel button", function () {
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     stateUserAccountRequestForm.clickOnCancelBtn();
   });
 
   it("Page 1 Selection", function () {
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     stateUserAccountRequestForm.clickOnStateUserRadioBtn();
 
     stateUserAccountRequestForm.elements.SecondAlert().should('have.text', 'Indicate the role-based access of the user.Standard users have view-only access to the state\'s NYTD information.State Managers can view all state NYTD information and can submit and delete files on behalf of the state.State Authorized Officials can transmit, submit, and delete NYTD files, as well as approve and manage user account requests for all state users.');
@@ -62,7 +64,7 @@ describe("State User Account Request Validations", function () {
 
   it("Page 1 Errors", function () {
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     stateUserAccountRequestForm.clickOnStateUserRadioBtn();
     stateUserAccountRequestForm.clickOnContinueBtn();
 
@@ -87,9 +89,9 @@ describe("State User Account Request Validations", function () {
 
   it("Page 1 Cancel Request", function () {
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     stateUserAccountRequestForm.clickOnStateUserRadioBtn();
-    stateUserAccountRequestForm.ModalCancelRequest();
+    commonObjects.ModalCancelRequest();
   });
 
   it("State User Account Request Form Page 2", function () {
@@ -102,9 +104,9 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbBlank);
     stateUserAccountRequestForm.elements.colorBar4().should("have.css", "background-color", rgbBlank);
 
-    stateUserAccountRequestForm.elements.header().contains("State User Account Request Form");
-    stateUserAccountRequestForm.elements.stepHeader().contains("Personal User Information");
-    stateUserAccountRequestForm.elements.Alert().contains("Asterisks (*) in field names are used to denote required fields.");
+    stateUserAccountRequestForm.elements.header().should("have.text", "State User Account Request Form");
+    stateUserAccountRequestForm.elements.stepHeader().should("have.text", "Personal User Information");
+    stateUserAccountRequestForm.elements.Alert().should("have.text", 'Asterisks (*) in field names are used to denote required fields.The user must acknowledge and submit the "State User Security Compliance Statement" on the next page.');
 
     stateUserAccountRequestForm.elements.UserTitleLabel().should("have.text", "User Title *");
     stateUserAccountRequestForm.elements.UserFNameLabel().should("have.text", "User First Name *");
@@ -115,7 +117,7 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.BackBtn().should("have.text", "Back");
 
     stateUserAccountRequestForm.elements.ContinueBtn().should("have.text", "Continue");
-    stateUserAccountRequestForm.elements.cancelRequestBtn().should("have.text", "Cancel Request");
+    commonObjects.elements.cancelRequestBtn().should("have.text", "Cancel Request");
   });
 
   it("Page 2 Selections", function () {
@@ -172,7 +174,7 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.navigateToStep2();
 
     stateUserAccountRequestForm.typeTitleInUserTitle();
-    stateUserAccountRequestForm.ModalCancelRequest();
+    commonObjects.ModalCancelRequest();
   });
 
   it("Page 2 Invalid Phone Number", function () {
@@ -208,8 +210,8 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbCurrent);
     stateUserAccountRequestForm.elements.colorBar4().should("have.css", "background-color", rgbBlank);
 
-    stateUserAccountRequestForm.elements.header().contains("State User Account Request Form");
-    stateUserAccountRequestForm.elements.stepHeader().contains("Security Compliance");
+    stateUserAccountRequestForm.elements.header().should("have.text", "State User Account Request Form");
+    stateUserAccountRequestForm.elements.stepHeader().should("have.text", "Security Compliance");
 
     // Check text
     stateUserAccountRequestForm.elements.AcknowledgeText().should("have.text","All new state users must acknowledge and submit the following statement of user responsibilities for ensuring appropriate security of NYTD data and of the NYTD system.");
@@ -229,7 +231,7 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.SecurityAgreeementCheckbox().should("have.text","Check here to acknowledge you have read and agree with the Security Compliance Statement above");
 
     // Check alert
-    stateUserAccountRequestForm.elements.Alert().contains("The Name entered here must match the first and last name on the request form.");
+    stateUserAccountRequestForm.elements.Alert().should("have.text", "The Name entered here must match the first and last name on the request form.");
 
     // check name fields
     stateUserAccountRequestForm.elements.NameText().should("have.text", "User First and Last Name *");
@@ -286,7 +288,7 @@ describe("State User Account Request Validations", function () {
 
     stateUserAccountRequestForm.CheckSecurityAgreementCheckbox();
 
-    stateUserAccountRequestForm.ModalCancelRequest();
+    commonObjects.ModalCancelRequest();
 
   });
 
@@ -296,20 +298,20 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar4().should("have.css", "background-color", rgbCurrent);
-    stateUserAccountRequestForm.elements.header().contains("State User Account Request Form");
-    stateUserAccountRequestForm.elements.stepHeader().contains("Review and Submit");
+    stateUserAccountRequestForm.elements.header().should("have.text", "State User Account Request Form");
+    stateUserAccountRequestForm.elements.stepHeader().should("have.text", "Review and Submit");
     stateUserAccountRequestForm.elements.Alert().should('have.text', 'Verify the information below is correct before submitting. If any changes need to be made, please click on the Edit button below.');
-    stateUserAccountRequestForm.elements.RequestTypeText().contains("Request Type *");
-    stateUserAccountRequestForm.elements.UserRoleText().contains("User Role *");
-    stateUserAccountRequestForm.elements.StateText().contains("State *");
-    stateUserAccountRequestForm.elements.AgencyOrOfficeText().contains("Agency or Office *");
-    stateUserAccountRequestForm.elements.UserTitleText().contains("User Title *");
-    stateUserAccountRequestForm.elements.UserFNameText().contains("User First Name *");
-    stateUserAccountRequestForm.elements.UserLNameText().contains("User Last Name *");
-    stateUserAccountRequestForm.elements.UserPhoneText().contains("User Phone *");
-    stateUserAccountRequestForm.elements.UserEmailText().contains("User Email *");  
-    stateUserAccountRequestForm.elements.SecurityStatementText().contains("Security Statement *");
-    stateUserAccountRequestForm.elements.DateSignedText().contains("Date Signed *");  
+    stateUserAccountRequestForm.elements.RequestTypeText().should("contain","Request Type *");
+    stateUserAccountRequestForm.elements.UserRoleText().should("contain", "User Role *");
+    stateUserAccountRequestForm.elements.StateText().should("contain", "State *");
+    stateUserAccountRequestForm.elements.AgencyOrOfficeText().should("contain", "Agency or Office *");
+    stateUserAccountRequestForm.elements.UserTitleText().should("contain", "User Title *");
+    stateUserAccountRequestForm.elements.UserFNameText().should("contain", "User First Name *");
+    stateUserAccountRequestForm.elements.UserLNameText().should("contain", "User Last Name *");
+    stateUserAccountRequestForm.elements.UserPhoneText().should("contain", "User Phone *");
+    stateUserAccountRequestForm.elements.UserEmailText().should("contain", "User Email *");  
+    stateUserAccountRequestForm.elements.SecurityStatementText().should("contain", "Security Statement *");
+    stateUserAccountRequestForm.elements.DateSignedText().should("contain", "Date Signed *");  
     stateUserAccountRequestForm.elements.AccuracyCheckbox().should('not.be.checked');
     stateUserAccountRequestForm.elements.AccuracyCheckbox().should('have.text', 'Check this box to confirm the accuracy of the above information');
     stateUserAccountRequestForm.elements.EditBtn().should('have.text', 'Edit');
@@ -333,12 +335,12 @@ describe("State User Account Request Validations", function () {
 
   it("Page 4 Cancel Request", function () {
     stateUserAccountRequestForm.navigateToStep4();
-    stateUserAccountRequestForm.ModalCancelRequest();
+    commonObjects.ModalCancelRequest();
   });
 
   it("SAO differences", function () {
     cy.visit('');
-    stateUserAccountRequestForm.clickOnRequestAccountLink();
+    commonObjects.clickOnRequestAccountLink();
     stateUserAccountRequestForm.clickOnStateUserRadioBtn();
     stateUserAccountRequestForm.clickOnSAOUserRoleRadioBtn();
     stateUserAccountRequestForm.selectTestStateDropdown();
@@ -369,7 +371,7 @@ describe("State User Account Request Validations", function () {
 
     
     stateUserAccountRequestForm.elements.ReturnHomeHeader().should('have.text', 'Account Request Successfully Submitted');
-    stateUserAccountRequestForm.elements.ReturnHomeText().contains('You will be contacted via email once your request has been reviewed.');
+    stateUserAccountRequestForm.elements.ReturnHomeText().should("have.text", 'You will be contacted via email once your request has been reviewed.');
     stateUserAccountRequestForm.elements.ReturnHomeBtn().should('have.text', 'Return to NYTD Home');
     stateUserAccountRequestForm.ClickReturnHomeBtn();    
   });
@@ -380,13 +382,13 @@ describe("State User Account Request Validations", function () {
 
     // cy.standardLogin('teststatesao', 'P@ssw0rd');
 
-    // cy.get('[data-testid="header_dropdown_button"]').contains('Account Settings').click();
-    // cy.get('[type="button"]').contains('User Account Management').click();
+    // cy.get('[data-testid="header_dropdown_button"]').should("have.text", 'Account Settings').click();
+    // cy.get('[type="button"]').should("have.text", 'User Account Management').click();
     // cy.get('[data-testid="manage_user_account_requests"]').click();
-    // cy.contains('td', 'FName') .should('exist');
-    // cy.contains('td', 'LName') .should('exist');
-    // cy.contains('td', 'FName').parent().within($tr => {
-    //   cy.get('button').contains('Deny').click();
+    // cy.should("have.text", 'td', 'FName') .should('exist');
+    // cy.should("have.text", 'td', 'LName') .should('exist');
+    // cy.should("have.text", 'td', 'FName').parent().within($tr => {
+    //   cy.get('button').should("have.text", 'Deny').click();
     // })    
     // cy.get('[data-testid="textarea"]').type('Test');
     // cy.get('[data-testid="Deny New_user_button"]').click();
@@ -398,13 +400,13 @@ describe("State User Account Request Validations", function () {
 
     // cy.standardAdminLogin('nytdsysadmin', 'P@ssw0rd1');
 
-    // cy.get('[data-testid="header_dropdown_button"]').contains('Account Settings').click();
-    // cy.get('[type="button"]').contains('User Account Management').click();
+    // cy.get('[data-testid="header_dropdown_button"]').should("have.text", 'Account Settings').click();
+    // cy.get('[type="button"]').should("have.text", 'User Account Management').click();
     // cy.get('[data-testid="manage_user_account_requests"]').click();
-    // cy.contains('td', 'FName') .should('exist');
-    // cy.contains('td', 'LName') .should('exist');
-    // cy.contains('td', 'FName').parent().within($tr => {
-    //   cy.get('button').contains('Deny').click();
+    // cy.should("have.text", 'td', 'FName') .should('exist');
+    // cy.should("have.text", 'td', 'LName') .should('exist');
+    // cy.should("have.text", 'td', 'FName').parent().within($tr => {
+    //   cy.get('button').should("have.text", 'Deny').click();
     // })
     // To Do - uncomment this once the account request creation is working
 
