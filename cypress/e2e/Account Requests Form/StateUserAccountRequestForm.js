@@ -12,7 +12,7 @@ describe("State User Account Request Validations", function () {
     cy.visit('');
     stateUserAccountRequestForm.clickOnRequestAccountLink();
 
-    stateUserAccountRequestForm.elements.nytdIcon().should("exist", "src");
+    stateUserAccountRequestForm.elements.nytdIcon().invoke('prop', 'naturalWidth').should('be.greaterThan', 0);
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbCurrent);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbBlank);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbBlank);
