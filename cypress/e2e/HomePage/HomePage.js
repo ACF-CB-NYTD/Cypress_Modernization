@@ -48,4 +48,40 @@ describe("Login Page Validations", function () {
     homePage.elements.incorrectUsernameAndPasswordErrorMsg().should('have.text','Incorrect username or password. Please try again.')
 
   });
+
+  it("Verify Request your NYTD account now link", function () {
+    cy.visit("");
+    homePage.clickOnRequestYourNYTDAccountNow();
+    commonPage.verifyUrl("/RequestAccount");
+  });
+
+  it("Verify privacy policy link", function () {
+    cy.visit("");
+    homePage.clickOnPrivacyPolicyLink();
+    cy.origin('https://www.hhs.gov/web/policies-and-standards/hhs-web-policies/privacy/index.html', () => {
+    cy.url().should('include','/privacy/index.html');
+    })
+  });
+
+  it("Verify Security compliance statement link", function () {
+    cy.visit("");
+    homePage.clickOnSecurityComplianceStatementLink();
+    commonPage.verifyUrl("/SecurityCompliance");
+  });
+
+  it("Verify Vulnerability disclosure policy link", function () {
+    cy.visit("");
+    homePage.clickOnVulnerabilityDisclosurePolicyLink();
+    cy.origin('https://www.hhs.gov/vulnerability-disclosure-policy/index.html', () => {
+    cy.url().should('include', '/vulnerability-disclosure-policy/index.html');
+    })
+  });
+
+  it("Verify Unauthorized access warning link", function () {
+    cy.visit("");
+    homePage.clickOnUnauthorizedAccessWarningLink();
+    commonPage.verifyUrl("/UnauthorizedAccess")
+  });
+
+
 });
