@@ -17,8 +17,13 @@ class HomePageObjects {
         incorrectUsernameAndPasswordErrorMsg: () => cy.get('#validation_message'), // Error msg "Incorrect username or password. Please try again." when user enters incorrect username or password.
         federalUserLogInInstructionText: () => cy.get('[data-testid="federal_instructions"]'), // Federal user instruction text witch display after clicking on federal user tab.
         pavCardImage: () => cy.get('[data-testid="federal_card_image"]'), // Card image witch display after clicking on federal user tab
+        requestYourNytdAccountNowLink: () => cy.get('[data-testid="request_account"]'), // Request Your nytd account link.
+        privacyPolicyLink: () => cy.get('[data-testid="privacy_policy_link"]'), // Privacy policy link.
+        securityComplianceStatement: () => cy.get('[data-testid="security_compliance_link"]'), // Security compliance statement link.
+        vulnerabilityDisclosurePolicy: () => cy.get('[data-testid="vulnerability_link"]'), // Vulnerability disclosure policy link.
+        unauthorizedAccessWarning: () => cy.get('[data-testid="unauthorized_access_link"]'), // Unauthorized Access warning link.
     }
-  
+
 
     clickOnNYTDIcon() {
         this.elements.nytdIcon().invoke('removeAttr', 'target', '_blank').click();
@@ -26,6 +31,22 @@ class HomePageObjects {
 
     clickOnPhoneNumber() {
         this.elements.phoneNumber().click();
+    }
+    clickOnRequestYourNYTDAccountNow() {
+        this.elements.requestYourNytdAccountNowLink().should('have.text', 'Request your NYTD account now').click();
+    }
+
+    clickOnPrivacyPolicyLink() {
+        this.elements.privacyPolicyLink().invoke('removeAttr', 'target').click();
+    }
+    clickOnSecurityComplianceStatementLink() {
+        this.elements.securityComplianceStatement().invoke('removeAttr', 'target').click();
+    }
+    clickOnVulnerabilityDisclosurePolicyLink() {
+        this.elements.vulnerabilityDisclosurePolicy().invoke('removeAttr', 'target').click();
+    }
+    clickOnUnauthorizedAccessWarningLink() {
+        this.elements.unauthorizedAccessWarning().invoke('removeAttr', 'target').click();
     }
 
     clickOnEmail() {
