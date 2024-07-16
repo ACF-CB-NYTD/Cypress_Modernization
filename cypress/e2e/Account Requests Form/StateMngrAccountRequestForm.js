@@ -6,8 +6,8 @@ const rgbCurrent = "rgb(99, 186, 176)";
 const rgbBlank = "rgb(221, 226, 232)";
 const rgbComplete = "rgb(22, 46, 81)";
 
-describe("State User Account Request Validations", function () {
-  it("State User Account Request Form Page 1", function () {
+describe("State Manager Account Request Validations", function () {
+  it("State Manager Account Request Form Page 1", function () {
     // Confirm page 1 elements appear
     cy.visit('');
     commonObjects.clickOnRequestAccountLink();
@@ -92,8 +92,8 @@ describe("State User Account Request Validations", function () {
     commonObjects.ModalCancelRequest();
   });
 
-  it("State User Account Request Form Page 2", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+  it("State Manager Account Request Form Page 2", function () {
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
 
 
     // Confirm page 2 elements appear
@@ -119,7 +119,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Selections", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
 
     // Fill out page 2 elements
     stateUserAccountRequestForm.typeTitleInUserTitle();
@@ -132,7 +132,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Errors", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
 
     stateUserAccountRequestForm.clickOnContinueBtn();
 
@@ -169,14 +169,14 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
 
     stateUserAccountRequestForm.typeTitleInUserTitle();
     commonObjects.ModalCancelRequest();
   });
 
   it("Page 2 Invalid Phone Number", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
     stateUserAccountRequestForm.elements.UserPhoneInput().type("123");
     stateUserAccountRequestForm.clickOnContinueBtn();
 
@@ -189,7 +189,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Invalid Email", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("Mngr");
     stateUserAccountRequestForm.elements.UserEmailInput().type("abc");
     stateUserAccountRequestForm.clickOnContinueBtn();
 
@@ -200,8 +200,8 @@ describe("State User Account Request Validations", function () {
       });
   });
 
-  it("State User Account Request Form Page 3", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+  it("State Manager Account Request Form Page 3", function () {
+    stateUserAccountRequestForm.navigateToStep3("Mngr");
 
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbComplete);
@@ -254,14 +254,14 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 3 Selections", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("Mngr");
 
     stateUserAccountRequestForm.CheckSecurityAgreementCheckbox();
     stateUserAccountRequestForm.TypeNameIntoNameInput();
   });
 
   it("Page 3 Errors", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("Mngr");
     stateUserAccountRequestForm.clickOnContinueBtn();
 
 
@@ -282,7 +282,7 @@ describe("State User Account Request Validations", function () {
 
   });
   it("Page 3 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("Mngr");
 
     stateUserAccountRequestForm.CheckSecurityAgreementCheckbox();
 
@@ -290,8 +290,8 @@ describe("State User Account Request Validations", function () {
 
   });
 
-  it("State User Account Request Form Page 4", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+  it("State Manager Account Request Form Page 4", function () {
+    stateUserAccountRequestForm.navigateToStep4("Mngr");
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbComplete);
@@ -307,12 +307,12 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.UserFNameText().should("contain", "User First Name *");
     stateUserAccountRequestForm.elements.UserLNameText().should("contain", "User Last Name *");
     stateUserAccountRequestForm.elements.UserPhoneText().should("contain", "User Phone *");
-    stateUserAccountRequestForm.elements.UserEmailText().should("contain", "User Email *"); 
+    stateUserAccountRequestForm.elements.UserEmailText().should("contain", "User Email *");  
     stateUserAccountRequestForm.elements.SecurityStatementText().should("contain", "Security Statement *");
-    stateUserAccountRequestForm.elements.DateSignedText().should("contain", "Date Signed *");   
+    stateUserAccountRequestForm.elements.DateSignedText().should("contain", "Date Signed *");  
 
     stateUserAccountRequestForm.elements.RequestType().should("contain", "State User Account");
-    stateUserAccountRequestForm.elements.UserRole().should("contain", "Standard User");
+    stateUserAccountRequestForm.elements.UserRole().should("contain", "State Manager");
     stateUserAccountRequestForm.elements.State().should("contain", "Test State");
     stateUserAccountRequestForm.elements.AgencyOrOffice().should("contain", "Test");
     stateUserAccountRequestForm.elements.UserTitle().should("contain", "Title");
@@ -336,7 +336,6 @@ describe("State User Account Request Validations", function () {
     stateUserAccountRequestForm.elements.DateSigned().should("contain", formattedDate);
 
 
-    
     stateUserAccountRequestForm.elements.AccuracyCheckbox().should('not.be.checked');
     stateUserAccountRequestForm.elements.AccuracyCheckbox().should('have.text', 'Check this box to confirm the accuracy of the above information');
     stateUserAccountRequestForm.elements.EditBtn().should('have.text', 'Edit');
@@ -345,21 +344,21 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 4 Selection", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("Mngr");
 
     stateUserAccountRequestForm.ClickAccuracyCheckbox();
 
   });
 
   it("Page 4 Error", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("Mngr");
     stateUserAccountRequestForm.ClickSubmitBtn();
     stateUserAccountRequestForm.elements.ErrorAlert().should('have.text', 'Please check your entries and try again.');
     stateUserAccountRequestForm.elements.ErrorMsg().should('have.text', 'Please fill out this field');
   });
 
   it("Page 4 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("Mngr");
     commonObjects.ModalCancelRequest();
   });
 
@@ -390,7 +389,7 @@ describe("State User Account Request Validations", function () {
   // });
 
   it("Confirm Request was sent", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("Mngr");
     stateUserAccountRequestForm.ClickAccuracyCheckbox();
     stateUserAccountRequestForm.ClickSubmitBtn(); 
 

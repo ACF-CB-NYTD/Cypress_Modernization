@@ -1,5 +1,3 @@
-import HomePageObjects from "../pages/HomePageObjects";
-const homePage = new HomePageObjects();
 import CommonPageObjects from "./CommonPageObjects";
 const commonObjects = new CommonPageObjects();
 class StateUserAccountRequestFormObjects {
@@ -94,26 +92,60 @@ class StateUserAccountRequestFormObjects {
     UserEmailText: () => cy.get(':nth-child(9) > .styles_verifyLabel__mWmE5'), //User email text in the table
     SecurityStatementText: () => cy.get(':nth-child(10) > .styles_verifyLabel__mWmE5'), //Security statement text in the table
     DateSignedText: () => cy.get(':nth-child(11) > .styles_verifyLabel__mWmE5'), //Date signed text in the table
+    
+    RequestType: () => cy.get(':nth-child(1) > [data-testid="table_value"]'), //Request type selected by the user
+    UserRole: () => cy.get(':nth-child(2) > [data-testid="table_value"]'), //User role selected by the user
+    State: () => cy.get(':nth-child(3) > [data-testid="table_value"]'), //State selected by the user
+    AgencyOrOffice: () => cy.get(':nth-child(4) > [data-testid="table_value"]'), //Agency or Office input by the user
+    UserTitle: () => cy.get(':nth-child(5) > [data-testid="table_value"]'), //User title input by the user
+    UserFName: () => cy.get(':nth-child(6) > [data-testid="table_value"]'), //User first name input by the user
+    UserLName: () => cy.get(':nth-child(7) > [data-testid="table_value"]'), //User last name input by the user
+    UserPhone: () => cy.get(':nth-child(8) > [data-testid="table_value"]'), //User phone input by the user
+    UserEmail: () => cy.get(':nth-child(9) > [data-testid="table_value"]'), //User email input by the user
+    SecurityStatement: () => cy.get(':nth-child(10) > [data-testid="table_value"]'), //Security statement input by the user
+    DateSigned: () => cy.get(':nth-child(11) > [data-testid="table_value"]'), //Date signed input by the user
+
+    
     ReturnHomeHeader: () => cy.get('[data-testid="request_account_success_modal_h1"]'), //Header of the modal after submitting the request
     ReturnHomeText: () => cy.get('[class="styles_subtitle___RAKh"]'), //Text of the modal after submitting the request
     ReturnHomeBtn: () => cy.get('[data-testid="request_account_success_modal_button"]'), //Button of the modal after submitting the request
   };
 
-  navigateToStep2() {
+  navigateToStep2(choice) {
     cy.visit("");
     commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
-    this.clickOnStandardUserRoleRadioBtn();
+    switch(choice) {
+      case "State User":
+        this.clickOnStandardUserRoleRadioBtn();
+        break;
+      case "SAO":
+        this.clickOnSAOUserRoleRadioBtn();
+        break;
+      case "Mngr":
+        this.clickOnMngrUserRoleRadioBtn();
+        break;
+    }
     this.selectTestStateDropdown();
     this.typeTestOnAgencyOrOfficeInput();
     this.clickOnContinueBtn();
   }
 
-  navigateToStep3() {
+  navigateToStep3(choice) {
     cy.visit("");
     commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
-    this.clickOnStandardUserRoleRadioBtn();
+    switch(choice) {
+      case "State User":
+        this.clickOnStandardUserRoleRadioBtn();
+        break;
+      case "SAO":
+        this.clickOnSAOUserRoleRadioBtn();
+        break;
+      case "Mngr":
+        this.clickOnMngrUserRoleRadioBtn();
+        break;
+    }
     this.selectTestStateDropdown();
     this.typeTestOnAgencyOrOfficeInput();
     this.clickOnContinueBtn();
@@ -125,11 +157,21 @@ class StateUserAccountRequestFormObjects {
     this.clickOnContinueBtn();
   }
 
-  navigateToStep4() {
+  navigateToStep4(choice) {
     cy.visit("");
     commonObjects.clickOnRequestAccountLink();
     this.clickOnStateUserRadioBtn();
-    this.clickOnStandardUserRoleRadioBtn();
+    switch(choice) {
+      case "State User":
+        this.clickOnStandardUserRoleRadioBtn();
+        break;
+      case "SAO":
+        this.clickOnSAOUserRoleRadioBtn();
+        break;
+      case "Mngr":
+        this.clickOnMngrUserRoleRadioBtn();
+        break;
+    }
     this.selectTestStateDropdown();
     this.typeTestOnAgencyOrOfficeInput();
     this.clickOnContinueBtn();
