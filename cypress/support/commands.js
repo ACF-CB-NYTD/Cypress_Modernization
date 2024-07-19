@@ -13,7 +13,7 @@ Cypress.Commands.add('login', (username, password) => {
         commonPage.verifyUrl('/MFA');
         mfaPage.elements.mfaHeader().should('have.text', 'Multi-Factor Authentication');
         mfaPage.elements.passcodeText().should('have.text', 'Passcode *');
-        mfaPage.enterPasscode("teststatesao");
+        mfaPage.enterPasscode(username);
         mfaPage.clickOnSubmitBtn();
         commonPage.verifyUrl('/User');
     }),
