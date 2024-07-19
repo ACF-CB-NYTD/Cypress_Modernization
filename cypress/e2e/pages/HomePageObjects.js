@@ -53,9 +53,9 @@ class HomePageObjects {
 
     verifyEyeIconShowsPassword() {
         this.elements.passwordInput().should('have.value', '1234').and('have.attr', 'type', 'password')
-        this.elements.eyeIcon().click();
+        this.elements.hidePasswordIcon().click();
         this.elements.passwordInput().should('have.value', '1234').and('have.attr', 'type', 'text')
-        this.elements.eyeIcon().click();
+        this.elements.hidePasswordIcon().click();
         this.elements.passwordInput().should('have.value', '1234').and('have.attr', 'type', 'password')
     }
 
