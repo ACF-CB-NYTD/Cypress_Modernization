@@ -14,7 +14,7 @@ describe("Login Page Validations", function () {
 
   it("Transmissions", function () {
     cy.visit('/User/Transmissions.html');
-    cy.wait(8000)
+    cy.wait(5000)
     cy.get(':nth-child(1) > .styles_button__1rHaa').click()
     cy.wait(8000)
   });
