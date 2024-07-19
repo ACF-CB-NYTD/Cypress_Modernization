@@ -154,7 +154,7 @@ describe("Login Page Validations", function () {
     commonPage.verifyUrl('/User/Account');
     commonPage.searchForUserAccount('Rusev');
     commonPage.clickOnRefreshResultBtn();
-    userAccountManagementPage.clickOnUsername();
+    userAccountManagementPage.clickOnUsername('Mincho.Rusev');
     commonPage.verifyUrl('/ViewAccount');
     userAccountManagementPage.clickOnUnlockAccountBtn();
     userAccountManagementPage.elements.accountUnlockText().should('have.text', 'Account Unlocked');
