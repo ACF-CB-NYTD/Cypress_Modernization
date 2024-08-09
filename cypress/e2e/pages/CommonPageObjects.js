@@ -1,9 +1,19 @@
+import { first } from "lodash";
 import HomePageObjects from "../pages/HomePageObjects";
 const homePage = new HomePageObjects();
 class CommonPageObjects {
   elements = {
     url: () => cy.url(), // This method will take the current url.
 
+    logOutBtn: () => cy.get('[data-testid="logout_button"]'), // Logout button
+
+    headerH3Text: () => cy.get('#main_content'), // Header H3 text
+    pageDescriptionText: () => cy.get('.styles_description__0k9k1'), // Page description text under the main content header
+
+    clearFiltersBtn: () => cy.get('.styles_actions__BA1vl > .nytd-button--tertiary'), // Clear filters button
+    refreshResultsBtn: () => cy.get('.nytd-button--secondary'), // Refresh results button
+    magnifyingGlassSearchIcon: () => cy.get('[data-testid="submissionstransmissions_search_icon_button"]'), // Magnifying glass search icon in most name search input fields
+        
     // Login page account request link
     requestAccountLink: () => cy.get('[data-testid="request_account"]'), //Request link under log in
     accountSettingsDropdown: () => cy.get(':nth-child(3) > [data-testid="header_dropdown_button"]'), //Account settings dropdown
@@ -19,10 +29,37 @@ class CommonPageObjects {
     cancelModalText: () => cy.get('[class="style_flexContainer__3X3nW"]'), //  Cancel modal body text
     cancelModalDiscardBtn: () => cy.get('[data-testid="button"]').contains("Discard Changes"), //Cancel modal discard button
     cancelModalContinueBtn: () => cy.get('[id="no_button"]'), //Cancel modal cancel button
+
+    // Pagination
+    currentPaginationBtn: () => cy.get('[data-testid="pagination-page-number"]').get('[class="usa-button usa-button--unstyled usa-pagination__button usa-current"]'), // Current pagination button
+    lastPaginationBtn: () => cy.get('[data-testid="pagination-page-number"]').last(), // Last Pagination button
+    firstPaginationBtn: () => cy.get('[data-testid="pagination-page-number"]').first(), // First pagination button
+    nextPaginationBtn: () => cy.get('[class="usa-pagination__link-text"]').contains('Next'), // Next pagination button
+    previousPaginationBtn: () => cy.get('[class="usa-pagination__link-text"]').contains('Previous'), // Previous pagination button
+    tenResultsBtn: () => cy.get('[name="10"]'),
+    twentyfiveResultsBtn: () => cy.get('[name="25"]'),
+    fiftyResultsBtn: () => cy.get('[name="50"]'),
+
   }
 
   verifyUrl(url) {
     this.elements.url().should("include", url);
+  }
+
+  clickOnLogoutBtn() {
+    this.elements.logOutBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  clickOnClearFiltersBtn() { 
+    this.elements.clearFiltersBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  clickOnRefreshResultsBtn() {
+    this.elements.refreshResultsBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  clickOnMagnifyingGlassSearchIcon() {
+    this.elements.magnifyingGlassSearchIcon().invoke("removeAttr", "target", "_blank").click();
   }
 
   clickOnRequestAccountLink() {
@@ -77,6 +114,38 @@ class CommonPageObjects {
 
   clickOnCancelModalDiscardBtn() {
     this.elements.cancelModalDiscardBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  clickOnCurrentPaginationBtn() {
+    this.elements.currentPaginationBtn().click();
+  }
+
+  clickOnLastPaginationBtn() {
+    this.elements.lastPaginationBtn().click();
+  }
+
+  clickOnFirstPaginationBtn() {
+    this.elements.firstPaginationBtn().click();
+  }
+
+  clickOnNextPaginationBtn() {
+    this.elements.nextPaginationBtn().click();
+  }
+
+  clickOnPreviousPaginationBtn() {
+    this.elements.previousPaginationBtn().click();
+  }
+
+  clickOnTenResultsBtn() {
+    this.elements.tenResultsBtn().click();
+  }
+
+  clickOnTwentyfiveResultsBtn() {
+    this.elements.twentyfiveResultsBtn().click();
+  }
+
+  clickOnFiftyResultsBtn() {
+    this.elements.fiftyResultsBtn().click();
   }
 
 }
