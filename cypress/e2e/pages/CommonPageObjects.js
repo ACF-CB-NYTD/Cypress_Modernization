@@ -1,4 +1,3 @@
-import { first } from "lodash";
 import HomePageObjects from "../pages/HomePageObjects";
 const homePage = new HomePageObjects();
 class CommonPageObjects {

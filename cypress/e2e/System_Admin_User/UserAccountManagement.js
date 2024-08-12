@@ -58,16 +58,22 @@ describe("UAM Page Validations", function () {
     it("Verify the filter inputs and dropdowns are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('Test');
-        commonPage.clickOnRefreshResultsBtn();
-        // Verify?
+        cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').then((text) => {
+            commonPage.clickOnRefreshResultsBtn();
+            cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').contains(text.text()).should('not.exist');
+        });
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.typeNameSearchInput('Test');
-        commonPage.clickOnMagnifyingGlassSearchIcon();
-        // Verify?
+        cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').then((text) => {
+            commonPage.clickOnMagnifyingGlassSearchIcon();
+            cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').contains(text.text()).should('not.exist');
+        });
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.typeNameSearchInput('Test');
-        userAccountManagement.typeNameSearchInput('{enter}');
-        // Verify?
+        cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').then((text) => {
+            userAccountManagement.typeNameSearchInput('{enter}');
+            cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]').contains(text.text()).should('not.exist');
+        });
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnPrimaryRoleDropdown();
         userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(1).click();
@@ -77,7 +83,7 @@ describe("UAM Page Validations", function () {
         userAccountManagement.clickOnSecondaryRoleDropdown();
         userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(0).click();
         commonPage.clickOnRefreshResultsBtn();
-        // cy.get(':nth-child(1) > :nth-child(6) > p').should('have.text', 'Data Export');
+        cy.get(':nth-child(1) > :nth-child(6) > p').should('have.text', 'Data Export');
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnPrimaryRoleDropdown();
         userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(2).click();
@@ -141,6 +147,7 @@ describe("UAM Page Validations", function () {
         userAccountManagement.typeNameSearchInput('removalIconTest');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.removalIcon().should('exist');
+        commonPage.clickOnClearFiltersBtn();
         userAccountManagement.typeNameSearchInput('elevationIconTest');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.elevationIcon().should('exist');
@@ -181,60 +188,45 @@ describe("UAM Page Validations", function () {
         cy.visit('/User/Account.html');
         // Default array check
         userAccountManagement.checkIsArraySorted(2, 'ascending');
-
         // Check username after 1 click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'descending');
-
-
         // Check username after a second click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'ascending');
-
         // Check First Name after a click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'descending');
-
         // Check First Name after a second click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'ascending');
-
         // Check Last Name after a click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'descending');
-
         // Check Last Name after a second click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'ascending');
-
         // Check Primary Role after a click
         userAccountManagement.elements.tableFourthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'descending');
-
         // Check Primary Role after a second click
         userAccountManagement.elements.tableFourthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'ascending');
-
         // Check Secondary Role after a click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(6, 'descending');
-
         // Check Secondary Role after a second click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(6, 'ascending');
-
         // Check Email after a click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(7, 'descending');
-
         // Check Email after a second click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(7, 'ascending');
-
         // Check Phone after a click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(8, 'descending');
-
         // // Check Phone after a second click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(8, 'ascending');
