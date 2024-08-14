@@ -314,7 +314,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Verify the SAO has received the Account Request and deny it", function () {
-    cy.standardLogin('teststatesao', 'P@ssw0rd');
+    cy.standardLogin('teststatesao', 'P@ssw0rd1');
     commonObjects.clickOnAccountSettingsDropdown();
     commonObjects.clickOnUserAccountManagementSelect();
     commonObjects.clickOnManageUserAccountRequestsBtn();
