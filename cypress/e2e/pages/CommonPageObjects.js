@@ -3,6 +3,8 @@ const homePage = new HomePageObjects();
 class CommonPageObjects {
   elements = {
     url: () => cy.url(), // This method will take the current url.
+    searchInput: () => cy.get('[data-testid="textInput"]'), // Search Input for user account to search for accounts
+    refreshResultButton: () => cy.get('.nytd-button--secondary'), // Refresh result button to update the result
 
     // Login page account request link
     requestAccountLink: () => cy.get('[data-testid="request_account"]'), //Request link under log in
@@ -77,6 +79,14 @@ class CommonPageObjects {
 
   clickOnCancelModalDiscardBtn() {
     this.elements.cancelModalDiscardBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  searchForUserAccount(firstOrLastName) {
+    this.elements.searchInput().type(firstOrLastName);
+  }
+
+  clickOnRefreshResultBtn() {
+    this.elements.refreshResultButton().click();
   }
 
 }
