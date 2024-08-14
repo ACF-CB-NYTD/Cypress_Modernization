@@ -53,7 +53,7 @@ describe("UAM Page Validations", function () {
         commonPage.clickOnAccountSettingsDropdown();
         commonPage.elements.userAccountManagementSelect().should('not.exist');
     });
-    it.only("Verify the filter inputs and dropdowns are working as expected", function () {
+    it("Verify the filter inputs and dropdowns are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('Test');
         userAccountManagement.elements.firstTableLink().then((text) => {
