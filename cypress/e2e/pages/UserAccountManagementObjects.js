@@ -15,6 +15,9 @@ class UserAccountManagementObjects {
     stateDropdown: () => cy.get(':nth-child(3) > .styles_button__uj25O'), // Regional filters dropdown
     stateChildren: () => cy.get('[data-testid="dropdown_wrapper"]').contains('State').get('[data-testid="checkbox"]').children(), // Other filters dropdown children options
     tableLink: () => cy.get('[data-testid="uam_link"]'), // Username table link
+    firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]'), // First username table link
+    firstPrimaryRole: () => cy.get(':nth-child(1) > :nth-child(5) > p'), // First primary role
+    firstSecondaryRoleOrRegion: () => cy.get(':nth-child(1) > :nth-child(6) > p'), // First secondary role
     tableFirstHeader: () => cy.get('[name="userName"]'), // Table first header
     tableSecondHeader: () => cy.get('[name="firstName"]'), // Table second header
     tableThirdHeader: () => cy.get('[name="lastName"]'), // Table third header
