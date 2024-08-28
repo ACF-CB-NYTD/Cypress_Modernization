@@ -5,7 +5,7 @@ module.exports = defineConfig({
     setupNodeEvents(on, config) {
       // implement node event listeners here
     },
-    baseUrl: 'https://sbx.dssnytd.com/',
+    baseUrl: 'https://nytdm.dev.dssnytd.com/',
     specPattern: ["cypress/e2e/**/*.{js,jsx,ts,tsx}",],
     pageLoadTimeout: 60000,
     watchForFileChanges: false,
