@@ -77,6 +77,7 @@ describe("SAO UAM Page Validations", function () {
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnOtherFiltersDropdown();
         userAccountManagement.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
+        userAccountManagement.typeNameSearchInput('Deleted');
         commonPage.clickOnRefreshResultsBtn();
         cy.get(':nth-child(1) > [title="Deleted User"]').should('contain', 'Deleted User');
     });
