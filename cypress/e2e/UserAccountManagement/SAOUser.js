@@ -29,9 +29,21 @@ describe("SAO UAM Page Validations", function () {
         userAccountManagement.elements.tableSixthHeader().should('have.text', 'Email');
         userAccountManagement.elements.tableSeventhHeader().should('have.text', 'Phone');
     });
-    it("Verify Regional and CB Office Staff users will not be able to access the User Account Management page.", function () {
+    it("Verify State users , State Managers, Regional, and CB Office Staff users will not be able to access the User Account Management page.", function () {
         cy.visit('/User.html');
         commonPage.clickOnLogoutBtn();
+        // standard
+        cy.standardLogin('teststateuser', 'P@ssw0rd1');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.elements.userAccountManagementSelect().should('not.exist');
+        commonPage.clickOnLogoutBtn();
+
+        // manager
+        cy.standardLogin('teststatemgr', 'P@ssw0rd1');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.elements.userAccountManagementSelect().should('not.exist');
+        commonPage.clickOnLogoutBtn();
+
         cy.standardLogin('nytdregional', 'P@ssw0rd1');
         commonPage.clickOnAccountSettingsDropdown();
         commonPage.elements.userAccountManagementSelect().should('not.exist');
@@ -40,7 +52,7 @@ describe("SAO UAM Page Validations", function () {
         commonPage.clickOnAccountSettingsDropdown();
         commonPage.elements.userAccountManagementSelect().should('not.exist');
     });
-    it("Verify the filter inputs and dropdowns are working as expected", function () {
+    it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('Ty');
         userAccountManagement.elements.firstTableLink().then((text) => {
@@ -59,29 +71,33 @@ describe("SAO UAM Page Validations", function () {
             userAccountManagement.typeNameSearchInput('{enter}');
             userAccountManagement.elements.firstTableLink().contains(text.text()).should('not.exist');
         });
-        commonPage.clickOnClearFiltersBtn();
+    });
+    it("Verify the Secondary Role dropdown filters are working as expected", function () {
+        cy.visit('/User/Account.html');
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(0).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(0);
         commonPage.clickOnRefreshResultsBtn();
         cy.get(':nth-child(1) > :nth-child(5) > span').should('have.text', '(none)');
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(1).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(1);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'Manager');
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(2).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(2);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'State Authorized Official');
-        commonPage.clickOnClearFiltersBtn();
+    });
+    it("Verify the Other Filters dropdown filters are working as expected", function () {
+        cy.visit('/User/Account.html');
         userAccountManagement.clickOnOtherFiltersDropdown();
         userAccountManagement.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
         userAccountManagement.typeNameSearchInput('Deleted');
         commonPage.clickOnRefreshResultsBtn();
-        cy.get(':nth-child(1) > [title="Deleted User"]').should('contain', 'Deleted User');
+        userAccountManagement.elements.deletedUserTitle().should('contain', 'Deleted User');
     });
-    it("As a System Administrator, I want to verify the Pending removal and pending elevation icons in the table", function () {
+    it("Verify the Pending removal and pending elevation icons in the table", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('removal');
         commonPage.clickOnRefreshResultsBtn();
@@ -96,66 +112,95 @@ describe("SAO UAM Page Validations", function () {
         cy.visit('/User/Account.html');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(1).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(1);
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
-    it("Verify the Manage User Account Requests button works", function () {
+    it.only("Verify the Manage User Account Requests button works", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.elements.manageUserAccountRequestsBtn().click();
         commonPage.elements.headerH3Text().should('have.text', 'User Account Requests');
+        commonPage.verifyUrl('/User/Account/Requests');
     });
     it("Verify the No Users Founds page functionality", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('TestABC123DoesNotExist');
         commonPage.clickOnRefreshResultsBtn();
-        cy.get('h2').should('have.text', 'No Users Found');
+        userAccountManagement.elements.tableErrorHeader().should('have.text', 'No Users Found');
     });
-    it("Verify the user hyperlinks in the table", function () {
+    it("Verify the username hyperlinks open View Account page", function () {
         cy.visit('/User/Account.html');
-        userAccountManagement.elements.tableLink().first().then((text) => {
-            const username = text.text();
-            userAccountManagement.elements.tableLink().first().click();
-            cy.get('.styles_frame__z_r5H > :nth-child(1) > p').should('have.text', username);
+        userAccountManagement.typeNameSearchInput('teststatemgr');
+        commonPage.clickOnRefreshResultsBtn();
+        userAccountManagement.elements.tableLink().first().click();
+        userAccountManagement.elements.editPageUsername().should('have.text', 'teststatemgr');
+        userAccountManagement.elements.editPageName().should('have.text', 'teststate mgr');
+        userAccountManagement.elements.editPageEmail().should('have.text', 'wyntonj1@yahoo.com');
+        userAccountManagement.elements.editPageReceivesEmails().should('have.text', 'Receives emails');
+        userAccountManagement.elements.editPageSAOButton().should('have.text', 'Elevate to State Authorized Official');
+        userAccountManagement.elements.editPageUnlockAccButton().should(($button) => {
+            const text = $button.text();
+            expect(text).to.match(/Unlock Account|Account is unlocked/);
         });
+        userAccountManagement.elements.editPageRemoveUserButton().should('have.text', 'Remove User Access');
+        commonPage.verifyUrl('/User/Account/ViewAccount');
     });
-    it("Verify the table can be sorted by clicking the header", function () {
+
+    it("Verify the table is sorted by default", function () {
         cy.visit('/User/Account.html');
         // Default array check
         userAccountManagement.checkIsArraySorted(2, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the username header", function () {
+        cy.visit('/User/Account.html');
         // Check username after 1 click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'descending');
         // Check username after a second click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the first name header", function () {
+        cy.visit('/User/Account.html');
         // Check First Name after a click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'descending');
         // Check First Name after a second click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the last name header", function () {
+        cy.visit('/User/Account.html');
         // Check Last Name after a click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'descending');
         // Check Last Name after a second click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the secondary role header", function () {
+        cy.visit('/User/Account.html');
         // Check Secondary Role after a click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'descending');
         // Check Secondary Role after a second click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the email header", function () {
+        cy.visit('/User/Account.html');
         // Check Email after a click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(6, 'descending');
-        // // Check Email after a second click
+        // Check Email after a second click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(6, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the phone header", function () {
+        cy.visit('/User/Account.html');
         // Check Phone after a click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(7, 'descending');
-        // // Check Phone after a second click
+        // Check Phone after a second click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(7, 'ascending');
     });

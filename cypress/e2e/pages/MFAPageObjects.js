@@ -1,9 +1,12 @@
 import debug from 'debug';
 import { authenticator, totp, hotp } from 'otplib';
+const testStateUsrSecret = 'V4QNFINSJE7IA7SYO3LBMTSXEUXUIQZMLTUHFXURCACKPW74ZMVA';
+const testStateMgrSecret = 'EQHTLQZ6JRV5Z3J2PAUDRZEJFKAUYOTDCNZT4C5CBQSTNBBQBIGQ';
 const testStateSAOSecret = 'OZZVNG7WRXMTOX2PX4MOJZTCL37AUBPHJI2ZDRFVYYMPLIUTNCYA';
 const nytdSysAdminSecret = '3VVWLETF3I2FKG3DZWGPZCJQFCXTTVTZOPTCCY7VRZXXENFGATHQ';
 const nytdRegionalSecret = 'O2B7FYKYE2VUJ7YM3T65XL2CLCF5QRDVDUIXLFUVDDPRPMADCTOA';
 const nytdCBSecret = 'MS5FLTBFCAICAKVXSTP7UJXM4BZTPETP2HB67EFXSBJFMBDM2CYQ';
+
 
 class MFAPageObjects {
     elements = {
@@ -14,8 +17,14 @@ class MFAPageObjects {
     enterPasscode(account) {
         debug.log(account);
         switch(account){
+            case "teststateuser":
+                this.elements.passcodeInput().type(authenticator.generate(testStateUsrSecret), { log: false });
+                break;
             case "teststatesao":
                 this.elements.passcodeInput().type(authenticator.generate(testStateSAOSecret), { log: false });
+                break;
+            case "teststatemgr":
+                this.elements.passcodeInput().type(authenticator.generate(testStateMgrSecret), { log: false });
                 break;
             case "nytdsysadmin":
                 this.elements.passcodeInput().type(authenticator.generate(nytdSysAdminSecret), { log: false });

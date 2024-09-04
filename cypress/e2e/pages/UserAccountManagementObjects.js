@@ -27,6 +27,18 @@ class UserAccountManagementObjects {
     tableSeventhHeader: () => cy.get('[name="phoneNumber"]'), // Table seventh header
     removalIcon: () => cy.get('[aria-label="Pending User Removal Request"]'), // Removal icon
     elevationIcon: () => cy.get('[aria-label="Pending Role Elevation Request"]'), // Elevation icon
+    tableErrorHeader: () => cy.get('h2'), // Table error header
+    deletedUserTitle: () => cy.get(':nth-child(1) > [title="Deleted User"]'), // Deleted user title
+    editPageUsername: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Edit page username
+    editPageName: () => cy.get('#main_content'), // Edit page name
+    editPageEmail: () => cy.get('.styles_frame__z_r5H > :nth-child(2) > p'), // Edit page email
+    editPageReceivesEmails: () => cy.get(':nth-child(3) > p'), // Edit page receives emails
+    editPageStateManagerButton: () => cy.get('[data-testid="elevate_account_button_State Manager"]'), // Edit page state manager button
+    editPageSAOButton: () => cy.get('[data-testid="elevate_account_button_State Authorized Official"]'), // Edit page SAO button
+    editPageEditButton: () => cy.get('[data-testid="Edit_user_button"]'), // Edit page edit button
+    editPageUnlockAccButton: () => cy.get('[data-testid="unlock_account_button"]'), // Edit page unlock account button
+    editPageRemoveUserButton: () => cy.get('[data-testid="remove_user_button"]'), // Edit page remove user button
+    editPageDeleteUserButton: () => cy.get('[data-testid="delete_user_button"]'), // Edit page delete user button
   }
 
   clickOnCancelRequestBtn() {
@@ -114,6 +126,23 @@ class UserAccountManagementObjects {
       expect(columnData).to.deep.equal(sortedItems);
     });
   }
+
+  clickPrimaryRoleCheckbox(num) {
+    this.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(num).click();
+  }
+
+  clickSecondaryRoleCheckbox(num) {
+    this.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(num).click();
+  }
+
+  clickRegionalCheckbox(num) {
+    this.elements.regionalChildren().get('[data-testid="checkbox"]').eq(num).click();
+  }
+
+  clickStateCheckbox(num) {
+    this.elements.stateChildren().eq(num).click();
+  }
+
 
 
 }

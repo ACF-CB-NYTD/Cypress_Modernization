@@ -32,19 +32,31 @@ describe("SA UAM Page Validations", function () {
         userAccountManagement.elements.tableSixthHeader().should('have.text', 'Email');
         userAccountManagement.elements.tableSeventhHeader().should('have.text', 'Phone');
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(3).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(3).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(3);
+        userAccountManagement.clickPrimaryRoleCheckbox(3);
         userAccountManagement.elements.regionalDropdown().should('contain', 'Region');
         userAccountManagement.elements.regionalChildren().should('contain', 'Region 1').and('contain', 'Region 2').and('contain', 'Region 3').and('contain', 'Region 4').and('contain', 'Region 5').and('contain', 'Region 6').and('contain', 'Region 7').and('contain', 'Region 8').and('contain', 'Region 9').and('contain', 'Region 10')
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(4).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(4).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(4);
+        userAccountManagement.clickPrimaryRoleCheckbox(4);
         userAccountManagement.elements.stateDropdown().should('contain', 'State');
         userAccountManagement.checkAllStates();
         userAccountManagement.clickOnPrimaryRoleDropdown();
     });
-    it("Verify Regional and CB Office Staff users will not be able to access the User Account Management page.", function () {
+    it("Verify State users, State Managers, Regional, and CB Office Staff users will not be able to access the User Account Management page.", function () {
         cy.visit('/User.html');
         commonPage.clickOnLogoutBtn();
+        // standard
+        cy.standardLogin('teststateuser', 'P@ssw0rd1');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.elements.userAccountManagementSelect().should('not.exist');
+        commonPage.clickOnLogoutBtn();
+
+        // manager
+        cy.standardLogin('teststatemgr', 'P@ssw0rd1');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.elements.userAccountManagementSelect().should('not.exist');
+        commonPage.clickOnLogoutBtn();
+
         cy.standardLogin('nytdregional', 'P@ssw0rd1');
         commonPage.clickOnAccountSettingsDropdown();
         commonPage.elements.userAccountManagementSelect().should('not.exist');
@@ -53,7 +65,7 @@ describe("SA UAM Page Validations", function () {
         commonPage.clickOnAccountSettingsDropdown();
         commonPage.elements.userAccountManagementSelect().should('not.exist');
     });
-    it("Verify the filter inputs and dropdowns are working as expected", function () {
+    it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('Test');
         userAccountManagement.elements.firstTableLink().then((text) => {
@@ -72,35 +84,37 @@ describe("SA UAM Page Validations", function () {
             userAccountManagement.typeNameSearchInput('{enter}');
             userAccountManagement.elements.firstTableLink().contains(text.text()).should('not.exist');
         });
-        commonPage.clickOnClearFiltersBtn();
+    });
+    it("Verify the Primary and Secondary Role dropdown filters are working as expected", function () {
+        cy.visit('/User/Account.html');
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(1).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(1).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(1);
+        userAccountManagement.clickPrimaryRoleCheckbox(1);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'System Administrator');
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(0).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(0);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFifthCol().should('have.text', 'Data Export');
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(2).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(2).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(2);
+        userAccountManagement.clickPrimaryRoleCheckbox(2);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'CB Central Office User');
         userAccountManagement.clickOnSecondaryRoleDropdown();
-        userAccountManagement.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(0).click();
+        userAccountManagement.clickSecondaryRoleCheckbox(0);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFifthCol().should('have.text', 'Data Export');
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(3).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(3).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(3);
+        userAccountManagement.clickPrimaryRoleCheckbox(3);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'Regional Office User');
         userAccountManagement.clickOnRegionalDropdown();
-        userAccountManagement.elements.regionalChildren().get('[data-testid="checkbox"]').eq(0).click();
-        userAccountManagement.elements.regionalChildren().get('[data-testid="checkbox"]').eq(1).click();
+        userAccountManagement.clickRegionalCheckbox(0);
+        userAccountManagement.clickRegionalCheckbox(1);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFifthCol().invoke('text').then((text) => {
             if (text.includes('Region 1')) {
@@ -115,13 +129,13 @@ describe("SA UAM Page Validations", function () {
         });
         commonPage.clickOnClearFiltersBtn();
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(4).click();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(4).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(4);
+        userAccountManagement.clickPrimaryRoleCheckbox(4);
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.firstRowFourthCol().should('have.text', 'State User');
         userAccountManagement.clickOnStateDropdown();
-        userAccountManagement.elements.stateChildren().eq(7).click();
-        userAccountManagement.elements.stateChildren().eq(9).click();
+        userAccountManagement.clickStateCheckbox(7);
+        userAccountManagement.clickStateCheckbox(9);
         commonPage.clickOnRefreshResultsBtn();
         cy.get('tbody > :nth-child(1) > :nth-child(7)').invoke('text').then((text) => {
             if (text.includes('Alabama')) {
@@ -134,11 +148,14 @@ describe("SA UAM Page Validations", function () {
                 expect(text).to.include('Fail');
             }
         });
-        commonPage.clickOnClearFiltersBtn();
+    });
+    it("Verify the Other Filters dropdown filters are working as expected", function () {
+        cy.visit('/User/Account.html');
         userAccountManagement.clickOnOtherFiltersDropdown();
         userAccountManagement.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
+        userAccountManagement.typeNameSearchInput('Deleted');
         commonPage.clickOnRefreshResultsBtn();
-        cy.get(':nth-child(1) > [title="Deleted User"]').should('contain', 'Deleted User');
+        userAccountManagement.elements.deletedUserTitle().should('contain', 'Deleted User');
     });
     it("As a System Administrator, I want to verify the Pending removal and pending elevation icons in the table", function () {
         cy.visit('/User/Account.html');
@@ -155,13 +172,14 @@ describe("SA UAM Page Validations", function () {
         cy.visit('/User/Account.html');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
         userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(1).click();
+        userAccountManagement.clickPrimaryRoleCheckbox(1);
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
     it("Verify the Manage User Account Requests button works", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.elements.manageUserAccountRequestsBtn().click();
         commonPage.elements.headerH3Text().should('have.text', 'User Account Requests');
+        commonPage.verifyUrl('/User/Account/Requests');
     });
     it("Verify the No Users Founds page functionality", function () {
         cy.visit('/User/Account.html');
@@ -171,11 +189,20 @@ describe("SA UAM Page Validations", function () {
     });
     it("Verify the user hyperlinks in the table", function () {
         cy.visit('/User/Account.html');
-        userAccountManagement.elements.tableLink().first().then((text) => {
-            const username = text.text();
-            userAccountManagement.elements.tableLink().first().click();
-            cy.get('.styles_frame__z_r5H > :nth-child(1) > p').should('have.text', username);
+        userAccountManagement.typeNameSearchInput('teststatemgr');
+        commonPage.clickOnRefreshResultsBtn();
+        userAccountManagement.elements.tableLink().first().click();
+        userAccountManagement.elements.editPageUsername().should('have.text', 'teststatemgr');
+        userAccountManagement.elements.editPageName().should('have.text', 'teststate mgr');
+        userAccountManagement.elements.editPageEmail().should('have.text', 'wyntonj1@yahoo.com');
+        userAccountManagement.elements.editPageReceivesEmails().should('have.text', 'Receives emails');
+        userAccountManagement.elements.editPageEditButton().should('have.text', 'Edit User');
+        userAccountManagement.elements.editPageUnlockAccButton().should(($button) => {
+            const text = $button.text();
+            expect(text).to.match(/Unlock Account|Account is unlocked/);
         });
+        userAccountManagement.elements.editPageDeleteUserButton().should('have.text', 'Delete User');
+        commonPage.verifyUrl('/User/Account/ViewAccount');
     });
     it("Verify the table can be sorted by clicking the header", function () {
         cy.visit('/User/Account.html');
