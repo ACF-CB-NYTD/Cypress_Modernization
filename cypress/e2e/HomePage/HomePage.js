@@ -146,9 +146,9 @@ describe("Login Page Validations", function () {
     }
     homePage.elements.yourAccountHasBeenLockedErrorMsg().should('have.text', 'Your account has been locked. Please contact NYTDhelp@acf.hhs.gov.')
   });
-  it("Verify User is able to unlock account", function () {
+  it.only("Verify User is able to unlock account", function () {
     cy.visit("");
-    cy.standardLogin('nytdsysadmin', 'P@ssw0rd') // Login with session, implemented in commands.js
+    cy.standardLogin('nytdsysadmin', 'P@ssw0rd1') // Login with session, implemented in commands.js
     commonPage.clickOnAccountSettingsDropdown();
     commonPage.clickOnUserAccountManagementSelect();
     commonPage.verifyUrl('/User/Account');
@@ -156,6 +156,7 @@ describe("Login Page Validations", function () {
     commonPage.clickOnRefreshResultBtn();
     userAccountManagementPage.clickOnUsername('Mincho.Rusev');
     commonPage.verifyUrl('/ViewAccount');
+    cy.pause();
     userAccountManagementPage.clickOnUnlockAccountBtn();
     userAccountManagementPage.elements.accountUnlockText().should('have.text', 'Account Unlocked');
     userAccountManagementPage.elements.accountHasBeenLockedText().contains('account has been unlocked.');

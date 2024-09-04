@@ -1,9 +1,12 @@
 import debug from 'debug';
 import { authenticator, totp, hotp } from 'otplib';
-const testStateSAOSecret = 'BZ722EYYD323F5YMTTTGPSWAN6EAUAVFVSKZ3YAEC4M2OV6OX4KA';
-const nytdSysAdminSecret = 'S7TV6LSWRJMG4P3G35UHYHGJNX2YVNYCYUJ7M2547WMTL6U7IQEQ';
-const nytdRegionalSecret = 'A3V7EHHWJEV6DAK7WQT5P7IMO7O4B3SSFAFVIDBU3E6FBKM3Q55Q';
-const nytdCBSecret = 'DIDPYC2IPMUGH5T36MZ6NQIR5PDZZNA3QCPUI2MXNMJ6VHXAPSBA';
+const testStateUsrSecret = 'V4QNFINSJE7IA7SYO3LBMTSXEUXUIQZMLTUHFXURCACKPW74ZMVA';
+const testStateMgrSecret = 'EQHTLQZ6JRV5Z3J2PAUDRZEJFKAUYOTDCNZT4C5CBQSTNBBQBIGQ';
+const testStateSAOSecret = 'OZZVNG7WRXMTOX2PX4MOJZTCL37AUBPHJI2ZDRFVYYMPLIUTNCYA';
+const nytdSysAdminSecret = '3VVWLETF3I2FKG3DZWGPZCJQFCXTTVTZOPTCCY7VRZXXENFGATHQ';
+const nytdRegionalSecret = 'O2B7FYKYE2VUJ7YM3T65XL2CLCF5QRDVDUIXLFUVDDPRPMADCTOA';
+const nytdCBSecret = 'MS5FLTBFCAICAKVXSTP7UJXM4BZTPETP2HB67EFXSBJFMBDM2CYQ';
+
 
 class MFAPageObjects {
     elements = {
@@ -14,8 +17,14 @@ class MFAPageObjects {
     enterPasscode(account) {
         debug.log(account);
         switch(account){
+            case "teststateuser":
+                this.elements.passcodeInput().type(authenticator.generate(testStateUsrSecret), { log: false });
+                break;
             case "teststatesao":
                 this.elements.passcodeInput().type(authenticator.generate(testStateSAOSecret), { log: false });
+                break;
+            case "teststatemgr":
+                this.elements.passcodeInput().type(authenticator.generate(testStateMgrSecret), { log: false });
                 break;
             case "nytdsysadmin":
                 this.elements.passcodeInput().type(authenticator.generate(nytdSysAdminSecret), { log: false });

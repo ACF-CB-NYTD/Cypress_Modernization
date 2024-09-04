@@ -16,8 +16,8 @@ class UserAccountManagementObjects {
     stateChildren: () => cy.get('[data-testid="dropdown_wrapper"]').contains('State').get('[data-testid="checkbox"]').children(), // Other filters dropdown children options
     tableLink: () => cy.get('[data-testid="uam_link"]'), // Username table link
     firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > [data-testid="uam_link"]'), // First username table link
-    firstPrimaryRole: () => cy.get(':nth-child(1) > :nth-child(5) > p'), // First primary role
-    firstSecondaryRoleOrRegion: () => cy.get(':nth-child(1) > :nth-child(6) > p'), // First secondary role
+    firstRowFourthCol: () => cy.get(':nth-child(1) > :nth-child(5) > p'), // First primary role
+    firstRowFifthCol: () => cy.get(':nth-child(1) > :nth-child(6) > p'), // First secondary role
     tableFirstHeader: () => cy.get('[name="userName"]'), // Table first header
     tableSecondHeader: () => cy.get('[name="firstName"]'), // Table second header
     tableThirdHeader: () => cy.get('[name="lastName"]'), // Table third header
@@ -27,6 +27,18 @@ class UserAccountManagementObjects {
     tableSeventhHeader: () => cy.get('[name="phoneNumber"]'), // Table seventh header
     removalIcon: () => cy.get('[aria-label="Pending User Removal Request"]'), // Removal icon
     elevationIcon: () => cy.get('[aria-label="Pending Role Elevation Request"]'), // Elevation icon
+    tableErrorHeader: () => cy.get('h2'), // Table error header
+    deletedUserTitle: () => cy.get(':nth-child(1) > [title="Deleted User"]'), // Deleted user title
+    editPageUsername: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Edit page username
+    editPageName: () => cy.get('#main_content'), // Edit page name
+    editPageEmail: () => cy.get('.styles_frame__z_r5H > :nth-child(2) > p'), // Edit page email
+    editPageReceivesEmails: () => cy.get(':nth-child(3) > p'), // Edit page receives emails
+    editPageStateManagerButton: () => cy.get('[data-testid="elevate_account_button_State Manager"]'), // Edit page state manager button
+    editPageSAOButton: () => cy.get('[data-testid="elevate_account_button_State Authorized Official"]'), // Edit page SAO button
+    editPageEditButton: () => cy.get('[data-testid="Edit_user_button"]'), // Edit page edit button
+    editPageUnlockAccButton: () => cy.get('[data-testid="unlock_account_button"]'), // Edit page unlock account button
+    editPageRemoveUserButton: () => cy.get('[data-testid="remove_user_button"]'), // Edit page remove user button
+    editPageDeleteUserButton: () => cy.get('[data-testid="delete_user_button"]'), // Edit page delete user button
   }
 
   clickOnCancelRequestBtn() {
@@ -73,15 +85,17 @@ class UserAccountManagementObjects {
     this.getColumnData(columnNumber).then(columnData => {
       cy.log(columnData.join(', '));
       let sortedItems = [];
-      if(checkType === 'ascending') {
-        sortedItems = [...columnData].sort((a, b) =>
-          a.replace(/[-_.]/g, '').localeCompare(b.replace(/[-_.]/g, ''), undefined, { sensitivity: 'base' })
-        );
-      } else if(checkType === 'descending') {
+      if (checkType === 'ascending') {
+        sortedItems = [...columnData].sort((a, b) => {
+          if (a === "(none)") return 1;
+          if (b === "(none)") return -1;
+          return a.replace(/[-_.]/g, '').localeCompare(b.replace(/[-_.]/g, ''), undefined, { sensitivity: 'base', numeric: true });
+        });
+      } else if (checkType === 'descending') {
         sortedItems = [...columnData].sort((a, b) =>
           b.replace(/[-_.]/g, '').localeCompare(a.replace(/[-_.]/g, ''), undefined, { sensitivity: 'base' })
         );
-      } 
+      }
       cy.log(sortedItems.join(', '));
 
       expect(columnData).to.deep.equal(sortedItems);
@@ -92,20 +106,43 @@ class UserAccountManagementObjects {
     this.getColumnData(columnNumber).then(columnData => {
       cy.log(columnData.join(', '));
       let sortedItems = [];
-      if(checkType === 'ascending') {
-        sortedItems = [...columnData].sort((a, b) =>
-          a.replace(/[-]/g, '').localeCompare(b.replace(/[-]/g, ''), undefined, { sensitivity: 'base' })
-        );
-      } else if(checkType === 'descending') {
-        sortedItems = [...columnData].sort((a, b) =>
-          b.replace(/[-]/g, '').localeCompare(a.replace(/[-]/g, ''), undefined, { sensitivity: 'base' })
-        );
-      } 
+      if (checkType === 'ascending') {
+        sortedItems = [...columnData].sort((a, b) => {
+            const localPartA = a.replace(/[-_.+@]/g, '');
+            const localPartB = b.replace(/[-_.+@]/g, '');
+            // cy.log('part a :' + localPartA + ' part b :' + localPartB + ' = ' + localPartA.localeCompare(localPartB, undefined, { sensitivity: 'base', numeric: true }));
+            return a.replace(/[-_.+@]/g, '').localeCompare(b.replace(/[-_.+@]/g, ''), undefined, { sensitivity: 'base' });
+        });
+    } else if (checkType === 'descending') {
+        sortedItems = [...columnData].sort((a, b) => {
+            const localPartA = a.replace(/[-_.+@]/g, '');
+            const localPartB = b.replace(/[-_.+@]/g, '');
+            // cy.log('part a :' + localPartA + ' part b :' + localPartB + ' = ' + localPartA.localeCompare(localPartB, undefined, { sensitivity: 'base', numeric: true }));
+            return b.replace(/[-_.+@]/g, '').localeCompare(a.replace(/[-_.+@]/g, ''), undefined, { sensitivity: 'base' });
+        });
+    }
       cy.log(sortedItems.join(', '));
 
       expect(columnData).to.deep.equal(sortedItems);
     });
   }
+
+  clickPrimaryRoleCheckbox(num) {
+    this.elements.primaryRoleChildren().get('[data-testid="radio"]').eq(num).click();
+  }
+
+  clickSecondaryRoleCheckbox(num) {
+    this.elements.secondaryRoleChildren().get('[data-testid="checkbox"]').eq(num).click();
+  }
+
+  clickRegionalCheckbox(num) {
+    this.elements.regionalChildren().get('[data-testid="checkbox"]').eq(num).click();
+  }
+
+  clickStateCheckbox(num) {
+    this.elements.stateChildren().eq(num).click();
+  }
+
 
 
 }

@@ -34,6 +34,7 @@ class CommonPageObjects {
     tenResultsBtn: () => cy.get('[name="10"]'),
     twentyfiveResultsBtn: () => cy.get('[name="25"]'),
     fiftyResultsBtn: () => cy.get('[name="50"]'),
+    profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
   }
 
   verifyUrl(url) {
