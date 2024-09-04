@@ -115,7 +115,7 @@ describe("SAO UAM Page Validations", function () {
         userAccountManagement.clickSecondaryRoleCheckbox(1);
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
-    it.only("Verify the Manage User Account Requests button works", function () {
+    it("Verify the Manage User Account Requests button works", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.elements.manageUserAccountRequestsBtn().click();
         commonPage.elements.headerH3Text().should('have.text', 'User Account Requests');
