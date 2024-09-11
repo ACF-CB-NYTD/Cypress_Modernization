@@ -92,7 +92,7 @@ describe("SAO UAM Page Validations", function () {
     it("Verify the Other Filters dropdown filters are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.clickOnOtherFiltersDropdown();
-        userAccountManagement.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
+        userAccountManagement.clickDeletedUserCheckbox();
         userAccountManagement.typeNameSearchInput('Deleted');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.deletedUserTitle().should('contain', 'Deleted User');

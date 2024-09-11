@@ -143,6 +143,10 @@ class UserAccountManagementObjects {
     this.elements.stateChildren().eq(num).click();
   }
 
+  clickDeletedUserCheckbox() {
+    this.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
+  }
+
 
 
 }

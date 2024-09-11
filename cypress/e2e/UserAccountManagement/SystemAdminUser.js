@@ -152,18 +152,18 @@ describe("SA UAM Page Validations", function () {
     it("Verify the Other Filters dropdown filters are working as expected", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.clickOnOtherFiltersDropdown();
-        userAccountManagement.elements.otherFiltersChildren().get('[data-testid="checkbox"]').contains('Show Deleted Users').click();
+        userAccountManagement.clickDeletedUserCheckbox();
         userAccountManagement.typeNameSearchInput('Deleted');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.deletedUserTitle().should('contain', 'Deleted User');
     });
-    it("As a System Administrator, I want to verify the Pending removal and pending elevation icons in the table", function () {
+    it("Verify the Pending removal and pending elevation icons in the table", function () {
         cy.visit('/User/Account.html');
-        userAccountManagement.typeNameSearchInput('removalIconTest');
+        userAccountManagement.typeNameSearchInput('removal');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.removalIcon().should('exist');
         commonPage.clickOnClearFiltersBtn();
-        userAccountManagement.typeNameSearchInput('elevationIconTest');
+        userAccountManagement.typeNameSearchInput('elevation');
         commonPage.clickOnRefreshResultsBtn();
         userAccountManagement.elements.elevationIcon().should('exist');
     });
@@ -185,9 +185,9 @@ describe("SA UAM Page Validations", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('TestABC123DoesNotExist');
         commonPage.clickOnRefreshResultsBtn();
-        cy.get('h2').should('have.text', 'No Users Found');
+        userAccountManagement.elements.tableErrorHeader().should('have.text', 'No Users Found');
     });
-    it("Verify the user hyperlinks in the table", function () {
+    it("Verify the username hyperlinks open View Account page", function () {
         cy.visit('/User/Account.html');
         userAccountManagement.typeNameSearchInput('teststatemgr');
         commonPage.clickOnRefreshResultsBtn();
@@ -204,50 +204,71 @@ describe("SA UAM Page Validations", function () {
         userAccountManagement.elements.editPageDeleteUserButton().should('have.text', 'Delete User');
         commonPage.verifyUrl('/User/Account/ViewAccount');
     });
-    it("Verify the table can be sorted by clicking the header", function () {
+    it("Verify the table is sorted", function () {
         cy.visit('/User/Account.html');
         // Default array check
         userAccountManagement.checkIsArraySorted(2, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the username header", function () {
+        cy.visit('/User/Account.html');
         // Check username after 1 click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'descending');
         // Check username after a second click
         userAccountManagement.elements.tableFirstHeader().click();
         userAccountManagement.checkIsArraySorted(2, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the First Name header", function () {
+        cy.visit('/User/Account.html');
         // Check First Name after a click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'descending');
         // Check First Name after a second click
         userAccountManagement.elements.tableSecondHeader().click();
         userAccountManagement.checkIsArraySorted(3, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the Last Name header", function () {
+        cy.visit('/User/Account.html');
         // Check Last Name after a click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'descending');
         // Check Last Name after a second click
         userAccountManagement.elements.tableThirdHeader().click();
         userAccountManagement.checkIsArraySorted(4, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the Primary Role header", function () {
+        cy.visit('/User/Account.html');
         // Check Primary Role after a click
         userAccountManagement.elements.tableFourthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'descending');
         // Check Primary Role after a second click
         userAccountManagement.elements.tableFourthHeader().click();
         userAccountManagement.checkIsArraySorted(5, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the Secondary Role header", function () {
+        cy.visit('/User/Account.html');
         // Check Secondary Role after a click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(6, 'descending');
         // Check Secondary Role after a second click
         userAccountManagement.elements.tableFifthHeader().click();
         userAccountManagement.checkIsArraySorted(6, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the Email header", function () {
+        cy.visit('/User/Account.html');
         // Check Email after a click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(7, 'descending');
         // Check Email after a second click
         userAccountManagement.elements.tableSixthHeader().click();
         userAccountManagement.checkIsEmailArraySorted(7, 'ascending');
+    });
+    it("Verify the table can be sorted by clicking the Phone header", function () {
+        cy.visit('/User/Account.html');
         // Check Phone after a click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(8, 'descending');
-        // // Check Phone after a second click
+        // Check Phone after a second click
         userAccountManagement.elements.tableSeventhHeader().click();
         userAccountManagement.checkIsArraySorted(8, 'ascending');
     });
