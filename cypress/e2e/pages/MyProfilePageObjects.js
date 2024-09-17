@@ -22,11 +22,30 @@ class MyProfilePageObjects {
         assignedStates: () => cy.get('.styles_spanRegionAssignedStates__GnxIX > :nth-child(1) > p'), // This locator is for assigned states
         editMyProfileBtn: () => cy.get('[data-testid="Edit_user_button"]'), // Edit my profile button
         deleteMyAccountBtn: () => cy.get('[data-testid="delete_user_button"]'), // Delete my account btn
+        deleteYourAccountModalText: () => cy.get('#deleteTitle'), // Delete your account modal text
         returnToTopBtn: () => cy.get('.styles_returnToTop__9_gBL > a'), // Return to top btn
         updatePasswordBtn: () => cy.get('[data-testid="button"]'), // Update password btn
         requestStateAuthOfficialAccessBtn: () => cy.get('[data-testid="request_elevation_button"]'), // Request state authorization official access button
         requestStateAuthOfficialAccessBtnForSTestStateUser: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(2)'), // Request state authorization official access button for state user
         requestStateManagerAccessBtnForTestStateUser: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(1)'), // Request state authorization official access button for state user
+        cancelBtn: () => cy.get('#cancel_button'), // Cancel btn on delete your account modal.
+    }
+
+    clickOnEditMyProfileButton() {
+        this.elements.editMyProfileBtn().click();
+    }
+
+    clickOnUpdatePassword() {
+        this.elements.updatePasswordBtn().click();
+    }
+
+    clickOnCancelButton() {
+        this.elements.cancelBtn().click();
+    }
+
+    clickOnDeleteMyAccount() {
+        this.elements.deleteMyAccountBtn().click({ force: true });
+        cy.wait(1000)
     }
 }
 export default MyProfilePageObjects;

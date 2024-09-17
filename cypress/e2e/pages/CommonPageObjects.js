@@ -45,8 +45,35 @@ class CommonPageObjects {
     this.elements.url().should("include", url);
   }
 
+  verifyBreadCrumbs(breadcrumb1,breadcrumb2,breadcrumb3){
+    if (breadcrumb3) {
+        cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+        expect($div).to.contain(breadcrumb2)
+        expect($div).to.contain(breadcrumb3)
+      })
+    }else if (breadcrumb2){
+        cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+        expect($div).to.contain(breadcrumb2)
+      })
+    }
+    else{
+      cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+      })
+    } 
+  }
+
   clickOnLogoutBtn() {
     this.elements.logOutBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  verifyPageIsScrollToTheTop() {
+    cy.window().its('scrollY').should('equal', 0);
   }
 
   clickOnWelcomeBtn() {
@@ -160,6 +187,10 @@ class CommonPageObjects {
 
   clickOnFiftyResultsBtn() {
     this.elements.fiftyResultsBtn().click();
+  }
+
+  navigateBack() {
+    cy.go('back')
   }
  
 
