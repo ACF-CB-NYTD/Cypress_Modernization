@@ -39,7 +39,7 @@ describe("State Authorized Official Account Request Validations", function () {
     commonPage.navigateBack();
     });
 
-    it("Verify test state users are able to view my profile via welcome username ", function () {
+    it("Verify test state users are able to view my profile from welcome username", function () {
     cy.visit('/User');
     commonPage.verifyUrl('/User');
     commonPage.clickOnWelcomeBtn();

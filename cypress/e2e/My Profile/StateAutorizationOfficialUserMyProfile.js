@@ -38,7 +38,7 @@ describe("State Authorized Official Account Request Validations", function () {
     commonPage.elements.headerH3Text().should('have.text', 'Update Password');
     commonPage.navigateBack();
     });
-    it("Verify SAO users are able to view my profile vie welcome username", function () {
+    it("Verify SAO users are able to view my profile from welcome username", function () {
     cy.visit('/User');
     commonPage.verifyUrl('/User');
     commonPage.clickOnWelcomeBtn();

@@ -35,7 +35,7 @@ describe("My profile validation", function () {
 
     });
 
-    it("Verify CB central users are able to view my profile user information vie welcome username ", function () {
+    it("Verify CB central users are able to view my profile user information from welcome username", function () {
     cy.visit('/User');
     commonPage.verifyUrl('/User');
     commonPage.clickOnWelcomeBtn();

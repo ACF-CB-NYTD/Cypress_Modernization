@@ -40,7 +40,7 @@ describe("State Authorized Official Account Request Validations", function () {
     commonPage.navigateBack();
     });
 
-    it("Verify state manager users are able to view my profile via welcome button", function () {
+    it("Verify state manager users are able to view my profile from welcome username", function () {
     cy.visit('/User');
     commonPage.verifyUrl('/User');
     commonPage.clickOnWelcomeBtn();
