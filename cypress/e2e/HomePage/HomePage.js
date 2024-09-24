@@ -1,7 +1,7 @@
 import HomePageObjects from "../pages/HomePageObjects";
 const homePage = new HomePageObjects();
-import UserAccountManagementPageObjects from "../pages/UserAccountManagementPageObjects";
-const userAccountManagementPage = new UserAccountManagementPageObjects();
+import UserAccountManagementObjects from "../pages/UserAccountManagementObjects";
+const userAccountManagementPage = new UserAccountManagementObjects();
 import CommonPageObjects from "../pages/CommonPageObjects";
 import { home } from "ospath";
 const commonPage = new CommonPageObjects();
@@ -146,7 +146,7 @@ describe("Login Page Validations", function () {
     }
     homePage.elements.yourAccountHasBeenLockedErrorMsg().should('have.text', 'Your account has been locked. Please contact NYTDhelp@acf.hhs.gov.')
   });
-  it.only("Verify User is able to unlock account", function () {
+  it("Verify User is able to unlock account", function () {
     cy.visit("");
     cy.standardLogin('nytdsysadmin', 'P@ssw0rd1') // Login with session, implemented in commands.js
     commonPage.clickOnAccountSettingsDropdown();
@@ -156,7 +156,6 @@ describe("Login Page Validations", function () {
     commonPage.clickOnRefreshResultBtn();
     userAccountManagementPage.clickOnUsername('Mincho.Rusev');
     commonPage.verifyUrl('/ViewAccount');
-    cy.pause();
     userAccountManagementPage.clickOnUnlockAccountBtn();
     userAccountManagementPage.elements.accountUnlockText().should('have.text', 'Account Unlocked');
     userAccountManagementPage.elements.accountHasBeenLockedText().contains('account has been unlocked.');

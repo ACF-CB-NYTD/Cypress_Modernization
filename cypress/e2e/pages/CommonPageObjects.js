@@ -4,13 +4,12 @@ class CommonPageObjects {
   elements = {
     url: () => cy.url(), // This method will take the current url.
     searchInput: () => cy.get('[data-testid="textInput"]'), // Search Input for user account to search for accounts
-    refreshResultButton: () => cy.get('.nytd-button--secondary'), // Refresh result button to update the result
-
+    refreshResultButton: () => cy.get('.nytd-button--secondary').contains('Refresh Results'), // Refresh result button to update the result
     logOutBtn: () => cy.get('[data-testid="logout_button"]'), // Logout button
     headerH3Text: () => cy.get('#main_content'), // Header H3 text
     pageDescriptionText: () => cy.get('.styles_description__0k9k1'), // Page description text under the main content header
-    clearFiltersBtn: () => cy.get('.styles_actions__BA1vl > .nytd-button--tertiary'), // Clear filters button
-    refreshResultsBtn: () => cy.get('.nytd-button--secondary'), // Refresh results button
+    clearFiltersBtn: () => cy.get('.styles_actions__BA1vl > .nytd-button--tertiary').contains('Clear Filters'), // Clear filters button
+    refreshResultsBtn: () => cy.get('.nytd-button--secondary').contains('Refresh Results'), // Refresh results button
     magnifyingGlassSearchIcon: () => cy.get('[data-testid="submissionstransmissions_search_icon_button"]'), // Magnifying glass search icon in most name search input fields
     // Login page account request link
     requestAccountLink: () => cy.get('[data-testid="request_account"]'), //Request link under log in
@@ -116,7 +115,7 @@ class CommonPageObjects {
   }
 
   clickOnRefreshResultBtn() {
-    this.elements.refreshResultButton().click();
+    this.elements.refreshResultButton().click({force:true});
   }
 
   clickOnCurrentPaginationBtn() {

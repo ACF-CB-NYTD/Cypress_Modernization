@@ -22,7 +22,7 @@ class userAccountRequestFormObjects {
     stateUserRadioBtn: () => cy.get('[data-testid="radio"]').contains("State User Account"), //Radio button for State user Account
     federalUserRadioBtn: () => cy.get('[data-testid="radio"]').contains("Federal User Account"), //Radio button for Federal user Account
     userRoleHeader: () => cy.get('[data-testid="label"]').contains("User Role *"), //user Role header after a radio button is selected
-    standardUserRoleRadioBtn: () => cy.get('[data-testid="radio"]').contains("Standard user"), //Radio button for Standard user selection
+    standardUserRoleRadioBtn: () => cy.get('[data-testid="radio"]').contains("Standard User"), //Radio button for Standard user selection
     mngrUserRoleRadioBtn: () => cy.get('[data-testid="radio"]').contains("State Manager"), //Radio button for State Manager selection
     saoUserRoleRadioBtn: () => cy.get('[data-testid="radio"]').contains("State Authorized Official"), //Radio button for State Authorized Official selection
     stateHeader: () => cy.get('[data-testid="label"]').contains("State *"), //State header for state dropdown
@@ -141,7 +141,7 @@ class userAccountRequestFormObjects {
     this.typeTestOnAgencyOrOfficeInput();
     this.clickOnContinueBtn();
     this.typeTitleInUserTitle();
-    this.typeFNameInFirstName();
+    this.typeNameInFirstName('FName');
     this.typeLNameInLastName();
     this.typePhoneInUserPhone();
     this.typeEmailInUserEmail();
@@ -167,7 +167,7 @@ class userAccountRequestFormObjects {
     this.typeTestOnAgencyOrOfficeInput();
     this.clickOnContinueBtn();
     this.typeTitleInUserTitle();
-    this.typeFNameInFirstName();
+    this.typeNameInFirstName('FName');
     this.typeLNameInLastName();
     this.typePhoneInUserPhone();
     this.typeEmailInUserEmail();
@@ -175,6 +175,37 @@ class userAccountRequestFormObjects {
     this.checkSecurityAgreementCheckbox();
     this.typeNameIntoNameInput();
     this.clickOnContinueBtn();
+  }  
+
+  createAccountRequest(choice, fname) {
+    cy.visit("");
+    commonObjects.clickOnRequestAccountLink();
+    this.clickOnStateUserRadioBtn();
+    switch(choice) {
+      case "State user":
+        this.clickOnStandardUserRoleRadioBtn();
+        break;
+      case "SAO":
+        this.clickOnSAOUserRoleRadioBtn();
+        break;
+      case "Mngr":
+        this.clickOnMngrUserRoleRadioBtn();
+        break;
+    }
+    this.selectTestStateDropdown();
+    this.typeTestOnAgencyOrOfficeInput();
+    this.clickOnContinueBtn();
+    this.typeTitleInUserTitle();
+    this.typeNameInFirstName(fname);
+    this.typeLNameInLastName();
+    this.typePhoneInUserPhone();
+    this.typeEmailInUserEmail();
+    this.clickOnContinueBtn();
+    this.checkSecurityAgreementCheckbox();
+    this.typeNameIntoNameInput();
+    this.clickOnContinueBtn();
+    this.clickAccuracyCheckbox();
+    this.clickSubmitBtn();
   }  
 
   clickOnStateUserRadioBtn() {
@@ -213,8 +244,8 @@ class userAccountRequestFormObjects {
     this.elements.userTitleInput().invoke("removeAttr", "target", "_blank").type("Title");
   }
 
-  typeFNameInFirstName() {
-    this.elements.userFnameInput().invoke("removeAttr", "target", "_blank").type("FName");
+  typeNameInFirstName(name) {
+    this.elements.userFnameInput().invoke("removeAttr", "target", "_blank").type(name);
   }
 
   typeLNameInLastName() {

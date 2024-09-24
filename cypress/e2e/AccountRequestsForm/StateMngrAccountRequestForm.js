@@ -101,7 +101,7 @@ describe("State Manager Account Request Validations", function () {
     stateMngrAccountRequestForm.navigateToStep2("Mngr");
     // Fill out page 2 elements
     stateMngrAccountRequestForm.typeTitleInUserTitle();
-    stateMngrAccountRequestForm.typeFNameInFirstName();
+    stateMngrAccountRequestForm.typeNameInFirstName('FName');
     stateMngrAccountRequestForm.typeLNameInLastName();
     stateMngrAccountRequestForm.typePhoneInUserPhone();
     stateMngrAccountRequestForm.typeEmailInUserEmail();
