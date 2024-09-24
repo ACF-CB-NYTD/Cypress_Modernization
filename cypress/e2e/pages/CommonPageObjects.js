@@ -1,10 +1,12 @@
-import HomePageObjects from "../pages/HomePageObjects";
+import HomePageObjects from "./HomePageObjects";
 const homePage = new HomePageObjects();
 class CommonPageObjects {
   elements = {
     url: () => cy.url(), // This method will take the current url.
     searchInput: () => cy.get('[data-testid="textInput"]'), // Search Input for user account to search for accounts
     refreshResultButton: () => cy.get('.nytd-button--secondary').contains('Refresh Results'), // Refresh result button to update the result
+    WelcomeBtn: () => cy.get('.styles_navSection__cbCNb > .styles_liBox__gTXAi > [data-testid="default_link"]'), // Welcome button
+
     logOutBtn: () => cy.get('[data-testid="logout_button"]'), // Logout button
     headerH3Text: () => cy.get('#main_content'), // Header H3 text
     pageDescriptionText: () => cy.get('.styles_description__0k9k1'), // Page description text under the main content header
@@ -18,6 +20,8 @@ class CommonPageObjects {
     manageUserAccountRequestsBtn: () => cy.get('[data-testid="manage_user_account_requests"]'), //Manage User Account Requests button in UAM
     textAreaSelector: () => cy.get('[data-testid="textarea"]'), // Text area selector for User account request deny selection
     denyRequestBtn: () => cy.get('[data-testid="Deny New_user_button"]'), // Deny request button for user account request
+    myProfileSelect: () => cy.get(':nth-child(1) > .styles_button__dXuFt'), // My profile option in account setting dropdown
+
     // Cancel Request Modal
     cancelRequestBtn: () => cy.get('[class="nytd-button--tertiary"]').contains("Cancel Request"), //Cancel Request button at the bottom left.
     cancelModalHeader: () => cy.get('[id="areYouSureTitle"]'), //Cancel modal header text
@@ -40,8 +44,39 @@ class CommonPageObjects {
     this.elements.url().should("include", url);
   }
 
+  verifyBreadCrumbs(breadcrumb1,breadcrumb2,breadcrumb3){
+    if (breadcrumb3) {
+        cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+        expect($div).to.contain(breadcrumb2)
+        expect($div).to.contain(breadcrumb3)
+      })
+    }else if (breadcrumb2){
+        cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+        expect($div).to.contain(breadcrumb2)
+      })
+    }
+    else{
+      cy.get('.styles_listOL__Xg8mu').should(($div) => {
+        expect($div).to.contain('Dashboard')
+        expect($div).to.contain(breadcrumb1)
+      })
+    } 
+  }
+
   clickOnLogoutBtn() {
     this.elements.logOutBtn().invoke("removeAttr", "target", "_blank").click();
+  }
+
+  verifyPageIsScrollToTheTop() {
+    cy.window().its('scrollY').should('equal', 0);
+  }
+
+  clickOnWelcomeBtn() {
+    this.elements.WelcomeBtn().invoke("removeAttr", "target", "_blank").click();
   }
 
   clickOnClearFiltersBtn() { 
@@ -66,6 +101,9 @@ class CommonPageObjects {
 
   clickOnUserAccountManagementSelect() {
     this.elements.userAccountManagementSelect().invoke("removeAttr", "target", "_blank").click();
+  }
+  clickOnMyProfileSelect() {
+    this.elements.myProfileSelect().invoke("removeAttr", "target", "_blank").click();
   }
 
   clickOnManageUserAccountRequestsBtn() {
@@ -149,6 +187,11 @@ class CommonPageObjects {
   clickOnFiftyResultsBtn() {
     this.elements.fiftyResultsBtn().click();
   }
+
+  navigateBack() {
+    cy.go('back')
+  }
+ 
 
 }
 export default CommonPageObjects;
