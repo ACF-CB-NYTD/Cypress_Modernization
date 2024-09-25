@@ -177,9 +177,8 @@ class userAccountRequestFormObjects {
     this.clickOnContinueBtn();
   }  
 
-  createAccountRequest(choice, fname) {
-    cy.visit("");
-    commonObjects.clickOnRequestAccountLink();
+  createAccountRequest(choice, fname, email) {
+    cy.visit("https://nytdm.qa.dssnytd.com/RequestAccount");
     this.clickOnStateUserRadioBtn();
     switch(choice) {
       case "State user":
@@ -199,10 +198,10 @@ class userAccountRequestFormObjects {
     this.typeNameInFirstName(fname);
     this.typeLNameInLastName();
     this.typePhoneInUserPhone();
-    this.typeEmailInUserEmail();
+    this.typeEmailInUserEmail(email);
     this.clickOnContinueBtn();
     this.checkSecurityAgreementCheckbox();
-    this.typeNameIntoNameInput();
+    this.typeNameIntoNameInput(fname);
     this.clickOnContinueBtn();
     this.clickAccuracyCheckbox();
     this.clickSubmitBtn();
@@ -256,8 +255,8 @@ class userAccountRequestFormObjects {
     this.elements.userPhoneInput().invoke("removeAttr", "target", "_blank").type("999-999-9999");
   }
 
-  typeEmailInUserEmail() {
-    this.elements.userEmailInput().invoke("removeAttr", "target", "_blank").type("test@gov.net");
+  typeEmailInUserEmail(email) {
+    this.elements.userEmailInput().invoke("removeAttr", "target", "_blank").type(email);
   }
 
   checkSecurityAgreementCheckbox() {
@@ -268,8 +267,8 @@ class userAccountRequestFormObjects {
     this.elements.backBtn().invoke("removeAttr", "target", "_blank").click();
   }
 
-  typeNameIntoNameInput() {
-    this.elements.nameInput().invoke("removeAttr", "target", "_blank").type("FName LName");
+  typeNameIntoNameInput(fname) {
+    this.elements.nameInput().invoke("removeAttr", "target", "_blank").type(fname +" LName");
   }
 
   clickAccuracyCheckbox() {
