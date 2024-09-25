@@ -279,7 +279,7 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
-    it.only("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
+    it("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
         manageUserAccountRequestObjects.createElevationRequest();
         cy.login('cypress.sysadmin', 'P@ssw0rd')
         cy.visit('/User/Account/Requests.html');
