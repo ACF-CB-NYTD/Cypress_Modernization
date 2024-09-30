@@ -75,7 +75,7 @@ describe("State User Account Request Validations", function () {
     commonObjects.modalCancelRequest();
   });
 
-  it.only("State User Account Request Form Page 2", function () {
+  it("State User Account Request Form Page 2", function () {
     stateUserAccountRequestForm.navigateToStep2("State user");
     // Confirm page 2 elements appear
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
