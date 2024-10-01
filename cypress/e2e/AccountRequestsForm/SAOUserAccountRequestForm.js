@@ -100,7 +100,7 @@ describe("State Authorized Official Account Request Validations", function () {
     saoUserAccountRequestForm.navigateToStep2("SAO");
     // Fill out page 2 elements
     saoUserAccountRequestForm.typeTitleInUserTitle();
-    saoUserAccountRequestForm.typeFNameInFirstName();
+    saoUserAccountRequestForm.typeNameInFirstName('FName');
     saoUserAccountRequestForm.typeLNameInLastName();
     saoUserAccountRequestForm.typePhoneInUserPhone();
     saoUserAccountRequestForm.typeEmailInUserEmail();

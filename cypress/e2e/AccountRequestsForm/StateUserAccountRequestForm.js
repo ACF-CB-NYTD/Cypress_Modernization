@@ -76,7 +76,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("State User Account Request Form Page 2", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     // Confirm page 2 elements appear
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbCurrent);
@@ -97,10 +97,10 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Selections", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     // Fill out page 2 elements
     stateUserAccountRequestForm.typeTitleInUserTitle();
-    stateUserAccountRequestForm.typeFNameInFirstName();
+    stateUserAccountRequestForm.typeNameInFirstName('FName');
     stateUserAccountRequestForm.typeLNameInLastName();
     stateUserAccountRequestForm.typePhoneInUserPhone();
     stateUserAccountRequestForm.typeEmailInUserEmail();
@@ -108,7 +108,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Errors", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     stateUserAccountRequestForm.clickOnContinueBtn();
     // Note errors
     cy.get('[data-testid="formGroup"]').eq(0).within(($span) => {
@@ -139,13 +139,13 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     stateUserAccountRequestForm.typeTitleInUserTitle();
     commonObjects.modalCancelRequest();
   });
 
   it("Page 2 Invalid Phone Number", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     stateUserAccountRequestForm.elements.userPhoneInput().type("123");
     stateUserAccountRequestForm.clickOnContinueBtn();
     cy.get('[data-testid="formGroup"]').eq(3).within(($span) => {
@@ -156,7 +156,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 2 Invalid Email", function () {
-    stateUserAccountRequestForm.navigateToStep2("State User");
+    stateUserAccountRequestForm.navigateToStep2("State user");
     stateUserAccountRequestForm.elements.userEmailInput().type("abc");
     stateUserAccountRequestForm.clickOnContinueBtn();
     cy.get('[data-testid="formGroup"]').eq(4).within(($span) => {
@@ -167,7 +167,7 @@ describe("State User Account Request Validations", function () {
   });
 
   it("State User Account Request Form Page 3", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("State user");
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbCurrent);
@@ -211,13 +211,13 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 3 Selections", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("State user");
     stateUserAccountRequestForm.checkSecurityAgreementCheckbox();
     stateUserAccountRequestForm.typeNameIntoNameInput();
   });
 
   it("Verifying Page 3 error messages display when required fields are blank", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("State user");
     stateUserAccountRequestForm.clickOnContinueBtn();
     // Note errors
     cy.get('[data-testid="formGroup"]').eq(0).within(($span) => {
@@ -234,13 +234,13 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 3 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep3("State User");
+    stateUserAccountRequestForm.navigateToStep3("State user");
     stateUserAccountRequestForm.checkSecurityAgreementCheckbox();
     commonObjects.modalCancelRequest();
   });
 
   it("State User Account Request Form Page 4", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     stateUserAccountRequestForm.elements.colorBar1().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar2().should("have.css", "background-color", rgbComplete);
     stateUserAccountRequestForm.elements.colorBar3().should("have.css", "background-color", rgbComplete);
@@ -287,24 +287,24 @@ describe("State User Account Request Validations", function () {
   });
 
   it("Page 4 Selection", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     stateUserAccountRequestForm.clickAccuracyCheckbox();
   });
 
   it("Page 4 Error", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     stateUserAccountRequestForm.clickSubmitBtn();
     stateUserAccountRequestForm.elements.errorAlert().should('have.text', 'Please check your entries and try again.');
     stateUserAccountRequestForm.elements.errorMsg().should('have.text', 'Please fill out this field');
   });
 
   it("Page 4 Cancel Request", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     commonObjects.modalCancelRequest();
   });
 
   it("Confirm Request was submitted and confirmation modal", function () {
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     stateUserAccountRequestForm.clickAccuracyCheckbox();
     stateUserAccountRequestForm.clickSubmitBtn(); 
     stateUserAccountRequestForm.elements.returnHomeHeader().should('have.text', 'Account Request Successfully Submitted');
@@ -328,7 +328,7 @@ describe("State User Account Request Validations", function () {
 
   it("Verify the SA has received the Account Request and deny it", function () {
     // Create a new user account request
-    stateUserAccountRequestForm.navigateToStep4("State User");
+    stateUserAccountRequestForm.navigateToStep4("State user");
     stateUserAccountRequestForm.clickAccuracyCheckbox();
     stateUserAccountRequestForm.clickSubmitBtn(); 
     stateUserAccountRequestForm.elements.returnHomeHeader().should('have.text', 'Account Request Successfully Submitted');

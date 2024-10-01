@@ -197,7 +197,7 @@ describe("SA UAM Page Validations", function () {
         userAccountManagement.elements.editPageEmail().should('have.text', 'wyntonj1@yahoo.com');
         userAccountManagement.elements.editPageReceivesEmails().should('have.text', 'Receives emails');
         userAccountManagement.elements.editPageEditButton().should('have.text', 'Edit User');
-        userAccountManagement.elements.editPageUnlockAccButton().should(($button) => {
+        userAccountManagement.elements.unlockAccountBtn().should(($button) => {
             const text = $button.text();
             expect(text).to.match(/Unlock Account|Account is unlocked/);
         });
