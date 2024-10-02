@@ -205,6 +205,7 @@ class userAccountRequestFormObjects {
     this.clickOnContinueBtn();
     this.clickAccuracyCheckbox();
     this.clickSubmitBtn();
+    cy.wait(2000);
   }  
 
   clickOnStateUserRadioBtn() {

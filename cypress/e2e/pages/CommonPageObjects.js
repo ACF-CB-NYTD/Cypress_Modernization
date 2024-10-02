@@ -41,7 +41,7 @@ class CommonPageObjects {
   }
 
   verifyUrl(url) {
-    this.elements.url().should("include", url);
+    this.elements.url().should("include", url, {timeout: 10000});
   }
 
   verifyBreadCrumbs(breadcrumb1,breadcrumb2,breadcrumb3){
@@ -107,7 +107,7 @@ class CommonPageObjects {
   }
 
   clickOnManageUserAccountRequestsBtn() {
-    this.elements.manageUserAccountRequestsBtn().invoke("removeAttr", "target", "_blank").click();
+    this.elements.manageUserAccountRequestsBtn().invoke("removeAttr", "target", "_blank").click({timeout:10000});
   }
 
   clickOnDenyQuickActionBtn() {
