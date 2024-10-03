@@ -1,9 +1,11 @@
 import debug from 'debug';
 import { authenticator, totp, hotp } from 'otplib';
+
+// Dev Secrets
 const testStateUsrSecret = 'V4QNFINSJE7IA7SYO3LBMTSXEUXUIQZMLTUHFXURCACKPW74ZMVA';
 const testStateMgrSecret = 'EQHTLQZ6JRV5Z3J2PAUDRZEJFKAUYOTDCNZT4C5CBQSTNBBQBIGQ';
 const testStateSAOSecret = 'OZZVNG7WRXMTOX2PX4MOJZTCL37AUBPHJI2ZDRFVYYMPLIUTNCYA';
-const nytdSysAdminSecret = 'G5M3KSTG6JG275QXC7ILXTLAWIR5T2667RKJVN27XOW7QRT4ABGA';
+const nytdSysAdminSecret = '2AH5YAMQ53EOCYQPMUDUWFO6G44TROHVJJBDC3SNMJVDY4XECFUA';
 const nytdRegionalSecret = 'O2B7FYKYE2VUJ7YM3T65XL2CLCF5QRDVDUIXLFUVDDPRPMADCTOA';
 const nytdCBSecret = 'MS5FLTBFCAICAKVXSTP7UJXM4BZTPETP2HB67EFXSBJFMBDM2CYQ';
 const cypressSysadmin = 'DPEVPQQBLAN7G7IELFYLVZVVIXCAMBGQ7UJGTA4RROLNGVU3PCWA';
@@ -12,6 +14,14 @@ const defaultState = 'XM6PKVB6GUTH2UFAPR7EQL2BF7XCNEG5XJRQQ6QREYI76ERWZVTA';
 const cypressao = 'LOFCGT4SWLTGJI6MDKVISUVE5EHZFAYGVR55HNLGCRIW4CWUVXQA';
 const cypressregion = 'D2OZ2FUQOOBBI3CGNFYIBKQFRSTZE54TIKNUM7LLPDVTAFKGEUPA';
 const cypresscb = 'J7QCG3UKX357IE7WT5SYN2IQSYIR2ODV4APQNW7IGVXM5LDIAUEQ';
+
+// QA Secrets
+const QACypressSysAdmin = 'WGCWL3EIBBUSKHKE64LHTXE43P5F32I4NCF6WADVZIGWZLUEQ2FA';
+const QACypressDefault = 'VSZMGCEFOTUUKLCUIQY3JWIGRTCUHXP76WGZBWKBSQ47UDBRMF3A';
+const QACypressMgr = '2NDDOYMXGPVKWIHS546CSU6AYED4R4C55ZHKO5GJQVX2R7MSNDYQ';
+const QACypressSAO = 'RXBJBOSFF3IGYIAQNLKGXNEL6EC26T5O4RKU6YJUIF6RYNAMXKOA';
+const QACypressRegional = '5EOJ3P4P23MDTOJ77FOEPOYDV5PWYIN3FA76NIR2YSVDZCOWNF2A';
+const QACypressCB = 'JW6YQDPGWPP2CUHOZXATCYZLP7T7UF6AY5FFUTICBFHTPFYNI7JQ';
 
 
 class MFAPageObjects {
@@ -58,6 +68,24 @@ class MFAPageObjects {
                 break;
             case "nytdcb":
                 this.elements.passcodeInput().type(authenticator.generate(nytdCBSecret), { log: false });
+                break;
+            case "cypress.sysadmin":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressSysAdmin), { log: false });
+                break;
+            case "cypress.default":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressDefault), { log: false });
+                break;
+            case "cypress.mgr":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressMgr), { log: false });
+                break;
+            case "cypress.sao":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressSAO), { log: false });
+                break;
+            case "cypress.regional":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressRegional), { log: false });
+                break;
+            case "cypress.cb":
+                this.elements.passcodeInput().type(authenticator.generate(QACypressCB), { log: false });
                 break;
             default:
                 this.elements.passcodeInput().debug().type('Default Failure');

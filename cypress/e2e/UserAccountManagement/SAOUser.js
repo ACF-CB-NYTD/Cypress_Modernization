@@ -137,7 +137,7 @@ describe("SAO UAM Page Validations", function () {
         userAccountManagement.elements.editPageEmail().should('have.text', 'wyntonj1@yahoo.com');
         userAccountManagement.elements.editPageReceivesEmails().should('have.text', 'Receives emails');
         userAccountManagement.elements.editPageSAOButton().should('have.text', 'Elevate to State Authorized Official');
-        userAccountManagement.elements.editPageUnlockAccButton().should(($button) => {
+        userAccountManagement.elements.unlockAccountBtn().should(($button) => {
             const text = $button.text();
             expect(text).to.match(/Unlock Account|Account is unlocked/);
         });
