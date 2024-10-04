@@ -4,6 +4,7 @@ const commonObjects = new CommonPageObjects();
 import userAccountRequestFormObjects from "./UserAccountRequestFormObjects";
 const userAccountRequestForm = new userAccountRequestFormObjects();
 import MyProfilePageObjects from "./MyProfilePageObjects";
+import { timeout } from "async";
 const myProfile = new MyProfilePageObjects();
 class ManageUserAccountRequestObjects {
   elements = {
@@ -36,9 +37,9 @@ class ManageUserAccountRequestObjects {
     tableFifthHeader: () => cy.get('[name="status"]'), // Table fifth header
     tableSixthHeader: () => cy.get('[name="approvedBy"]'), // Table sixth header
     tableSeventhHeader: () => cy.get('[name="approvedDateTime"]'), // Table seventh header
-    firstNameData: () => cy.get('.styles_table__9XfOZ > tbody > :nth-child(1) > :nth-child(2)'), // First name table data
+    firstNameData: () => cy.get('tbody > :nth-child(1) > :nth-child(2)'), // First name table data
     requestDateData: () => cy.get('tbody > :nth-child(1) > :nth-child(4)'), // Request date table data
-    firstStatusData: () => cy.get(':nth-child(1) > :nth-child(5) > .styles_iconStatus__nqxNz'), // First status table data
+    firstStatusData: () => cy.get('tbody > :nth-child(1) > :nth-child(5)'), // First status table data
     updatedOnData: () => cy.get('tbody > :nth-child(1) > :nth-child(7)'), // Updated on table data
     backToAllRequestsBtn: () => cy.get('[data-testid="backToAllRequests"]'), // Back to all requests button
     commentInputText: () => cy.get('[name="comments_input_text"]'), // Comment input text
@@ -69,7 +70,9 @@ class ManageUserAccountRequestObjects {
     elevateCancelBtn: () => cy.get('[data-testid="Elevate_cancel_button"]'), // Elevate cancel button
 
     denyElevateBtn: () => cy.get('[data-testid="Deny Elevate_user_button"]'), // Deny Elevate button
+    denyElevateHeader: () => cy.get('[data-testid="Deny Elevate_h1"]'), // Deny Elevate header
     denyElevateCancelBtn: () => cy.get('[data-testid="Deny Elevate_cancel_button"]'), // Deny Elevate cancel button
+    denyElevateConfirmationBtn: () => cy.get('[data-testid="Deny Elevate_button"]'), // Deny Elevate confirmation button
 
     removeQuickActionBtn: () => cy.get('[data-testid="removeButton"]'), // Remove QA button
     removeBtn: () => cy.get('[data-testid="Delete_user_button"]'), // Remove button
@@ -114,13 +117,13 @@ class ManageUserAccountRequestObjects {
   }
 
   inputRequestedDateRange() {
-    this.elements.requestedDateBtn().click();
+    this.elements.requestedDateBtn().click({timeout: 10000});
     this.elements.datePickerEnabledBtnList().eq(0).click();
     this.elements.datePickerEnabledBtnList().eq(-1).click();
   }
 
   inputUpdatedDateRange() {
-    this.elements.updatedDateBtn().click();
+    this.elements.updatedDateBtn().click({timeout: 10000});
     this.elements.datePickerEnabledBtnList().eq(0).click();
     this.elements.datePickerEnabledBtnList().eq(-1).click();
   }
@@ -189,13 +192,14 @@ class ManageUserAccountRequestObjects {
 
   createElevationRequest() {
     cy.clearCookies();
-    cy.standardLogin('cypress.default', 'P@ssw0rd')
+    cy.standardLogin('cypress.default', 'P@ssw0rd1')
     cy.visit('/User/Profile.html');
+    cy.wait(4000);
     myProfile.elements.requestStateAuthOfficialAccessBtn().last().click();
     cy.wait(2000);
     cy.get('[for="Yes"]').click();
     cy.get('[data-testid="confirm_button"]').click();
-    cy.wait(5000);
+    cy.wait(2000);
   }
 
   deElevateCypressDefault() {
@@ -204,24 +208,24 @@ class ManageUserAccountRequestObjects {
     cy.get(':nth-child(2) > .usa-radio__label').click();
     cy.get('[data-testid="preview_edits_button"]').click();
     cy.get('[data-testid="save_edits_button"]').click();
+    cy.wait(2000);
   }
 
   createRemoveRequest() {
     cy.clearCookies();
-    cy.standardLogin('cypress.default', 'P@ssw0rd')
+    cy.standardLogin('cypress.default', 'P@ssw0rd1')
     cy.visit('/User/Profile.html');
     cy.get('[data-testid="delete_user_button"] > :nth-child(1)').click();
     cy.get('[data-testid="textarea"]').type('test');
     cy.get('[data-testid="delete_user_button"]').eq(1).click();
-    cy.get('[for="Yes"]').click();
+    cy.get('[for="Yes"]', {timeout: 10000}).click();
+    cy.get('[data-testid="confirm_button"]').click();
     cy.get('[data-testid="confirm_button"]').click();
     cy.wait(2000);
-    cy.get('[data-testid="confirm_button"]').click();
   }
 
   createStateUserRequest(choice, fname, email) {
     userAccountRequestForm.createAccountRequest(choice, fname, email);
-    cy.wait(2000);
   }
 }
 export default ManageUserAccountRequestObjects;

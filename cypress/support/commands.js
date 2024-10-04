@@ -1,3 +1,4 @@
+import { timeout } from "async";
 import CommonPageObjects from "../e2e/pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 import HomePageObjects from "../e2e/pages/HomePageObjects";
@@ -10,7 +11,7 @@ Cypress.Commands.add('login', (username, password) => {
         cy.visit('')
         homePage.enterUsernameAndPassword(username, password);
         homePage.clickOnStateUserLoginBtn();
-        commonPage.verifyUrl('/MFA');
+        commonPage.verifyUrl('/MFA', {timeout: 10000});
         commonPage.elements.headerH3Text().should('have.text', 'Multi-Factor Authentication');
         mfaPage.elements.passcodeText().should('have.text', 'Passcode *');
         mfaPage.enterPasscode(username);
@@ -27,8 +28,7 @@ Cypress.Commands.add('standardLogin', (username, password,) => {
     cy.visit('')
     homePage.enterUsernameAndPassword(username, password);
     homePage.clickOnStateUserLoginBtn();
-    cy.wait(5000);
-    commonPage.verifyUrl('/MFA');
+    commonPage.verifyUrl('/MFA', { timeout: 10000 });
     commonPage.elements.headerH3Text().should('have.text', 'Multi-Factor Authentication');
     mfaPage.elements.passcodeText().should('have.text', 'Passcode *');
     mfaPage.enterPasscode(username);

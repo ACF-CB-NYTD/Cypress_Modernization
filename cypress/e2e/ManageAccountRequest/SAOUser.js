@@ -1,11 +1,13 @@
+import { timeout } from "async";
 import CommonPageObjects from "../pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 
 import ManageUserAccountRequestObjects from "../pages/ManageUserAccountRequestObjects";
+import userAccountRequestFormObjects from "../pages/UserAccountRequestFormObjects";
 const manageUserAccountRequestObjects = new ManageUserAccountRequestObjects();
-describe("SA UAR Page Validations", function () {
+describe("SAO UAR Page Validations", function () {
     beforeEach(() => {
-        cy.login('cypress.sysadmin', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.sao', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify User Account Requests page buttons, text fields, checkboxes and dropdowns", function () {
         cy.visit('/User.html');
@@ -30,7 +32,7 @@ describe("SA UAR Page Validations", function () {
         commonPage.elements.clearFiltersBtn().should('contain', 'Clear Filters');
         commonPage.elements.refreshResultsBtn().should('have.text', 'Refresh Results');
         manageUserAccountRequestObjects.elements.requestTypeDropdown().click();
-        manageUserAccountRequestObjects.elements.requestTypeChildren().should('contain', 'Create Federal User').should('contain', 'Create State User').should('contain', 'Elevate to State Authorized Official').should('contain', 'Elevate to State Manager').should('contain', 'Remove User');
+        manageUserAccountRequestObjects.elements.requestTypeChildren().should('contain', 'Create State User').should('contain', 'Elevate to State Authorized Official').should('contain', 'Elevate to State Manager').should('contain', 'Remove User');
         manageUserAccountRequestObjects.elements.statusDropdown().click();
         manageUserAccountRequestObjects.elements.statusChildren().should('contain', 'Submitted').should('contain', 'Requested by State Authorized Official').should('contain', 'Submitted, no State Authorized Official').should('contain', 'Approved by State Authorized Official').should('contain', 'Approved').should('contain', 'Completed').should('contain', 'Declined');
         manageUserAccountRequestObjects.elements.tableFirstHeader().should('have.text', 'Request Type');
@@ -42,6 +44,8 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.tableSeventhHeader().should('have.text', 'Updated On');
     });
     it("Verify the date range pickers can be selected and the shown requests are within the range", function () {
+        manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
+        cy.login('cypress.sao', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.inputRequestedDateRange();
         commonPage.clickOnRefreshResultBtn();
@@ -67,7 +71,7 @@ describe("SA UAR Page Validations", function () {
     it("Verify the Refresh Results button is greyed out by default", function () {
         cy.visit('/User/Account/Requests.html');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
     it("Verify the default table sorting is by Request Date by default", function () {
@@ -127,9 +131,9 @@ describe("SA UAR Page Validations", function () {
     // Needs a FName user premade
     it("Verify clicking a request type hyperlink opens the request in a new page", function () {
         manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
-        cy.login('cypress.sysadmin', 'P@ssw0rd1')
+        cy.login('cypress.sao', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.elements.requestDateData().then((requestedDate) => {
             manageUserAccountRequestObjects.elements.updatedOnData().then((updatedDate) => {
@@ -140,19 +144,19 @@ describe("SA UAR Page Validations", function () {
                 //Calculated requested date text
                 const requestedDateText = requestedDate.text();
                 const dateParts = requestedDateText.split(' ');
-                const [month, day, year] = dateParts[0].split('/');
+                let [month, day, year] = dateParts[0].split('/');
                 // Ensure day and month are two digits
                 day = day.padStart(2, '0');
                 const timeParts = dateParts[1].split(' ');
                 const time = timeParts[0];
-                const formattedRequestDate = `${months[parseInt(month, 10) - 1]} ${parseInt(day, 10)}, ${year} ${time} ET`;
+                const formattedRequestDate = `${months[parseInt(month, 10) - 1]} ${day}, ${year} ${time} ET`;
                 //Calculated updated date text
                 const updatedDateText = updatedDate.text();
                 const updatedDateParts = updatedDateText.split(' ');
                 const [updatedMonth, updatedDay, updatedYear] = updatedDateParts[0].split('/');
                 const updatedTimeParts = updatedDateParts[1].split(' ');
                 const updatedTime = updatedTimeParts[0];
-                const formattedUpdatedDate = `${months[parseInt(updatedMonth, 10) - 1]} ${parseInt(updatedDay, 10)}, ${updatedYear} ${updatedTime} ET`;
+                const formattedUpdatedDate = `${months[parseInt(updatedMonth, 10) - 1]} ${updatedDay}, ${updatedYear} ${updatedTime} ET`;
                 manageUserAccountRequestObjects.elements.firstTableHyperlink().click({ force: true });
                 manageUserAccountRequestObjects.elements.requestRequestedDate().should('have.text', 'Requested on' + formattedRequestDate);
                 manageUserAccountRequestObjects.elements.requestUpdatedDate().should('have.text', 'Last updated on ' + formattedUpdatedDate);
@@ -174,9 +178,10 @@ describe("SA UAR Page Validations", function () {
     });
     it("Verify clicking buttons in the request details page", function () {
         manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
-        cy.login('cypress.sysadmin', 'P@ssw0rd1');
+        manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
+        cy.login('cypress.sao', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
@@ -184,7 +189,7 @@ describe("SA UAR Page Validations", function () {
         commonPage.verifyUrl('/User/Account/Requests/RequestDetails');
         manageUserAccountRequestObjects.elements.backToAllRequestsBtn().click();
         commonPage.verifyUrl('/User/Account/Requests');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
@@ -196,36 +201,48 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'The request to add State User test@gov.net has been denied. A confirmation message has been sent to the requester.');
         manageUserAccountRequestObjects.elements.denyConfirmationBtn().should('have.text', 'Continue').click();
         commonPage.verifyUrl('/User/Account/Requests');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(6);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
         commonPage.clickOnClearFiltersBtn();
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.firstTableHyperlink().click();
         commonPage.verifyUrl('/User/Account/Requests/RequestDetails');
         manageUserAccountRequestObjects.elements.createQuickActionBtn().click();
-        manageUserAccountRequestObjects.elements.createRequestHeader().should('have.text', 'New User Account Created');
-        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'A State User with the email test@gov.net has been successfully added to the NYTD system.')
+        manageUserAccountRequestObjects.elements.createRequestHeader().should('have.text', 'New User Request Approved');
+        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'You have successfully approved the request to add State User with the email test@gov.net. This request has been sent to a System Administrator for final confirmation.')
         manageUserAccountRequestObjects.elements.createConfirmationBtn().should('have.text', 'Continue').click();
         cy.visit('/User/Account/Requests.html');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
-        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(5);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
+        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
+        manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Approved by State Authorized Official');
+        commonPage.clickOnLogoutBtn();
+        cy.standardLogin('cypress.sysadmin', 'P@ssw0rd1');
+        cy.visit('/User/Account');
+        commonPage.clickOnManageUserAccountRequestsBtn();
+        commonPage.verifyUrl('/Account/Requests');
+        manageUserAccountRequestObjects.typeNameInput('FName');
+        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(3);
+        commonPage.clickOnRefreshResultBtn();
+        manageUserAccountRequestObjects.elements.denyQuickActionBtn().click();
+        manageUserAccountRequestObjects.typeComment('Test comment');
+        manageUserAccountRequestObjects.elements.denyBtn().click();
     });
     // Needs a FName user premade
     it("Verify Create Quick Action button for Create State User", function () {
-        manageUserAccountRequestObjects.createStateUserRequest('State user', 'test', 'tyler.smith+testSU@icf.com');
-        cy.login('cypress.sysadmin', 'P@ssw0rd1');
+        manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
+        cy.login('cypress.sao', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
@@ -241,27 +258,39 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.createQuickActionBtn().eq(0).click();
         manageUserAccountRequestObjects.typeComment('Test comment');
         manageUserAccountRequestObjects.elements.createBtn().click();
-        manageUserAccountRequestObjects.elements.createRequestHeader().should('have.text', 'New User Account Created');
-        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'A State User with the email test@gov.net has been successfully added to the NYTD system.')
+        manageUserAccountRequestObjects.elements.createRequestHeader().should('have.text', 'New User Request Approved');
+        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'You have successfully approved the request to add State User with the email test@gov.net. This request has been sent to a System Administrator for final confirmation.')
         manageUserAccountRequestObjects.elements.createConfirmationBtn().should('have.text', 'Continue').click();
         cy.visit('/User/Account/Requests.html');
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
-        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(5);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
+        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
+        manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Approved by State Authorized Official');
+        commonPage.clickOnLogoutBtn();
+        cy.standardLogin('cypress.sysadmin', 'P@ssw0rd1');
+        cy.visit('/User/Account');
+        commonPage.clickOnManageUserAccountRequestsBtn();
+        commonPage.verifyUrl('/Account/Requests');
+        manageUserAccountRequestObjects.typeNameInput('FName');
+        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(3);
+        commonPage.clickOnRefreshResultBtn();
+        manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click();
+        manageUserAccountRequestObjects.typeComment('Test comment');
+        manageUserAccountRequestObjects.elements.denyBtn().click();
     });
     // Needs a FName user premade
     it("Verify Deny Quick Action button for Create State or Federal User", function () {
         manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
-        cy.login('cypress.sysadmin', 'P@ssw0rd1');
+        cy.login('cypress.sao', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(0);
         manageUserAccountRequestObjects.typeNameInput('FName');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
-        manageUserAccountRequestObjects.elements.modalHeader().should('have.text', 'Deny New User Account?', {timeout:10000});
+        manageUserAccountRequestObjects.elements.modalHeader().should('have.text', 'Deny New User Account?', {timeout: 10000});
         manageUserAccountRequestObjects.elements.firstInfo().should('contain', 'Request Type').should('contain', 'User Role').should('contain', 'Office').should('contain', 'State');
         manageUserAccountRequestObjects.elements.secondInfo().should('contain', 'First Name').should('contain', 'Last Name').should('contain', 'Title').should('contain', 'Phone').should('contain', 'Email');
         manageUserAccountRequestObjects.elements.commentsText().should('have.text', 'Comments*');
@@ -271,22 +300,22 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
         manageUserAccountRequestObjects.typeComment('Test comment');
         manageUserAccountRequestObjects.elements.denyBtn().click();
-        manageUserAccountRequestObjects.elements.denyConfirmationBtn().should('have.text', 'User Request Denied');
+        manageUserAccountRequestObjects.elements.denyRequestHeader().should('have.text', 'User Request Denied');
         manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'The request to add State User test@gov.net has been denied. A confirmation message has been sent to the requester.');
         manageUserAccountRequestObjects.elements.denyConfirmationBtn().should('have.text', 'Continue').click();
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(6);
         commonPage.clickOnRefreshResultBtn();
-        manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
+        manageUserAccountRequestObjects.elements.firstNameData().should('contain', 'FName');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
-    it.only("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
+    it("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
         manageUserAccountRequestObjects.createElevationRequest();
-        cy.login('cypress.sysadmin', 'P@ssw0rd1')
+        cy.login('cypress.sao', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
         manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(2);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('cypress');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.elevateQuickActionBtn().first().click();
@@ -302,27 +331,29 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.elevateBtn().click();
         manageUserAccountRequestObjects.elements.elevateConfirmationHeader().click();
         commonPage.clickOnClearFiltersBtn();
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
         manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(2);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(5);
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.firstTableHyperlink().invoke('text').should('match', /Elevate to State Authorized Official|Elevate to State Manager/);
-        manageUserAccountRequestObjects.elements.uamBreadcrumbText().click();
+        commonPage.clickOnLogoutBtn();
+        cy.standardLogin('cypress.sysadmin', 'P@ssw0rd1');
+        cy.visit('/User/Account');
         manageUserAccountRequestObjects.typeNameInput('cypress.default');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.deElevateCypressDefault();
     });
-    it.only("Verify Deny Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
+    it("Verify Deny Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
         manageUserAccountRequestObjects.createElevationRequest();
-        cy.login('cypress.sysadmin', 'P@ssw0rd1');
+        cy.login('cypress.sao', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
         manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(2);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('cypress');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
-        manageUserAccountRequestObjects.elements.modalHeader().should('have.text', 'Deny Elevate User Account?');
+        manageUserAccountRequestObjects.elements.modalHeader().should('be.visible', {timeout: 10000}).should('have.text', 'Deny Elevate User Account?');
         manageUserAccountRequestObjects.elements.firstInfo().should('contain', 'Request Type').should('contain', 'User Role').should('contain', 'Office').should('contain', 'State');
         manageUserAccountRequestObjects.elements.secondInfo().should('contain', 'First Name').should('contain', 'Last Name').should('contain', 'Title').should('contain', 'Phone').should('contain', 'Email');
         manageUserAccountRequestObjects.elements.commentsText().should('have.text', 'Comments*');
@@ -333,21 +364,22 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
         manageUserAccountRequestObjects.typeComment('Test comment');
         manageUserAccountRequestObjects.elements.denyElevateBtn().click();
-        manageUserAccountRequestObjects.elements.denyConfirmationBtn().should('have.text', 'User Request Denied');
-        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'The request to add State User test@gov.net has been denied. A confirmation message has been sent to the requester.');
-        manageUserAccountRequestObjects.elements.denyConfirmationBtn().should('have.text', 'Continue').click();
-        manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
+        manageUserAccountRequestObjects.elements.denyElevateHeader().should('have.text', 'Elevation Request Denied');
+        manageUserAccountRequestObjects.elements.requestConfirmationText().should('have.text', 'The request to elevate  tyler.smith+cypressdefault@icf.com to State Authorized Official has been denied. A confirmation message has been sent to the requester.');
+        manageUserAccountRequestObjects.elements.denyElevateConfirmationBtn().should('have.text', 'Continue').click();
+        commonPage.clickOnClearFiltersBtn();
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(1);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(6);
         commonPage.clickOnRefreshResultBtn();
-        manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
+        manageUserAccountRequestObjects.elements.firstNameData().eq(0).should('contain', 'cypress');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
-    it.only("Verify Remove Quick Action button for Remove User", function () {
+    it("Verify Remove Quick Action button for Remove User", function () {
         manageUserAccountRequestObjects.createRemoveRequest();
-        cy.login('cypress.sysadmin', 'P@ssw0rd1');
+        cy.login('cypress.sao', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(4);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('cypress');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.removeQuickActionBtn().eq(0).click();
@@ -361,13 +393,17 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.removeCancelBtn().click();
         manageUserAccountRequestObjects.elements.removeQuickActionBtn().eq(0).click();
         manageUserAccountRequestObjects.typeComment('Test comment');
+        manageUserAccountRequestObjects.elements.removeCancelBtn().click();
+        manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
+        manageUserAccountRequestObjects.typeComment('Test comment');
+        manageUserAccountRequestObjects.elements.removeDenyBtn().click();
     });
-    it.only("Verify Deny Quick Action button for Remove User", function () {
+    it("Verify Deny Quick Action button for Remove User", function () {
         manageUserAccountRequestObjects.createRemoveRequest();
-        cy.login('cypress.sysadmin', 'P@ssw0rd1')
+        cy.login('cypress.sao', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(0);
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(4);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.typeNameInput('cypress');
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.elements.denyQuickActionBtn().eq(0).click({ force: true });
@@ -384,10 +420,10 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.removeDenyBtn().click();
         manageUserAccountRequestObjects.elements.removeDenyRequestBtn().click();
         commonPage.clickOnClearFiltersBtn();
-        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(4);
+        manageUserAccountRequestObjects.clickOnRequestTypeDropdownCheckbox(3);
         manageUserAccountRequestObjects.clickOnStatusDropdownCheckbox(6);
         commonPage.clickOnRefreshResultBtn();
-        manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'cypress');
+        manageUserAccountRequestObjects.elements.firstNameData().should('contain', 'cypress');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
 });
