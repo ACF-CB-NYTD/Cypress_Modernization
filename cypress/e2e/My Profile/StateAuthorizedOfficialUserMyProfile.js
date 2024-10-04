@@ -17,7 +17,7 @@ describe("State Authorized Official Account Request Validations", function () {
     commonPage.verifyBreadCrumbs('My Profile');
     viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
     viewMyProfile.elements.username().should('have.text', 'cypress.sao')
-    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'mincho.rusev+cypresssao@icf.com')
+    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
     viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
     viewMyProfile.elements.userType().should('have.text', 'Test State')
     viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
@@ -48,7 +48,7 @@ describe("State Authorized Official Account Request Validations", function () {
     commonPage.verifyBreadCrumbs('My Profile');
     viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
     viewMyProfile.elements.username().should('have.text', 'cypress.sao')
-    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'mincho.rusev+cypresssao@icf.com')
+    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
     viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
     viewMyProfile.elements.userType().should('have.text', 'Test State')
     viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
@@ -81,7 +81,7 @@ describe("State Authorized Official Account Request Validations", function () {
         viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao')
         viewMyProfile.elements.username().should('have.text', 'cypress.sao')
         viewMyProfile.elements.phoneNumber().should('have.text', '(508) 246-0311')
-        viewMyProfile.elements.email().should('have.text', 'mincho.rusev+cypresssao@icf.com')
+        viewMyProfile.elements.email().should('have.text', 'tyler.smith+cypresssao@icf.com')
         viewMyProfile.elements.receivesEmailNotification().should('have.text', 'Receives emails')
         viewMyProfile.elements.userType().should('have.text', 'Test State')
         viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
@@ -98,7 +98,7 @@ describe("State Authorized Official Account Request Validations", function () {
         editMyProfile.elements.phoneText().should('have.text', 'Phone *');
         editMyProfile.elements.phoneTextBox().should('have.value', '(508) 246-0311');
         editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
-        editMyProfile.elements.userEmailTextBox().should('have.value', 'mincho.rusev+cypresssao@icf.com');
+        editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypresssao@icf.com');
         editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
         editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
         editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
@@ -112,7 +112,7 @@ describe("State Authorized Official Account Request Validations", function () {
         editMyProfile.elements.currentUserInfoFirstName().should('have.text', 'cypress');
         editMyProfile.elements.currentUserInfoLastName().should('have.text', 'sao');
         editMyProfile.elements.currentUserInfoUsername().should('have.text', 'cypress.sao');
-        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'mincho.rusev+cypresssao@icf.com');
+        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'tyler.smith+cypresssao@icf.com');
         editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
         editMyProfile.elements.currentUserInfoPhone().should('have.text', '(508) 246-0311');
         editMyProfile.elements.currentUserInfoState().should('have.text', 'Test State');
@@ -154,7 +154,7 @@ describe("State Authorized Official Account Request Validations", function () {
         editMyProfile.elements.phoneText().should('have.text', 'Phone *');
         editMyProfile.elements.phoneTextBox().should('have.value', editMyProfile.phone);
         editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
-        editMyProfile.elements.userEmailTextBox().should('have.value', 'mincho.rusev+cypresssao@icf.com');
+        editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypresssao@icf.com');
         editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
         editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
         editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
@@ -168,7 +168,7 @@ describe("State Authorized Official Account Request Validations", function () {
         editMyProfile.elements.currentUserInfoFirstName().should('have.text', editMyProfile.firstName);
         editMyProfile.elements.currentUserInfoLastName().should('have.text', editMyProfile.lastName);
         editMyProfile.elements.currentUserInfoUsername().should('have.text', 'cypress.sao');
-        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'mincho.rusev+cypresssao@icf.com');
+        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'tyler.smith+cypresssao@icf.com');
         editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
         editMyProfile.elements.currentUserInfoPhone().should('have.text', editMyProfile.phone);
         editMyProfile.elements.currentUserInfoState().should('have.text', 'Test State');
