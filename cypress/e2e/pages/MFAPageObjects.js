@@ -8,12 +8,6 @@ const testStateSAOSecret = 'OZZVNG7WRXMTOX2PX4MOJZTCL37AUBPHJI2ZDRFVYYMPLIUTNCYA
 const nytdSysAdminSecret = '2AH5YAMQ53EOCYQPMUDUWFO6G44TROHVJJBDC3SNMJVDY4XECFUA';
 const nytdRegionalSecret = 'O2B7FYKYE2VUJ7YM3T65XL2CLCF5QRDVDUIXLFUVDDPRPMADCTOA';
 const nytdCBSecret = 'MS5FLTBFCAICAKVXSTP7UJXM4BZTPETP2HB67EFXSBJFMBDM2CYQ';
-const cypressSysadmin = 'DPEVPQQBLAN7G7IELFYLVZVVIXCAMBGQ7UJGTA4RROLNGVU3PCWA';
-const cypressmgr = 'VGDVAGWC5QXJZLSCAW27JA7SCD2PA2H6HM5MKVV7NK6MO3FBIWFQ';
-const defaultState = 'XM6PKVB6GUTH2UFAPR7EQL2BF7XCNEG5XJRQQ6QREYI76ERWZVTA';
-const cypressao = 'LOFCGT4SWLTGJI6MDKVISUVE5EHZFAYGVR55HNLGCRIW4CWUVXQA';
-const cypressregion = 'D2OZ2FUQOOBBI3CGNFYIBKQFRSTZE54TIKNUM7LLPDVTAFKGEUPA';
-const cypresscb = 'J7QCG3UKX357IE7WT5SYN2IQSYIR2ODV4APQNW7IGVXM5LDIAUEQ';
 
 // QA Secrets
 const QACypressSysAdmin = 'GW3WYHR5GJSPNASBAA2JTHQPLLCK4KH2MBJBTDSZ5ZKG734XBJSQ';
@@ -33,24 +27,6 @@ class MFAPageObjects {
     enterPasscode(account) {
         debug.log(account);
         switch(account){
-            case "cypress.sysadmin":
-                this.elements.passcodeInput().type(authenticator.generate(cypressSysadmin), { log: false });
-                break;
-            case "cypress.sao":
-                this.elements.passcodeInput().type(authenticator.generate(cypressao), { log: false });
-                break;
-            case "cypress.regional":
-                this.elements.passcodeInput().type(authenticator.generate(cypressregion), { log: false });
-                break;
-            case "cypress.cb":
-                this.elements.passcodeInput().type(authenticator.generate(cypresscb), { log: false });
-                break;
-            case "cypress.default":
-                this.elements.passcodeInput().type(authenticator.generate(defaultState), { log: false });
-                break;
-            case "cypress.mng":
-                this.elements.passcodeInput().type(authenticator.generate(cypressmgr), { log: false });
-                break;
             case "teststateuser":
                 this.elements.passcodeInput().type(authenticator.generate(testStateUsrSecret), { log: false });
                 break;
