@@ -62,7 +62,7 @@ describe("My profile validation", function () {
     commonPage.navigateBack();
     });
 
-    it.only("Verify cb central user is able to edit firstname,lastname and phone number for my profile", function () {
+    it("Verify cb central user is able to edit firstname,lastname and phone number for my profile", function () {
         cy.visit('/User');
         commonPage.verifyUrl('/User');
         commonPage.clickOnWelcomeBtn();
@@ -93,8 +93,6 @@ describe("My profile validation", function () {
         editMyProfile.elements.systemAdministratorRadioButton().should('have.text', 'System Administrator');
         editMyProfile.elements.cbCentralOfficeStaffMemberRadioButton().should('have.text', 'CB Central Office Staff Member');
         editMyProfile.elements.regionalOfficeUserRadioButton().should('have.text', 'Regional Office User');
-    
-     
         editMyProfile.elements.previewEditsButton().should('have.text', 'Preview Edits');
         editMyProfile.elements.accountSecurityText().should('have.text', 'Account Security');
         editMyProfile.elements.deleteMyAccountButton().should('have.text', 'Delete My Account');
@@ -105,8 +103,6 @@ describe("My profile validation", function () {
         editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
         editMyProfile.elements.currentUserInfoPhone().should('have.text', '(508) 246-0311');
         editMyProfile.elements.currentUserInfoPrimaryRole().should('have.text', 'Regional Office User');
-
-
         editMyProfile.elements.currentUserInfo().should('have.text', 'This information will not be updated until "Preview Edits" and then "Save Edits" have been clicked');
         editMyProfile.elements.usernameTextBox().should('be.disabled');
         editMyProfile.elements.userEmailTextBox().should('be.disabled');
