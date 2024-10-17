@@ -11,7 +11,6 @@ class ManageUserAccountRequestObjects {
     uamBreadcrumbText: () => cy.get(':nth-child(2) > .styles_liOther__1TGKl'), // Breadcrumb text
     datePickerEnabledBtnList: () => cy.get('[role="gridcell"]:not([aria-disabled="true"])'), // Date picker enabled button list
     descriptionText: () => cy.get('.styles_description__0k9k1'), // Description text
-    exportBtn: () => cy.get('.styles_button__T2X6A').contains('Export Current Table'),
     nameSearchLabel: () => cy.get('[for="firstName"]'), // Name Search label
     requestedDateLabel: () => cy.get('[for="date-range-filter-requestDateTime"]'), // Requested Date label
     requestedDateBtn: () => cy.get('[data-testid="daterangepicker_group_date-range-filter-requestDateTime"] > [data-testid="daterangepicker_calendar_button"]'), // Requested Date button
@@ -154,7 +153,7 @@ class ManageUserAccountRequestObjects {
 
       cy.log(sortedItems.join(',\n '));
 
-      // expect(columnData).to.deep.equal(sortedItems);
+      expect(columnData).to.deep.equal(sortedItems);
     });
   }
 

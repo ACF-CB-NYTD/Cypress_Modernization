@@ -4,7 +4,7 @@ import UserAccountManagementObjects from "../pages/UserAccountManagementObjects"
 const userAccountManagement = new UserAccountManagementObjects();
 describe("SA UAM Page Validations", function () {
     beforeEach(() => {
-        cy.login('nytdsysadmin', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.sysadmin', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify User Account Management page buttons, text fields, checkboxes and dropdowns", function () {
         cy.visit('/User.html');
@@ -39,7 +39,7 @@ describe("SA UAM Page Validations", function () {
         userAccountManagement.clickPrimaryRoleCheckbox(4);
         userAccountManagement.clickPrimaryRoleCheckbox(4);
         userAccountManagement.elements.stateDropdown().should('contain', 'State');
-        userAccountManagement.checkAllStates();
+        commonPage.checkAllStates(userAccountManagement.elements.stateChildren());
         userAccountManagement.clickOnPrimaryRoleDropdown();
     });
     it("Verify State users, State Managers, Regional, and CB Office Staff users will not be able to access the User Account Management page.", function () {

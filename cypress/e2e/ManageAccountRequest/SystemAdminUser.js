@@ -18,7 +18,7 @@ describe("SA UAR Page Validations", function () {
         commonPage.verifyBreadCrumbs('User Account Management', 'User Account Requests');
         commonPage.elements.headerH3Text().should('have.text', 'User Account Requests');
         manageUserAccountRequestObjects.elements.descriptionText().should('have.text', 'The following requests are in the NYTD system.');
-        manageUserAccountRequestObjects.elements.exportBtn().should('have.text', 'Export Current Table');
+        commonPage.elements.exportBtn().should('have.text', 'Export Current Table');
         manageUserAccountRequestObjects.elements.nameSearchLabel().should('have.text', 'Name Search');
         manageUserAccountRequestObjects.elements.requestedDateLabel().should('have.text', 'Requested Date');
         manageUserAccountRequestObjects.elements.updatedDateLabel().should('have.text', 'Updated Date');
