@@ -4,72 +4,112 @@ import ViewMyProfile from "../pages/MyProfilePageObjects";
 const viewMyProfile = new ViewMyProfile();
 import EditMyProfilePageObjects from "../pages/EditMyProfilePageObjects";
 const editMyProfile = new EditMyProfilePageObjects();
-describe("State Authorized Official Account Request Validations", function () {
+describe("Verify my profile for SAO user", function () {
     beforeEach(() => {
         cy.login('cypress.sao', 'P@ssw0rd1') // Login with session, implemented in commands.js
     })
     it("Verify SAO users are able to view my profile user information", function () {
-    cy.visit('/User');
-    commonPage.verifyUrl('/User');
-    commonPage.clickOnAccountSettingsDropdown();
-    commonPage.clickOnMyProfileSelect();
-    commonPage.verifyUrl('/User/Profile');
-    commonPage.verifyBreadCrumbs('My Profile');
-    viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
-    viewMyProfile.elements.username().should('have.text', 'cypress.sao')
-    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
-    viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
-    viewMyProfile.elements.userType().should('have.text', 'Test State')
-    viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
-    viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
-    viewMyProfile.elements.updatePasswordBtn().should('have.text','Update Password')
-    viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
-    viewMyProfile.clickOnDeleteMyAccount();
-    viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
-    viewMyProfile.clickOnCancelButton();
-    viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
-    commonPage.verifyPageIsScrollToTheTop();
-    viewMyProfile.clickOnEditMyProfileButton();
-    commonPage.verifyUrl('/User/Profile/Edit');
-    commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
-    commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-    commonPage.navigateBack();
-    viewMyProfile.clickOnUpdatePassword();
-    commonPage.verifyUrl('/User/Profile/UpdatePassword?page=Profile');
-    commonPage.verifyBreadCrumbs('My Profile', 'Update Password');
-    commonPage.elements.headerH3Text().should('have.text', 'Update Password');
-    commonPage.navigateBack();
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
+        viewMyProfile.elements.username().should('have.text', 'cypress.sao')
+        viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
+        viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
+        viewMyProfile.elements.userType().should('have.text', 'Test State')
+        viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
+        viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
+        viewMyProfile.elements.updatePasswordBtn().should('have.text', 'Update Password')
+        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
+        viewMyProfile.clickOnDeleteMyAccount();
+        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
+        viewMyProfile.clickOnCancelButton();
+        viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
+        commonPage.verifyPageIsScrollToTheTop();
+        viewMyProfile.clickOnEditMyProfileButton();
+        commonPage.verifyUrl('/User/Profile/Edit');
+        commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
+        commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
+        commonPage.navigateBack();
+        viewMyProfile.clickOnUpdatePassword();
+        commonPage.verifyUrl('/User/Profile/UpdatePassword?page=Profile');
+        commonPage.verifyBreadCrumbs('My Profile', 'Update Password');
+        commonPage.elements.headerH3Text().should('have.text', 'Update Password');
+        commonPage.navigateBack();
+    });
+
+    it("Verify primary role Information text expand and collapse when clicking i icon for SAO user", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.clickOnEditMyProfileButton();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        editMyProfile.clickOnPrimaryRoleInformationIcon();
+        editMyProfile.elements.primaryRoleInformationText().should('be.visible')
+        editMyProfile.elements.primaryRoleInformationText().should('contain', "Indicate the role-based access of the user.");
+        editMyProfile.clickOnPrimaryRoleInformationIcon();
+        editMyProfile.elements.primaryRoleInformationText().should('not.exist')
+    });
+
+    it("Verify unsaved changes modal", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.clickOnEditMyProfileButton();
+        commonPage.verifyUrl('/User/Profile/Edit');
+        commonPage.verifyBreadCrumbs('Edit My Profile');
+        editMyProfile.enterFirstName();
+        editMyProfile.clickOnCancelButton();
+        editMyProfile.elements.unsavedChangesModal().should('have.text', 'Unsaved Changes')
+        editMyProfile.clickOnContinueEditing();
+        commonPage.verifyUrl('/User/Profile/Edit');
+        commonPage.verifyBreadCrumbs('Edit My Profile');
+        editMyProfile.clickOnCancelButton();
+        editMyProfile.elements.unsavedChangesModal().should('have.text', 'Unsaved Changes')
+        editMyProfile.clickOnDiscardChanges();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
     });
     it("Verify SAO users are able to view my profile from welcome username", function () {
-    cy.visit('/User');
-    commonPage.verifyUrl('/User');
-    commonPage.clickOnWelcomeBtn();
-    commonPage.verifyUrl('/User/Profile');
-    commonPage.verifyBreadCrumbs('My Profile');
-    viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
-    viewMyProfile.elements.username().should('have.text', 'cypress.sao')
-    viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
-    viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
-    viewMyProfile.elements.userType().should('have.text', 'Test State')
-    viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
-    viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
-    viewMyProfile.elements.updatePasswordBtn().should('have.text','Update Password')
-    viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
-    viewMyProfile.clickOnDeleteMyAccount();
-    viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
-    viewMyProfile.clickOnCancelButton();
-    viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
-    commonPage.verifyPageIsScrollToTheTop();
-    viewMyProfile.clickOnEditMyProfileButton();
-    commonPage.verifyUrl('/User/Profile/Edit');
-    commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
-    commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-    commonPage.navigateBack();
-    viewMyProfile.clickOnUpdatePassword();
-    commonPage.verifyUrl('/User/Profile/UpdatePassword?page=Profile');
-    commonPage.verifyBreadCrumbs('My Profile', 'Update Password');
-    commonPage.elements.headerH3Text().should('have.text', 'Update Password');
-    commonPage.navigateBack();
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnWelcomeBtn();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao');
+        viewMyProfile.elements.username().should('have.text', 'cypress.sao')
+        viewMyProfile.elements.emailForTestStateSao().should('have.text', 'tyler.smith+cypresssao@icf.com')
+        viewMyProfile.elements.receivesEmailNotificationForTestStatesao().should('have.text', 'Receives emails')
+        viewMyProfile.elements.userType().should('have.text', 'Test State')
+        viewMyProfile.elements.userTypeForSAO().should('have.text', 'State Authorized Official')
+        viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
+        viewMyProfile.elements.updatePasswordBtn().should('have.text', 'Update Password')
+        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
+        viewMyProfile.clickOnDeleteMyAccount();
+        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
+        viewMyProfile.clickOnCancelButton();
+        viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
+        commonPage.verifyPageIsScrollToTheTop();
+        viewMyProfile.clickOnEditMyProfileButton();
+        commonPage.verifyUrl('/User/Profile/Edit');
+        commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
+        commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
+        commonPage.navigateBack();
+        viewMyProfile.clickOnUpdatePassword();
+        commonPage.verifyUrl('/User/Profile/UpdatePassword?page=Profile');
+        commonPage.verifyBreadCrumbs('My Profile', 'Update Password');
+        commonPage.elements.headerH3Text().should('have.text', 'Update Password');
+        commonPage.navigateBack();
     });
 
     it("Verify state authorized user is able to edit firstname,lastname and phone number for my profile", function () {
@@ -78,23 +118,14 @@ describe("State Authorized Official Account Request Validations", function () {
         commonPage.clickOnWelcomeBtn();
         commonPage.verifyUrl('/User/Profile');
         commonPage.verifyBreadCrumbs('My Profile');
-        viewMyProfile.elements.myProfileFirstLastName().should('have.text', 'cypress sao')
-        viewMyProfile.elements.username().should('have.text', 'cypress.sao')
-        viewMyProfile.elements.phoneNumber().should('have.text', '(508) 246-0311')
-        viewMyProfile.elements.email().should('have.text', 'tyler.smith+cypresssao@icf.com')
-        viewMyProfile.elements.receivesEmailNotification().should('have.text', 'Receives emails')
-        viewMyProfile.elements.userType().should('have.text', 'Test State')
-        viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
-        viewMyProfile.elements.updatePasswordBtn().should('have.text', 'Update Password')
-        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
         viewMyProfile.clickOnEditMyProfileButton();
         commonPage.verifyUrl('/User/Profile/Edit');
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        editMyProfile.elements.firstnameText().should('have.text', 'First Name *');
-        editMyProfile.elements.firstnameTextBox().should('have.value', 'cypress')
-        editMyProfile.elements.lastnameText().should('have.text', 'Last Name *');
-        editMyProfile.elements.lastnameTextBox().should('have.value', 'sao')
+        editMyProfile.elements.firstNameText().should('have.text', 'First Name *');
+        editMyProfile.elements.firstNameTextBox().should('have.value', 'cypress')
+        editMyProfile.elements.lastNameText().should('have.text', 'Last Name *');
+        editMyProfile.elements.lastNameTextBox().should('have.value', 'sao')
         editMyProfile.elements.phoneText().should('have.text', 'Phone *');
         editMyProfile.elements.phoneTextBox().should('have.value', '(508) 246-0311');
         editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
@@ -141,21 +172,35 @@ describe("State Authorized Official Account Request Validations", function () {
         editMyProfile.elements.SuccessMsg().contains('You have successfully updated the NYTD account information for');
         editMyProfile.clickOnContinueBtn();
         commonPage.verifyUrl('/User/Profile');
+    });
+
+
+    it("Change user information back to original user information", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnWelcomeBtn();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.clickOnEditMyProfileButton();
+        commonPage.verifyUrl('/User/Profile/Edit');
+        commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
+        commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
         viewMyProfile.elements.myProfileFirstLastName().should('have.text', editMyProfile.firstName + " " + editMyProfile.lastName)
         viewMyProfile.elements.phoneNumber().should('have.text', editMyProfile.phone)
         viewMyProfile.clickOnEditMyProfileButton();
         commonPage.verifyUrl('/User/Profile/Edit');
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        editMyProfile.elements.firstnameText().should('have.text', 'First Name *');
-        editMyProfile.elements.firstnameTextBox().should('have.value', editMyProfile.firstName)
-        editMyProfile.elements.lastnameText().should('have.text', 'Last Name *');
-        editMyProfile.elements.lastnameTextBox().should('have.value', editMyProfile.lastName)
+        editMyProfile.elements.firstNameText().should('have.text', 'First Name *');
+        editMyProfile.elements.firstNameTextBox().should('have.value', editMyProfile.firstName)
+        editMyProfile.elements.lastNameText().should('have.text', 'Last Name *');
+        editMyProfile.elements.lastNameTextBox().should('have.value', editMyProfile.lastName)
         editMyProfile.elements.phoneText().should('have.text', 'Phone *');
         editMyProfile.elements.phoneTextBox().should('have.value', editMyProfile.phone);
         editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
         editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypresssao@icf.com');
         editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
+        editMyProfile.elements.receivesEmailNotificationsCheckbox().should('be.checked');
         editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
         editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
         editMyProfile.elements.secondaryRoleTextForStateMng().should('have.text', 'Secondary Role');
