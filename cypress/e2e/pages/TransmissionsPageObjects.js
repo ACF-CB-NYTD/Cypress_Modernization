@@ -5,12 +5,12 @@ class TransmissionPageObjects {
         dateRangeName: () => cy.get('[for="date-range-filter-fileReceivedDate"]'),
         dateRangeInput: () => cy.get('[data-testid="date-range-picker"]'),
         dateRangeBtn: () => cy.get('[data-testid="daterangepicker_calendar_button"]'),
-        penaltyDropdown: () => cy.get('[data-testid="dropdown_wrapper"]', { timeout: 10000 }).eq(0).should('be.visible'),
+        penaltyDropdown: () => cy.get('div.styles_buttonGroup__NYJPa > div:nth-child(1)', {timeout : 10000}),
         penaltyDropdownCompliance: () => cy.get('[data-testid="dropdown_wrapper"]').eq(0).find('[data-testid="fieldset"]').children().eq(1).children(),
         penaltyDropdownNonCompliance: () => cy.get('[data-testid="dropdown_wrapper"]').eq(0).find('[data-testid="fieldset"]').children().eq(2).children(),
-        reportPeriodDropdown: () => cy.get('[data-testid="dropdown_wrapper"]', { timeout: 10000 }).eq(1),
+        reportPeriodDropdown: () => cy.get('div.styles_buttonGroup__NYJPa > div:nth-child(2)', {timeout : 10000}),
         reportPeriodDropdownOptions: () => cy.get('[data-testid="dropdown_wrapper"]').eq(1).find('[data-testid="fieldset"]').children().eq(1).children(),
-        fileTypeDropdown: () => cy.get('[data-testid="dropdown_wrapper"]', { timeout: 10000 }).eq(2),
+        fileTypeDropdown: () => cy.get('div.styles_buttonGroup__NYJPa > div:nth-child(3)', {timeout : 10000}),
         fileTypeDropdownOptions: () => cy.get('[data-testid="dropdown_wrapper"]').eq(2).find('[data-testid="fieldset"]').children().eq(1).children(),
         fileNumberHeader: () => cy.get('[name="transmissionId"]'),
         reportPeriodHeader: () => cy.get('[name="reportingPeriod"]'),
@@ -26,11 +26,16 @@ class TransmissionPageObjects {
         tableFifthHeader: () => cy.get('[name="complianceStatus"]'),
         tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
 
-        firstTableLink: () => cy.get(':nth-child(2) > .usa-link'),
+        firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > .usa-link'),
+        firstPenaltyLink: () => cy.get(':nth-child(1) > [align="center"] > .usa-link'),
         penaltyTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(6)', { timeout: 10000 }),
         reportPeriodTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(3)', { timeout: 10000 }),
         fileTypeTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(5)', { timeout: 10000 }),
-        firstTransmissionArrowBtn: () => cy.get(':nth-child(1) > [style="width: 62px;"] > .nytd-icon-button'),
+        firstTransmissionArrowBtn: () => cy.get(':nth-child(1) > [style="width: 62px;"] > .nytd-icon-button', {timeout: 10000}),
+        transmissionDetails: () => cy.get('[class="styles_container__EboDE"]'),
+        readyModalHeader: () => cy.get('[class="usa-modal__heading"]:visible'),
+        readyModalText: () => cy.get('[class="usa-modal__content"]').find('[class="usa-prose"]:visible'),
+        readyModalFooter: () => cy.get('[class="usa-modal__content"]').find('[data-testid="modalFooter"]:visible'),
 
         errorHeader: () => cy.get('.styles_heading__wNxLX', { timeout: 30000 }),
         errorText: () => cy.get('.styles_description__0DZVg'),
@@ -41,6 +46,7 @@ class TransmissionPageObjects {
         quickActionSubmit: () => cy.get('[class="nytd-button--secondary styles_quickActionEdit__D9YjA"]'),
         quickActionDelete: () => cy.get('[class="nytd-button--secondary nytd-button--error styles_quickActionDelete__WUBjC"]'),
 
+        returnBreadcrumb: () => cy.get(':nth-child(2) > .styles_liOther__1TGKl'),
     }
 
     typeFileNumber(fileNum) {

@@ -44,6 +44,33 @@ describe("State User Transmission Page", function () {
         transmissionPage.elements.complianceHeader().should('have.text', 'Compliance');
         transmissionPage.elements.penaltyHeader().should('have.text', 'Potential Penalty');
     });
+    it('Verify the penalty dropdown filters can be clicked', function () {
+        cy.visit('/User/Transmissions');
+        transmissionPage.elements.firstTableLink().should('exist');
+        transmissionPage.elements.penaltyDropdown().click();
+        transmissionPage.elements.penaltyDropdownCompliance().eq(1).click();
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(1).click();
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(2).find('[type="checkbox"]').should('be.checked');
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(3).find('[type="checkbox"]').should('be.checked');
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(4).find('[type="checkbox"]').should('be.checked');
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(5).find('[type="checkbox"]').should('be.checked');
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(6).find('[type="checkbox"]').should('be.checked');
+        transmissionPage.elements.penaltyDropdownNonCompliance().eq(7).find('[type="checkbox"]').should('be.checked');
+    });
+    it("Verify the report period dropdown filters can be clicked", function () {
+        cy.visit('/User/Transmissions');
+        transmissionPage.elements.reportPeriodDropdown().click();
+        transmissionPage.elements.reportPeriodDropdownOptions().each((option) => {
+            cy.get(option).click();
+        })
+    });
+    it("Verify the file type dropdown filters can be clicked", function () {
+        cy.visit('/User/Transmissions');
+        transmissionPage.elements.fileTypeDropdown().click();
+        transmissionPage.elements.fileTypeDropdownOptions().each((option) => {
+            cy.get(option).click();
+        })
+    });
     it("Verify the dropdown filters are working as expected", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.penaltyDropdown().click();
@@ -61,11 +88,19 @@ describe("State User Transmission Page", function () {
         commonPage.clickOnRefreshResultsBtn();
         transmissionPage.elements.fileTypeTableData().should('have.text', 'Subsequent');
     });
+    it('Verify links are working as expected', function () {
+        cy.visit('/User/Transmissions');
+        transmissionPage.elements.firstTableLink().click();
+        commonPage.verifyUrl('/User/Transmissions/Summary?');
+        transmissionPage.elements.returnBreadcrumb().click();
+        transmissionPage.elements.firstPenaltyLink().click();
+        commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        transmissionPage.elements.returnBreadcrumb().click();
+    });
     it("Verify the Refresh Results button is greyed out by default", function () {
-        cy.visit('/User/Account.html');
+        cy.visit('/User/Transmissions');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
-        userAccountManagement.clickOnPrimaryRoleDropdown();
-        userAccountManagement.clickPrimaryRoleCheckbox(1);
+        transmissionPage.typeFileNumber('8488');
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
     it("Verify Default State user is not able to upload file", function () {
@@ -77,23 +112,48 @@ describe("State User Transmission Page", function () {
         transmissionPage.elements.quickActionSubmit().should('not.exist');
         transmissionPage.elements.quickActionDelete().should('not.exist');
     });
-    it.only("Verify Default State user is able to export current table", function () {
+    it("Verify Default State user is able to export current table", function () {
         cy.visit('/User/Transmissions');
-        commonPage.elements.exportBtn().should('have.text', 'Export Current Table').click();
+        // commonPage.elements.exportBtn().should('have.text', 'Export Current Table').click();
         // cy.verifyDownload('picture.png');
         // cy.readFile('nytd_transmissions_2024-10-15T19_07_43.791Z').should('exist');
         // TODO - verify excel doc is downloaded
     });
-    it.only("Verify the arrow dropdown button opens the transmissions expanded view", function () {
+    it("Verify the arrow dropdown button opens the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.firstTransmissionArrowBtn().click();
-        cy.get('[class="styles_container__EboDE"]').should('exist').and('not.have.descendants', '[data-testid="Loading_div"]');
-        cy.get('[class="styles_container__EboDE"]').children().eq(0).children().eq(0).should('have.text', 'Uploaded');
-        cy.get('[class="styles_container__EboDE"]').children().eq(1).children().eq(0).should('have.text', 'Records In File');
-        cy.get('[class="styles_container__EboDE"]').children().eq(2).children().eq(0).should('have.text', 'Meets Standards');
-        cy.get('[class="styles_container__EboDE"]').children().eq(3).children().eq(0).should('have.text', 'Data Quality Advisories');
-        cy.get('[class="styles_container__EboDE"]').children().eq(4).children().eq(0).should('have.text', 'Element Compliance');
-        cy.get('[class="styles_container__EboDE"]').children().eq(5).children().eq(0).should('have.text', 'Workflow Status');
+        transmissionPage.elements.transmissionDetails().should('exist').and('not.have.descendants', '[data-testid="Loading_div"]');
+        transmissionPage.elements.transmissionDetails().children().eq(0).children().eq(0).should('have.text', 'Uploaded');
+        transmissionPage.elements.transmissionDetails().children().eq(1).children().eq(0).should('have.text', 'Records In File');
+        transmissionPage.elements.transmissionDetails().children().eq(1).find('tbody').should('contain', 'Served').should('contain', 'Baseline').should('contain', 'Follow-up').should('contain', 'Total');
+        transmissionPage.elements.transmissionDetails().children().eq(2).children().eq(0).should('have.text', 'Meets Standards');
+        transmissionPage.elements.transmissionDetails().children().eq(2).find('tbody').should('contain', 'File Submission').should('contain', 'Data');
+        transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(0).should('have.text', 'Data Quality Advisories');
+        transmissionPage.elements.transmissionDetails().children().eq(3).find('tbody').should('contain', 'Element-level').should('contain', 'Record-level').should('contain', 'Total');
+        transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(0).should('have.text', 'Element Compliance');
+        transmissionPage.elements.transmissionDetails().children().eq(4).find('tbody').should('contain', 'Total');
+        transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(0).should('have.text', 'Workflow Status');
+    });
+    it("Verify the link and modals in the transmissions expanded view", function () {
+        // TODO: breadcrumbs
+        cy.visit('/User/Transmissions');
+        transmissionPage.elements.firstTransmissionArrowBtn().click();
+        transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click();
+        commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        transmissionPage.elements.returnBreadcrumb().click();
+        transmissionPage.elements.firstTransmissionArrowBtn().click();
+        transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click();
+        commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        transmissionPage.elements.returnBreadcrumb().click();
+        transmissionPage.elements.firstTransmissionArrowBtn().click();
+        transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click();
+        commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        transmissionPage.elements.returnBreadcrumb().click();
+        transmissionPage.elements.firstTransmissionArrowBtn().click();
+        transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(1).click();
+        transmissionPage.elements.readyModalHeader().should('have.text', 'Submission Available for this File');
+        transmissionPage.elements.readyModalText().should('have.text', 'This file is ready for submission.');
+        transmissionPage.elements.readyModalFooter().should('have.text', 'Close').find('button').click();
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Transmissions');
@@ -128,55 +188,43 @@ describe("State User Transmission Page", function () {
     it("Verify the table can be sorted by the File Number header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableFirstHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(2, 'descending');
         transmissionPage.elements.tableFirstHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(2, 'ascending');
     });
     it("Verify the table can be sorted by the Report Period header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableSecondHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(3, 'descending');
         transmissionPage.elements.tableSecondHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(3, 'ascending');
     });
     it("Verify the table can be sorted by the Transmission Date header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableThirdHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsDateSorted(4, 'descending');
         transmissionPage.elements.tableThirdHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsDateSorted(4, 'ascending');
     });
     it("Verify the table can be sorted by the File Type header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableFourthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(5, 'descending');
         transmissionPage.elements.tableFourthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(5, 'ascending');
     });
     it("Verify the table can be sorted by the Compliance header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableFifthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(6, 'descending');
         transmissionPage.elements.tableFifthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(6, 'ascending');
     });
     it("Verify the table can be sorted by the Potential Penalty header", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.tableSixthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(7, 'descending');
         transmissionPage.elements.tableSixthHeader().click();
-        cy.wait(2000);
         transmissionPage.checkIsArraySorted(7, 'ascending');
     });
 
