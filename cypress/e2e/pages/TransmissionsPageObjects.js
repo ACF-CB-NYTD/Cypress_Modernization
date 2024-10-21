@@ -1,3 +1,5 @@
+import { timeInterval } from "rxjs";
+
 class TransmissionPageObjects {
     elements = {
         fileSearchName: () => cy.get('[for="transmissionId"]'), // Name Search label
@@ -26,7 +28,7 @@ class TransmissionPageObjects {
         tableFifthHeader: () => cy.get('[name="complianceStatus"]'),
         tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
 
-        firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > .usa-link'),
+        firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > .usa-link', { timeout: 10000 }),
         firstPenaltyLink: () => cy.get(':nth-child(1) > [align="center"] > .usa-link'),
         penaltyTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(6)', { timeout: 10000 }),
         reportPeriodTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(3)', { timeout: 10000 }),
@@ -41,9 +43,13 @@ class TransmissionPageObjects {
         errorText: () => cy.get('.styles_description__0DZVg'),
         errorRefreshBtn: () => cy.get('.styles_action__oJXCb'),
 
-        uploadTransmissionBtn: () => cy.get('[data-testid="button"]').contains('Upload New Transmission'),
+        uploadTransmissionBtn: () => cy.get('[data-testid="button"]', {timeout: 10000}).contains('Upload New Transmission'),
+        uploadModalHeader: () => cy.get('[id="fileUploadID"]'),
 
         quickActionSubmit: () => cy.get('[class="nytd-button--secondary styles_quickActionEdit__D9YjA"]'),
+        submissionModal: () => cy.get('[id="submission_confirmation"] > .usa-modal-overlay > .styles_modal__wKLbX > .usa-modal__content > .usa-modal__main'),
+        deleteModal: () => cy.get('[id="deletion_confirmation"] > .usa-modal-overlay > .styles_modal__wKLbX > .usa-modal__content > .usa-modal__main'),
+        
         quickActionDelete: () => cy.get('[class="nytd-button--secondary nytd-button--error styles_quickActionDelete__WUBjC"]'),
 
         returnBreadcrumb: () => cy.get(':nth-child(2) > .styles_liOther__1TGKl'),
