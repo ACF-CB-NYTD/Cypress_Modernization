@@ -41,6 +41,20 @@ describe("Verify my profile for SAO user", function () {
         commonPage.navigateBack();
     });
 
+    it("Verify SAO user is able to delete account", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
+        viewMyProfile.clickOnDeleteMyAccount();
+        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
+        viewMyProfile.clickOnCancelButton();
+    });
+
+
     it("Verify primary role Information text expand and collapse when clicking i icon for SAO user", function () {
         cy.visit('/User');
         commonPage.verifyUrl('/User');

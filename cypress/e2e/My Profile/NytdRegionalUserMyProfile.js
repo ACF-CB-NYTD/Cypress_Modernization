@@ -22,10 +22,6 @@ describe("My profile validation for Regional user", function () {
         viewMyProfile.elements.region().should('have.text', 'Region 1')
         viewMyProfile.elements.assignedStatesText().should('have.text', 'No Assigned States')
         viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
-        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
-        viewMyProfile.clickOnDeleteMyAccount();
-        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
-        viewMyProfile.clickOnCancelButton();
         viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
         commonPage.verifyPageIsScrollToTheTop();
         viewMyProfile.clickOnEditMyProfileButton();
@@ -34,6 +30,20 @@ describe("My profile validation for Regional user", function () {
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
         commonPage.navigateBack();
     });
+
+    it("Verify regional user is able to delete account", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
+        viewMyProfile.clickOnDeleteMyAccount();
+        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
+        viewMyProfile.clickOnCancelButton();
+    });
+
 
     it("Verify primary role Information text expand and collapse when clicking i icon for regional user", function () {
         cy.visit('/User');

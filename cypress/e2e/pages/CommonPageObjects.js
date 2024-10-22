@@ -39,7 +39,10 @@ class CommonPageObjects {
     fiftyResultsBtn: () => cy.get('[name="50"]'),
     profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
     submissionsTab: () => cy.get(':nth-child(3) > [data-testid="default_link"]'), // Submissions tab
-
+    transmissionsTab: () => cy.get('ul.styles_navItems__QzYIZ > li:nth-child(2)'), // Transmission tab
+    uploadNewTransmission: () => cy.get(':nth-child(2) > [data-testid="button"]'), // Upload new transmission button
+    exportCurrentTable: () => cy.get('.styles_button__T2X6A'), // Export Current table
+  
   }
 
   verifyUrl(url) {
@@ -197,6 +200,17 @@ class CommonPageObjects {
     this.elements.submissionsTab().click();
   }
 
+  clickOnTransmissionTab() {
+    this.elements.transmissionsTab().click();
+  }
+
+  clickOnUploadNewTransmissions() {
+    this.elements.uploadNewTransmission().click();
+  }
+
+  clickOnExportCurrentTable() {
+    this.elements.exportCurrentTable().click({ force: true });
+  }
 
 }
 export default CommonPageObjects;

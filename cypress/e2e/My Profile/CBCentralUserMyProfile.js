@@ -23,10 +23,6 @@ describe("Verify my profile for cb central user", function () {
         viewMyProfile.elements.userType().should('have.text', 'Central Office User')
         viewMyProfile.elements.dataExportText().should('have.text', " Data Export")
         viewMyProfile.elements.editMyProfileBtn().should('have.text', 'Edit My Profile')
-        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
-        viewMyProfile.clickOnDeleteMyAccount();
-        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
-        viewMyProfile.clickOnCancelButton();
         viewMyProfile.elements.returnToTopBtn().should('have.text', 'Return to top').click();
         commonPage.verifyPageIsScrollToTheTop();
         viewMyProfile.clickOnEditMyProfileButton();
@@ -34,6 +30,19 @@ describe("Verify my profile for cb central user", function () {
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
         commonPage.navigateBack();
+    });
+
+    it("Verify CB central is able to delete account", function () {
+        cy.visit('/User');
+        commonPage.verifyUrl('/User');
+        commonPage.clickOnAccountSettingsDropdown();
+        commonPage.clickOnMyProfileSelect();
+        commonPage.verifyUrl('/User/Profile');
+        commonPage.verifyBreadCrumbs('My Profile');
+        viewMyProfile.elements.deleteMyAccountBtn().should('have.text', 'Delete My Account')
+        viewMyProfile.clickOnDeleteMyAccount();
+        viewMyProfile.elements.deleteYourAccountModalText().should('have.text', 'Delete Your Account?')
+        viewMyProfile.clickOnCancelButton();
     });
 
     it("Verify primary role Information text expand and collapse when clicking i icon for cb user", function () {
