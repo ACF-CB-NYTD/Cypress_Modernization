@@ -1,4 +1,5 @@
 import { timeout } from "async";
+import 'cypress-file-upload';
 import CommonPageObjects from "../e2e/pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 import HomePageObjects from "../e2e/pages/HomePageObjects";
