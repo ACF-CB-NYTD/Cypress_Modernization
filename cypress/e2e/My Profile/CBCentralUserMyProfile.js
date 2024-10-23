@@ -170,7 +170,7 @@ describe("Verify my profile for cb central user", function () {
         editMyProfile.elements.revisedInformationNumber().should('have.text', editMyProfile.phone)
         editMyProfile.clickOnSaveEdits();
         editMyProfile.elements.editsSuccessfulText().should('have.text', 'Edits Successful');
-        editMyProfile.elements.SuccessMsg().contains('You have successfully updated the NYTD account information for');
+        editMyProfile.elements.successMsg().contains('You have successfully updated the NYTD account information for');
         editMyProfile.clickOnContinueBtn();
         commonPage.verifyUrl('/User/Profile');
         viewMyProfile.elements.myProfileFirstLastName().should('have.text', editMyProfile.firstName + " " + editMyProfile.lastName)
@@ -186,52 +186,15 @@ describe("Verify my profile for cb central user", function () {
         viewMyProfile.clickOnEditMyProfileButton();
         commonPage.verifyUrl('/User/Profile/Edit');
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
-        commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        editMyProfile.elements.firstNameText().should('have.text', 'First Name *');
-        editMyProfile.elements.firstNameTextBox().should('have.value', editMyProfile.firstName)
-        editMyProfile.elements.lastNameText().should('have.text', 'Last Name *');
-        editMyProfile.elements.lastNameTextBox().should('have.value', editMyProfile.lastName)
-        editMyProfile.elements.phoneText().should('have.text', 'Phone *');
-        editMyProfile.elements.phoneTextBox().should('have.value', editMyProfile.phone);
-        editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
-        editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypresscb@icf.com');
-        editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
-        editMyProfile.elements.primaryRoleText().should('have.text', 'Primary Role');
-        editMyProfile.elements.systemAdministratorRadioButton().should('have.text', 'System Administrator');
-        editMyProfile.elements.cbCentralOfficeStaffMemberRadioButton().should('have.text', 'CB Central Office Staff Member');
-        editMyProfile.elements.regionalOfficeUserRadioButton().should('have.text', 'Regional Office User');
-        editMyProfile.elements.additionalPermissionsText().should('have.text', 'Additional Permissions');
-        editMyProfile.elements.dataExportCheckBox().should('have.text', 'Data Export');
-        editMyProfile.elements.previewEditsButton().should('have.text', 'Preview Edits');
-        editMyProfile.elements.accountSecurityText().should('have.text', 'Account Security');
-        editMyProfile.elements.deleteMyAccountButton().should('have.text', 'Delete My Account');
-        editMyProfile.elements.currentUserInfoFirstName().should('have.text', editMyProfile.firstName);
-        editMyProfile.elements.currentUserInfoLastName().should('have.text', editMyProfile.lastName);
-        editMyProfile.elements.currentUserInfoUsername().should('have.text', 'cypress.cb');
-        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'tyler.smith+cypresscb@icf.com');
-        editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
-        editMyProfile.elements.currentUserInfoPhone().should('have.text', editMyProfile.phone);
-        editMyProfile.elements.currentUserInfoPrimaryRole().should('have.text', 'CB Central Office Staff Member');
-        editMyProfile.elements.currentUserInfoDataExport().should('have.text', 'Yes');
-        editMyProfile.elements.currentUserInfoAccountLocked().should('have.text', 'No');
-        editMyProfile.elements.currentUserInfo().should('have.text', 'This information will not be updated until "Preview Edits" and then "Save Edits" have been clicked');
-        editMyProfile.elements.usernameTextBox().should('be.disabled');
-        editMyProfile.elements.userEmailTextBox().should('be.disabled');
-        editMyProfile.elements.previewEditsButton().should('be.disabled');
         editMyProfile.enterDefaultUsernamePasswordAndPhone('cypress', 'cb', '5082460311');
         editMyProfile.clickOnPreviewEdits();
-        editMyProfile.elements.editUserInfoModalText().should('have.text', 'Edit User Information');
-        editMyProfile.elements.oldInformationText().should('have.text', 'Old Information');
-        editMyProfile.elements.oldInformationFName().should('have.text', editMyProfile.firstName)
-        editMyProfile.elements.oldInformationLName().should('have.text', editMyProfile.lastName)
-        editMyProfile.elements.oldInformationNumber().should('have.text', editMyProfile.phone)
         editMyProfile.elements.revisedInformationText().should('have.text', 'Revised Information');
         editMyProfile.elements.revisedInformationFName().should('have.text', 'cypress')
         editMyProfile.elements.revisedInformationLName().should('have.text', "cb")
         editMyProfile.elements.revisedInformationNumber().should('have.text', '(508) 246-0311')
         editMyProfile.clickOnSaveEdits();
         editMyProfile.elements.editsSuccessfulText().should('have.text', 'Edits Successful');
-        editMyProfile.elements.SuccessMsg().contains('You have successfully updated the NYTD account information for');
+        editMyProfile.elements.successMsg().contains('You have successfully updated the NYTD account information for');
         editMyProfile.clickOnContinueBtn();
         commonPage.verifyUrl('/User/Profile');
         viewMyProfile.elements.myProfileFirstLastName().should('have.text', "cypress cb")

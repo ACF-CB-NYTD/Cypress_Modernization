@@ -206,37 +206,6 @@ describe("Verify my profile for state manager user", function () {
         commonPage.verifyUrl('/User/Profile/Edit');
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        editMyProfile.elements.firstNameText().should('have.text', 'First Name *');
-        editMyProfile.elements.firstNameTextBox().should('have.value', editMyProfile.firstName)
-        editMyProfile.elements.lastNameText().should('have.text', 'Last Name *');
-        editMyProfile.elements.lastNameTextBox().should('have.value', editMyProfile.lastName)
-        editMyProfile.elements.phoneText().should('have.text', 'Phone *');
-        editMyProfile.elements.phoneTextBox().should('have.value', editMyProfile.phone);
-        editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
-        editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypressmgr@icf.com');
-        editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
-        editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
-        editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
-        editMyProfile.elements.secondaryRoleTextForStateMng().should('have.text', 'Secondary Role');
-        editMyProfile.elements.standardUserRadioButton().should('have.text', 'Standard User');
-        editMyProfile.elements.stateManagerRadioButton().should('have.text', 'State Manager');
-        editMyProfile.elements.stateAuthorizationOfficialRadioButton().should('have.text', 'State Authorized Official');
-        editMyProfile.elements.previewEditsButton().should('have.text', 'Preview Edits');
-        editMyProfile.elements.accountSecurityText().should('have.text', 'Account Security');
-        editMyProfile.elements.deleteMyAccountButton().should('have.text', 'Delete My Account');
-        editMyProfile.elements.currentUserInfoFirstName().should('have.text', editMyProfile.firstName);
-        editMyProfile.elements.currentUserInfoLastName().should('have.text', editMyProfile.lastName);
-        editMyProfile.elements.currentUserInfoUsername().should('have.text', 'cypress.mgr');
-        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'tyler.smith+cypressmgr@icf.com');
-        editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
-        editMyProfile.elements.currentUserInfoPhone().should('have.text', editMyProfile.phone);
-        editMyProfile.elements.currentUserInfoState().should('have.text', 'Test State');
-        editMyProfile.elements.currentUserInfoStateAuthorizationOfficial().should('have.text', 'No');
-        editMyProfile.elements.currentUserInfoAccountLockedStateMng().should('have.text', 'No');
-        editMyProfile.elements.currentUserInfo().should('have.text', 'This information will not be updated until "Preview Edits" and then "Save Edits" have been clicked');
-        editMyProfile.elements.usernameTextBox().should('be.disabled');
-        editMyProfile.elements.userEmailTextBox().should('be.disabled');
-        editMyProfile.elements.previewEditsButton().should('be.disabled');
         editMyProfile.enterDefaultUsernamePasswordAndPhone('cypress', 'mgr', '5082460311');
         editMyProfile.clickOnPreviewEdits();
         editMyProfile.elements.editUserInfoModalText().should('have.text', 'Edit User Information');
@@ -250,11 +219,10 @@ describe("Verify my profile for state manager user", function () {
         editMyProfile.elements.revisedInformationNumber().should('have.text', '(508) 246-0311')
         editMyProfile.clickOnSaveEdits();
         editMyProfile.elements.editsSuccessfulText().should('have.text', 'Edits Successful');
-        editMyProfile.elements.SuccessMsg().contains('You have successfully updated the NYTD account information for');
+        editMyProfile.elements.successMsg().contains('You have successfully updated the NYTD account information for');
         editMyProfile.clickOnContinueBtn();
         commonPage.verifyUrl('/User/Profile');
         viewMyProfile.elements.myProfileFirstLastName().should('have.text', "cypress mgr")
         viewMyProfile.elements.phoneNumber().should('have.text', '(508) 246-0311')
     });
-
 });

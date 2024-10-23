@@ -48,8 +48,8 @@ class EditMyProfilePageObjects {
         currentUserInfoAccountLocked: () => cy.get(':nth-child(9) > .styles_field__qOPLO'), //Current user information account locked
         currentUserInfoAccountLockedStateMng: () => cy.get(':nth-child(10) > .styles_field__qOPLO'), //Current user information account locked
         currentUserInfo: () => cy.get('.styles_alertText__uV_MD'), //Current user information
-        cancel: () => cy.get('#cancel_button'), //cancel button for delete
-        cancelButtonForEditNyProfile: () => cy.get('[data-testid="button"]'), //cancel button for editing
+        cancelDeleteBtn: () => cy.get('#cancel_button'), //cancel button for delete
+        cancelButtonForEditMyProfile: () => cy.get('[data-testid="button"]'), //cancel button for editing
         saveEditsButton: () => cy.get('#uam-confirm-edits-modal > div > div > div > div > div > span > button'), //Save edits from the modal
         editUserInfoModalText: () => cy.get('#editUserInfo'), //Edit User Information header text from the modal
         oldInformationText: () => cy.get(' tr > th.styles_oldInfoText__ZKyDf'), //Old information text from the modal
@@ -61,8 +61,8 @@ class EditMyProfilePageObjects {
         revisedInformationLName: () => cy.get('tr:nth-child(2) > td.styles_newInfoText___BkZZ'), //Revised information text from the modal
         revisedInformationNumber: () => cy.get('tr:nth-child(3) > td.styles_newInfoText___BkZZ'), //Revised information text from the modal
         editsSuccessfulText: () => cy.get('#heading_label'), //Revised information text from the modal
-        SuccessMsg: () => cy.get('#modal_subtitle_description'), //Success msg from the modal
-        continueBtn: () => cy.get('#success_modal_button'), //Success modal continue button
+        successMsg: () => cy.get('#modal_subtitle_description'), //Success msg from the modal
+        continueBtnForSuccessModal: () => cy.get('#success_modal_button'), //Success modal continue button
         primaryRoleInformationText: () => cy.get('.usa-alert__body'), //Primary role information text
         primaryRoleInformationTextForStateAuth: () => cy.get('.usa-alert__body'), //Primary role information text
         primaryRoleInformationTextForRegionalUser: () => cy.get('.usa-alert__body'), //Primary role information text for regional office
@@ -116,11 +116,11 @@ class EditMyProfilePageObjects {
     }
 
     clickOnContinueBtn() {
-        this.elements.continueBtn().click();
+        this.elements.continueBtnForSuccessModal().click();
     }
 
     clickOnCancelButton() {
-        this.elements.cancelButtonForEditNyProfile().click();
+        this.elements.cancelButtonForEditMyProfile().click();
     }
 
     clickOnPrimaryRoleInformationIcon() {

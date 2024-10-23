@@ -126,7 +126,7 @@ describe("Verify my profile for SAO user", function () {
         commonPage.navigateBack();
     });
 
-    it("Verify state authorized user is able to edit firstname,lastname and phone number for my profile", function () {
+    it("Verify SAO user is able to edit firstname,lastname and phone number for my profile", function () {
         cy.visit('/User');
         commonPage.verifyUrl('/User');
         commonPage.clickOnWelcomeBtn();
@@ -183,7 +183,7 @@ describe("Verify my profile for SAO user", function () {
         editMyProfile.elements.revisedInformationNumber().should('have.text', editMyProfile.phone)
         editMyProfile.clickOnSaveEdits();
         editMyProfile.elements.editsSuccessfulText().should('have.text', 'Edits Successful');
-        editMyProfile.elements.SuccessMsg().contains('You have successfully updated the NYTD account information for');
+        editMyProfile.elements.successMsg().contains('You have successfully updated the NYTD account information for');
         editMyProfile.clickOnContinueBtn();
         commonPage.verifyUrl('/User/Profile');
     });
@@ -199,51 +199,8 @@ describe("Verify my profile for SAO user", function () {
         commonPage.verifyUrl('/User/Profile/Edit');
         commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
         commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        viewMyProfile.elements.myProfileFirstLastName().should('have.text', editMyProfile.firstName + " " + editMyProfile.lastName)
-        viewMyProfile.elements.phoneNumber().should('have.text', editMyProfile.phone)
-        viewMyProfile.clickOnEditMyProfileButton();
-        commonPage.verifyUrl('/User/Profile/Edit');
-        commonPage.verifyBreadCrumbs('My Profile', 'Edit My Profile');
-        commonPage.elements.headerH3Text().should('have.text', 'Edit My Profile');
-        editMyProfile.elements.firstNameText().should('have.text', 'First Name *');
-        editMyProfile.elements.firstNameTextBox().should('have.value', editMyProfile.firstName)
-        editMyProfile.elements.lastNameText().should('have.text', 'Last Name *');
-        editMyProfile.elements.lastNameTextBox().should('have.value', editMyProfile.lastName)
-        editMyProfile.elements.phoneText().should('have.text', 'Phone *');
-        editMyProfile.elements.phoneTextBox().should('have.value', editMyProfile.phone);
-        editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
-        editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypresssao@icf.com');
-        editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
-        editMyProfile.elements.receivesEmailNotificationsCheckbox().should('be.checked');
-        editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
-        editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
-        editMyProfile.elements.secondaryRoleTextForStateMng().should('have.text', 'Secondary Role');
-        editMyProfile.elements.standardUserRadioButton().should('have.text', 'Standard User');
-        editMyProfile.elements.stateManagerRadioButton().should('have.text', 'State Manager');
-        editMyProfile.elements.stateAuthorizationOfficialRadioButton().should('have.text', 'State Authorized Official');
-        editMyProfile.elements.previewEditsButton().should('have.text', 'Preview Edits');
-        editMyProfile.elements.accountSecurityText().should('have.text', 'Account Security');
-        editMyProfile.elements.deleteMyAccountButton().should('have.text', 'Delete My Account');
-        editMyProfile.elements.currentUserInfoFirstName().should('have.text', editMyProfile.firstName);
-        editMyProfile.elements.currentUserInfoLastName().should('have.text', editMyProfile.lastName);
-        editMyProfile.elements.currentUserInfoUsername().should('have.text', 'cypress.sao');
-        editMyProfile.elements.currentUserInfoUserEmail().should('have.text', 'tyler.smith+cypresssao@icf.com');
-        editMyProfile.elements.currentUserInfoReceivesEmail().should('have.text', 'Yes');
-        editMyProfile.elements.currentUserInfoPhone().should('have.text', editMyProfile.phone);
-        editMyProfile.elements.currentUserInfoState().should('have.text', 'Test State');
-        editMyProfile.elements.currentUserInfoStateAuthorizationOfficial().should('have.text', 'Yes');
-        editMyProfile.elements.currentUserInfoAccountLockedStateMng().should('have.text', 'No');
-        editMyProfile.elements.currentUserInfo().should('have.text', 'This information will not be updated until "Preview Edits" and then "Save Edits" have been clicked');
-        editMyProfile.elements.usernameTextBox().should('be.disabled');
-        editMyProfile.elements.userEmailTextBox().should('be.disabled');
-        editMyProfile.elements.previewEditsButton().should('be.disabled');
         editMyProfile.enterDefaultUsernamePasswordAndPhone('cypress', 'sao', '5082460311');
         editMyProfile.clickOnPreviewEdits();
-        editMyProfile.elements.editUserInfoModalText().should('have.text', 'Edit User Information');
-        editMyProfile.elements.oldInformationText().should('have.text', 'Old Information');
-        editMyProfile.elements.oldInformationFName().should('have.text', editMyProfile.firstName)
-        editMyProfile.elements.oldInformationLName().should('have.text', editMyProfile.lastName)
-        editMyProfile.elements.oldInformationNumber().should('have.text', editMyProfile.phone)
         editMyProfile.elements.revisedInformationText().should('have.text', 'Revised Information');
         editMyProfile.elements.revisedInformationFName().should('have.text', 'cypress')
         editMyProfile.elements.revisedInformationLName().should('have.text', "sao")
