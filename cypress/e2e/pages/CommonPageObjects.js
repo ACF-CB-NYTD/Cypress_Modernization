@@ -38,6 +38,8 @@ class CommonPageObjects {
     twentyfiveResultsBtn: () => cy.get('[name="25"]'),
     fiftyResultsBtn: () => cy.get('[name="50"]'),
     profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
+    submissionsTab: () => cy.get(':nth-child(3) > [data-testid="default_link"]'), // Submissions tab
+    exportCurrentTable: () => cy.get('div.styles_row___aqhD > button'), // Export Current table
   }
 
   verifyUrl(url) {
@@ -191,7 +193,13 @@ class CommonPageObjects {
   navigateBack() {
     cy.go('back')
   }
- 
+
+  clickOnSubmissionsTab() {
+    this.elements.submissionsTab().click();
+  }
+  clickOnExportCurrentTable() {
+    this.elements.exportCurrentTable().click({ force: true });
+  }
 
 }
 export default CommonPageObjects;
