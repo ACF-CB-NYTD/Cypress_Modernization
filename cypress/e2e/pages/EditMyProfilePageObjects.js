@@ -19,9 +19,9 @@ class EditMyProfilePageObjects {
         receivesEmailNotificationsCheckbox: () => cy.get('#receiveEmailNotifications'), //Receives email notification checkbox
         primaryRoleText: () => cy.get('span > span > p.styles_roleTitle__sI0_r'), //Primary role text
         primaryRoleInformationIcon: () => cy.get('button.styles_iconOnlyButton__jK5lV'), //Primary role information icon
-        primaryRoleTextForStateMng: () => cy.get('.styles_inputBoxes__jaCG4 > :nth-child(1) > .styles_roleTitle__sI0_r'), //Primary role text for state mng
-        stateUserForTestStateStateMngText: () => cy.get('.styles_primaryRoleRow__y90fr'), //Primary role for state mng
-        secondaryRoleTextForStateMng: () => cy.get('.styles_span__DfGgm > .styles_starAlign__0k_WA > .styles_roleTitle__sI0_r'), //Primary role text
+        primaryRoleTextForState: () => cy.get('.styles_inputBoxes__jaCG4 > :nth-child(1) > .styles_roleTitle__sI0_r'), //Primary role text for state mng
+        stateUserForTestStateStateText: () => cy.get('.styles_primaryRoleRow__y90fr'), //Primary role for state mng
+        secondaryRoleTextForState: () => cy.get('.styles_span__DfGgm > .styles_starAlign__0k_WA > .styles_roleTitle__sI0_r'), //Primary role text
         systemAdministratorRadioButton: () => cy.get(':nth-child(2) > .usa-radio__label'), //System administrator radio button
         standardUserRadioButton: () => cy.get(':nth-child(2) > .usa-radio__label'), //Standard user radio button
         stateManagerRadioButton: () => cy.get(':nth-child(3) > .usa-radio__label'), //State manager radio button

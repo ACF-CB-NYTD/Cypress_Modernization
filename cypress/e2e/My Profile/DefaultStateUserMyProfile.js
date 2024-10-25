@@ -162,9 +162,9 @@ describe("Verify My Profile for default state user", function () {
         editMyProfile.elements.userEmailText().should('have.text', 'User Email *');
         editMyProfile.elements.userEmailTextBox().should('have.value', 'tyler.smith+cypressdefault@icf.com');
         editMyProfile.elements.receivesEmailNotificationsText().should('have.text', 'Receive Email Notifications? *');
-        editMyProfile.elements.primaryRoleTextForStateMng().should('have.text', 'Primary Role');
-        editMyProfile.elements.stateUserForTestStateStateMngText().should('contain', 'State User for Test State');
-        editMyProfile.elements.secondaryRoleTextForStateMng().should('have.text', 'Secondary Role');
+        editMyProfile.elements.primaryRoleTextForState().should('have.text', 'Primary Role');
+        editMyProfile.elements.stateUserForTestStateStateText().should('contain', 'State User for Test State');
+        editMyProfile.elements.secondaryRoleTextForState().should('have.text', 'Secondary Role');
         editMyProfile.elements.standardUserRadioButton().should('have.text', 'Standard User');
         editMyProfile.elements.stateManagerRadioButton().should('have.text', 'State Manager');
         editMyProfile.elements.stateAuthorizationOfficialRadioButton().should('have.text', 'State Authorized Official');
