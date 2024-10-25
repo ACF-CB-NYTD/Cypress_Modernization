@@ -3,9 +3,9 @@ import CommonPageObjects from "../pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 import TransmissionPageObjects from "../pages/TransmissionsPageObjects";
 const transmissionPage = new TransmissionPageObjects();
-describe("State Manager User Transmission Page", function () {
+describe("State User Transmission Page", function () {
     beforeEach(() => {
-        cy.login('cypress.mgr', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.default', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify Transmission page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
@@ -59,7 +59,6 @@ describe("State Manager User Transmission Page", function () {
     });
     it("Verify the report period dropdown filters can be clicked", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.firstTableLink().should('exist');
         transmissionPage.elements.reportPeriodDropdown().click();
         transmissionPage.elements.reportPeriodDropdownOptions().each((option) => {
             cy.get(option).click();
@@ -67,7 +66,6 @@ describe("State Manager User Transmission Page", function () {
     });
     it("Verify the file type dropdown filters can be clicked", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.firstTableLink().should('exist');
         transmissionPage.elements.fileTypeDropdown().click();
         transmissionPage.elements.fileTypeDropdownOptions().each((option) => {
             cy.get(option).click();
@@ -75,7 +73,6 @@ describe("State Manager User Transmission Page", function () {
     });
     it("Verify the dropdown filters are working as expected", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.firstTableLink().should('exist');
         transmissionPage.elements.penaltyDropdown().click();
         transmissionPage.elements.penaltyDropdownCompliance().eq(1).click();
         commonPage.clickOnRefreshResultsBtn();
@@ -91,7 +88,7 @@ describe("State Manager User Transmission Page", function () {
         commonPage.clickOnRefreshResultsBtn();
         transmissionPage.elements.fileTypeTableData().should('have.text', 'Subsequent');
     });
-    it('Verify links are working as expected', function () {
+    it('Verify the file number and potential penalty links are working as expected', function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.firstTableLink().click();
         commonPage.verifyUrl('/User/Transmissions/Summary?');
@@ -103,84 +100,21 @@ describe("State Manager User Transmission Page", function () {
     it("Verify the Refresh Results button is greyed out by default", function () {
         cy.visit('/User/Transmissions');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
-        transmissionPage.typeFileNumber('8488');
+        transmissionPage.typeFileNumber('8487');
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
-    it.only("Verify Manager State user is able to upload file", function () {
+    it("Verify Default State user is not able to upload file", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.uploadTransmissionBtn().should('exist').click();
-        transmissionPage.elements.uploadModalHeader().should('have.text', 'NYTD File Upload').should('be.visible');
-        cy.get('[data-testid="alert"]').should('have.text', 'Asterisks (*) in field names are used to denote required fields.');
-        cy.get('[class="usa-modal"]').find('[data-testid="label"]').eq(0).should('have.text', 'Choose an xml file to upload. *');
-        cy.get('[class="usa-modal"]').find('[data-testid="label"]').eq(1).should('have.text', 'Report Period *');
-        cy.get('[class="usa-modal"]').find('[data-testid="label"]').eq(2).should('have.text', 'File Type *');
-        cy.get('button.styles_uploadButton__vdJ7F').should('have.text', 'Upload');
-        cy.get('[id="chooseFile"]').should('have.text', 'Choose File');
-
-
-
-        const file = 'VVG1CX4.CFI.ST.A2024.S241018.T1541.xml';
-        cy.get('input[type=file]').selectFile(`cypress/fixtures/${file}`, { force: true });
-
-        
-
-        cy.get('[id="reportPeriod"]').select('2024A');
-        cy.get('[id="reportPeriod"]').should('have.value', '2024A');
-        cy.get('[id="fileType"]').select('Subsequent');
-        cy.get('[id="fileType"]').should('have.value', 'Subsequent');
-        // cy.get('div.usa-modal:visible').find('button.nytd-button--tertiary').should('have.text', 'Cancel').click();
-        // transmissionPage.elements.uploadTransmissionBtn().click();
-        // cy.get('[data-testid="success_modal_h1"]').should('have.text', 'Success!');
-        // cy.get('[id="modal_subtitle_description"]').should('have.text', 'Your file was uploaded successfully.');
-        // cy.get('[id="success_modal_button"]').should('have.text', 'Return to Transmissions Page').click();
-
+        transmissionPage.elements.uploadTransmissionBtn().should('not.exist');
     });
-    it("Verify Manager State user can use the Submit Quick Action", function () {
+    it("Verify Default State user cannot use Quick Actions", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.firstTableLink().should('exist');
-
-        transmissionPage.elements.quickActionSubmit().eq(0).should('have.text', 'Submit').click();
-        transmissionPage.elements.submissionModal().find('[id="fileReviewID"]').should('have.text', 'Submit File Review');
-        transmissionPage.elements.submissionModal().find('[class="usa-prose"]').eq(0).should('have.text', 'You have chosen the following transmission for submission');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(0).children().eq(0).should('have.text', 'File Number:');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(1).children().eq(0).should('have.text', 'File Name:');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(2).children().eq(0).should('have.text', 'Report Period:');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(3).children().eq(0).should('have.text', 'File Type:');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(4).children().eq(0).should('have.text', 'Compliance Status:');
-        transmissionPage.elements.submissionModal().find('tbody').children().eq(5).children().eq(0).should('have.text', 'Potential Penalty:');
-        transmissionPage.elements.submissionModal().find('[class="usa-prose"]').eq(1).should('have.text', 'This file will become the "active" submission of record for this report period for monitoring and data analysis purposes. In addition, regular and corrected file submissions will be reviewed for compliance with NYTD standards by ACF.');
-        transmissionPage.elements.submissionModal().find('[data-testid="button"]').should('have.text', 'Confirm Submit');
-        transmissionPage.elements.submissionModal().find('[id="submission_confirmationCancelButton"]').should('have.text', 'Cancel').click();
-
-        transmissionPage.elements.firstTableLink().invoke('text').then((fileNum) => {
-            // transmissionPage.elements.quickActionSubmit().eq(0).should('have.text', 'Submit').click();
-            // transmissionPage.elements.submissionModal().find('[data-testid="button"]').should('have.text', 'Confirm Submit').click();
-            // cy.get('h2 > ?[data-testid="success_modal_h1"]').should('have.text', 'Success!');
-            // cy.get('[id="modal_subtitle_description"]').should('have.text', `File ${fileNum.trim()} was successfully submitted.`);
-            // cy.get('[id="success_modal_button"]').should('have.text', 'Return to Transmissions Page').click();
-        });
-
+        transmissionPage.elements.quickActionSubmit().should('not.exist');
+        transmissionPage.elements.quickActionDelete().should('not.exist');
     });
-    it("Verify Manager State user can use the Delete Quick Action", function () {
+    it("Verify Default State user is able to export current table", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.firstTableLink().should('exist');
-        transmissionPage.elements.quickActionDelete().eq(0).should('have.text', 'Delete').click({ force: true });
-        transmissionPage.elements.deleteModal().find('[id="fileReviewID"]').should('have.text', 'Delete File Review');
-        transmissionPage.elements.deleteModal().find('[class="usa-prose"]').eq(0).should('have.text', 'You have chosen the following transmission for deletion');
-        transmissionPage.elements.deleteModal().find('tbody').children().should('contain', 'File Number:').should('contain', 'File Name:').should('contain', 'Report Period:').should('contain', 'File Type:').should('contain', 'Compliance Status:').should('contain', 'Potential Penalty:');
-        transmissionPage.elements.deleteModal().find('[class="usa-prose"]').eq(1).should('have.text', 'This file will be deleted from the NYTD database and will no longer be available.');
-        transmissionPage.elements.deleteModal().find('[data-testid="button"]').should('have.text', 'Confirm Delete');
-        transmissionPage.elements.deleteModal().find('[id="deletion_confirmationCancelButton"]').should('have.text', 'Cancel').click();
-        transmissionPage.elements.quickActionDelete().eq(0).should('have.text', 'Delete').click({ force: true });
-        transmissionPage.elements.deleteModal().find('[data-testid="button"]').should('have.text', 'Confirm Delete').click();
-        cy.get('[data-testid="success_modal_h1"]').should('have.text', 'Success!');
-        cy.get('[id="modal_subtitle_description"]').should('have.text', 'File 8563 was successfully submitted.');
-        cy.get('[id="success_modal_button"]').should('have.text', 'Return to Transmissions Page').click();
-        // TODO do Delete
-    });
-    it("Verify Manager State user is able to export current table", function () {
-        cy.visit('/User/Transmissions');
-        commonPage.elements.exportBtn().should('have.text', 'Export Current Table').click();
+        // commonPage.elements.exportBtn().should('have.text', 'Export Current Table').click();
         // cy.verifyDownload('picture.png');
         // cy.readFile('nytd_transmissions_2024-10-15T19_07_43.791Z').should('exist');
         // TODO - verify excel doc is downloaded
@@ -200,7 +134,7 @@ describe("State Manager User Transmission Page", function () {
         transmissionPage.elements.transmissionDetails().children().eq(4).find('tbody').should('contain', 'Total');
         transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(0).should('have.text', 'Workflow Status');
     });
-    it("Verify the link and modals in the transmissions expanded view", function () {
+    it("Verify the links and modals in the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.firstTransmissionArrowBtn().click();
         transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click();
@@ -215,24 +149,26 @@ describe("State Manager User Transmission Page", function () {
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click();
-        transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(1).click({ force: true });
+        transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(1).click();
         transmissionPage.elements.readyModalHeader().should('have.text', 'Submission Available for this File');
         transmissionPage.elements.readyModalText().should('have.text', 'This file is ready for submission.');
         transmissionPage.elements.readyModalFooter().should('have.text', 'Close').find('button').click();
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.typeFileNumber('8488');
+        transmissionPage.typeFileNumber('8487');
         commonPage.clickOnRefreshResultsBtn();
-        transmissionPage.elements.firstTableLink().should('have.text', '8488');
+        transmissionPage.elements.firstTableLink().should('have.text', '8487');
         commonPage.clickOnClearFiltersBtn();
-        transmissionPage.typeFileNumber('8488');
+
+        transmissionPage.typeFileNumber('8487');
         commonPage.clickOnMagnifyingGlassSearchIcon();
-        transmissionPage.elements.firstTableLink().should('have.text', '8488');
+        transmissionPage.elements.firstTableLink().should('have.text', '8487');
         commonPage.clickOnClearFiltersBtn();
-        transmissionPage.typeFileNumber('8488');
+
+        transmissionPage.typeFileNumber('8487');
         transmissionPage.typeFileNumber('{enter}');
-        transmissionPage.elements.firstTableLink().should('have.text', '8488');
+        transmissionPage.elements.firstTableLink().should('have.text', '8487');
         commonPage.clickOnClearFiltersBtn();
     });
     it("Verify the Error Loading Results message is displayed when inputting letters", function () {
