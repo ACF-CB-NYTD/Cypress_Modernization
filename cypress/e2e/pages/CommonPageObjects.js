@@ -6,16 +6,13 @@ class CommonPageObjects {
     searchInput: () => cy.get('[data-testid="textInput"]'), // Search Input for user account to search for accounts
     refreshResultButton: () => cy.get('.nytd-button--secondary').contains('Refresh Results'), // Refresh result button to update the result
     WelcomeBtn: () => cy.get('.styles_navSection__cbCNb > .styles_liBox__gTXAi > [data-testid="default_link"]'), // Welcome button
-
     transmissionsBtn: () => cy.get('a').contains('Transmissions'), // Transmissions navigation button
     submissionsBtn: () => cy.get('a').contains('Submissions'), // Submissions navigation button
     cohortManagementBtn: () => cy.get('a').contains('Cohort Management'), // Cohort Management navigation button
     reportsBtn: () => cy.get('a').contains('Reports'), // Reports navigation button
     dataExportBtn: () => cy.get('a').contains('Data Export'), // Data Export navigation button
     samplingBtn: () => cy.get('a').contains('Sampling'), // Sampling navigation button
-
     exportBtn: () => cy.get('.styles_button__T2X6A').contains('Export Current Table'),
-
     logOutBtn: () => cy.get('[data-testid="logout_button"]'), // Logout button
     headerH3Text: () => cy.get('#main_content'), // Header H3 text
     pageDescriptionText: () => cy.get('.styles_description__0k9k1'), // Page description text under the main content header
@@ -30,7 +27,6 @@ class CommonPageObjects {
     textAreaSelector: () => cy.get('[data-testid="textarea"]'), // Text area selector for User account request deny selection
     denyRequestBtn: () => cy.get('[data-testid="Deny New_user_button"]'), // Deny request button for user account request
     myProfileSelect: () => cy.get(':nth-child(1) > .styles_button__dXuFt'), // My profile option in account setting dropdown
-
     // Cancel Request Modal
     cancelRequestBtn: () => cy.get('[class="nytd-button--tertiary"]').contains("Cancel Request"), //Cancel Request button at the bottom left.
     cancelModalHeader: () => cy.get('[id="areYouSureTitle"]'), //Cancel modal header text

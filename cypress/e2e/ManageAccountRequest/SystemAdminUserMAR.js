@@ -280,7 +280,7 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
-    it.only("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
+    it("Verify Elevate Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
         manageUserAccountRequestObjects.createElevationRequest();
         cy.login('cypress.sysadmin', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
@@ -312,7 +312,7 @@ describe("SA UAR Page Validations", function () {
         commonPage.clickOnRefreshResultBtn();
         manageUserAccountRequestObjects.deElevateCypressDefault();
     });
-    it.only("Verify Deny Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
+    it("Verify Deny Quick Action button for Elevate to State Manager or Elevate to State Authorized Official", function () {
         manageUserAccountRequestObjects.createElevationRequest();
         cy.login('cypress.sysadmin', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
@@ -342,7 +342,7 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.firstNameData().should('have.text', 'FName');
         manageUserAccountRequestObjects.elements.firstStatusData().should('contain', 'Declined');
     });
-    it.only("Verify Remove Quick Action button for Remove User", function () {
+    it("Verify Remove Quick Action button for Remove User", function () {
         manageUserAccountRequestObjects.createRemoveRequest();
         cy.login('cypress.sysadmin', 'P@ssw0rd1');
         cy.visit('/User/Account/Requests.html');
@@ -362,7 +362,7 @@ describe("SA UAR Page Validations", function () {
         manageUserAccountRequestObjects.elements.removeQuickActionBtn().eq(0).click();
         manageUserAccountRequestObjects.typeComment('Test comment');
     });
-    it.only("Verify Deny Quick Action button for Remove User", function () {
+    it("Verify Deny Quick Action button for Remove User", function () {
         manageUserAccountRequestObjects.createRemoveRequest();
         cy.login('cypress.sysadmin', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
