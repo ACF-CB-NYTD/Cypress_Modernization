@@ -179,7 +179,7 @@ describe("SAO User Transmission Page", function () {
             transmissionPage.elements.successModalBtn(fileNum).should('have.text', 'Return to Transmissions Page').click();
         });
     });
-    it.only("Verify SAO user is able to export current table", function () {
+    it("Verify SAO user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
         })
