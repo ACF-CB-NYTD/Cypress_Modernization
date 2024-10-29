@@ -7,6 +7,6 @@ describe("CB Central Office User Transmission Page", function () {
     it("Verify Transmission tab does not exist", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.elements.transmissionsBtn().should('not.exist');
+        commonPage.clickOnTransmissionsTab().should('not.exist');
     });
 });

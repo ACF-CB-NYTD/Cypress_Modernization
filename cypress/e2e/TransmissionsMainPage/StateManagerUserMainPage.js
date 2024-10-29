@@ -9,7 +9,7 @@ describe("State Manager User Transmission Page", function () {
     it("Verify Transmission page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.elements.transmissionsBtn().click();
+        commonPage.clickOnTransmissionsTab();
         commonPage.verifyBreadCrumbs('Transmissions');
         commonPage.elements.headerH3Text().should('have.text', 'Transmissions');
         commonPage.elements.pageDescriptionText().should('have.text', '[TRANSMISSIONS PAGE DESCRIPTION -  example: “Leave the filter blank if you wish to receive all column results. The filter will return transmissions that meet the criteria you select after clicking the "Refresh Results" button. To clear a filter, press the X (delete) button in the panel.”]');
@@ -178,7 +178,7 @@ describe("State Manager User Transmission Page", function () {
             transmissionPage.elements.successModalBtn(fileNum).should('have.text', 'Return to Transmissions Page').click();
         });
     });
-    it.only("Verify SAO user is able to export current table", function () {
+    it("Verify State Manager user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
         })

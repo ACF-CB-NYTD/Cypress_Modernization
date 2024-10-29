@@ -33,6 +33,7 @@ class TransmissionPageObjects {
         readyModalHeader: () => cy.get('[class="usa-modal__heading"]:visible'),
         readyModalText: () => cy.get('[class="usa-modal__content"]').find('[class="usa-prose"]:visible'),
         readyModalFooter: () => cy.get('[class="usa-modal__content"]').find('[data-testid="modalFooter"]:visible'),
+        downloadFileHeader : () => cy.get(':nth-child(7) > .styles_row__66FUN > .styles_title__ZGMcO'),
         errorHeader: () => cy.get('.styles_heading__wNxLX', { timeout: 30000 }),
         errorText: () => cy.get('.styles_description__0DZVg'),
         errorRefreshBtn: () => cy.get('.styles_action__oJXCb'),
@@ -55,6 +56,26 @@ class TransmissionPageObjects {
         successModalText: () => this.elements.successModal().find('.styles_iconSubtitleSpan__HkTlX > .styles_subtitle___RAKh'),
         successModalBtn: (fileNum) => cy.get(`[id="${fileNum.trim()}_modal_button"]`).eq(0),
         returnBreadcrumb: () => cy.get(':nth-child(2) > .styles_liOther__1TGKl'),
+    }
+
+    clickOnDQAElementLink() {
+        this.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click({ force: true });
+    }
+
+    clickOnRecordLink () {
+        this.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click({force:true});
+    }
+    
+    clickOnElementComplianceTotalLink() {
+        this.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({force:true});
+    }
+
+    clickOnWorkflowStatusLink() {
+        this.elements.transmissionDetails().children().eq(5).children().eq(1).click({ force: true });
+    }
+
+    clickOnDetailsDownloadLink() {
+        this.elements.transmissionDetails().children().eq(6).children().eq(1).click({ force: true });
     }
 
     getTableData(sysadmin, column) {

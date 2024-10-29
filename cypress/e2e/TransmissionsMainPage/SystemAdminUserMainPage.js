@@ -9,7 +9,7 @@ describe("System Admin User Transmission Page", function () {
     it("Verify Transmission page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.elements.transmissionsBtn().click();
+        commonPage.clickOnTransmissionsTab();
         commonPage.verifyBreadCrumbs('Transmissions');
         commonPage.elements.headerH3Text().should('have.text', 'Transmissions');
         commonPage.elements.pageDescriptionText().should('have.text', '[TRANSMISSIONS PAGE DESCRIPTION -  example: “Leave the filter blank if you wish to receive all column results. The filter will return transmissions that meet the criteria you select after clicking the "Refresh Results" button. To clear a filter, press the X (delete) button in the panel.”]');
@@ -164,7 +164,6 @@ describe("System Admin User Transmission Page", function () {
         transmissionPage.elements.submissionModal().find('[class="usa-prose"]').eq(1).should('have.text', 'This file will become the "active" submission of record for this report period for monitoring and data analysis purposes. In addition, regular and corrected file submissions will be reviewed for compliance with NYTD standards by ACF.');
         transmissionPage.elements.submissionModal().find('[data-testid="button"]').should('have.text', 'Confirm Submit');
         transmissionPage.elements.submissionModal().find('[id="submission_confirmationCancelButton"]').should('have.text', 'Cancel').click();
-        cy.wait(10000);
         transmissionPage.elements.firstTableLink().invoke('text').then((fileNum) => {
             transmissionPage.elements.quickActionSubmit().click();
             transmissionPage.elements.submissionModal().find('[data-testid="button"]').should('have.text', 'Confirm Submit').click();
@@ -194,7 +193,7 @@ describe("System Admin User Transmission Page", function () {
             transmissionPage.elements.successModalBtn(fileNum).should('have.text', 'Return to Transmissions Page').click();
         });
     });
-    it.only("Verify SAO user is able to export current table", function () {
+    it("Verify System Admin user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
         })
@@ -218,25 +217,30 @@ describe("System Admin User Transmission Page", function () {
         transmissionPage.elements.transmissionDetails().children().eq(4).find('tbody').should('contain', 'Total');
         transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(0).should('have.text', 'Workflow Status');
     });
-    it("Verify the link and modals in the transmissions expanded view", function () {
+    it("Verify the links, modals, and download file functionality in the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
-        transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click({force:true});
+        transmissionPage.clickOnDQAElementLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
-        transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click({force:true});
+        transmissionPage.clickOnRecordLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
-        transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({force:true});
+        transmissionPage.clickOnElementComplianceTotalLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
-        transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(1).click({ force: true });
+        transmissionPage.clickOnWorkflowStatusLink();   
         transmissionPage.elements.readyModalHeader().should('have.text', 'Submission Available for this File');
         transmissionPage.elements.readyModalText().should('have.text', 'This file is ready for submission.');
         transmissionPage.elements.readyModalFooter().should('have.text', 'Close').find('button').click();
+        transmissionPage.elements.stateDropdown().click();
+        transmissionPage.elements.secondDropdownContent().children().children().eq(1).children().eq(4).click();
+        transmissionPage.elements.downloadFileHeader().should('have.text', 'Download File');
+        transmissionPage.clickOnDetailsDownloadLink();
+        cy.verifyDownload('CA', { contains: true }, { timeout: 70000, interval: 900 });
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Transmissions');

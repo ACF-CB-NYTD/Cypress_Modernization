@@ -50,6 +50,11 @@ class CommonPageObjects {
   
   }
 
+  clickOnTransmissionsTab()
+  {
+    this.elements.transmissionsBtn().click();
+  }
+
   verifyUrl(url) {
     this.elements.url().should("include", url, {timeout: 10000});
   }
