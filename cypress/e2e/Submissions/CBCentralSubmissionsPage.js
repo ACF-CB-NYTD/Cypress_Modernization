@@ -3,48 +3,55 @@ import CommonPageObjects from "../pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 import SubmissionsPageObjects from "../pages/SubmissionsPageObjects";
 const submissionsPage = new SubmissionsPageObjects();
-describe("Default state User Submissions Page", function () {
+describe("System admin user Submissions Page", function () {
     beforeEach(() => {
-        cy.login('cypress.default', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.cb', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify Submissions page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.clickOnSubmissionsTab();
+        commonPage.clickOnSubmissionsTabForCBUser();
         commonPage.verifyBreadCrumbs('Submissions');
         commonPage.elements.headerH3Text().should('have.text', 'Submissions');
-        submissionsPage.elements.fileSearchName().should('have.text', 'File Search'); 
-        submissionsPage.elements.submissionDateText().should('have.text', 'Submission Date'); 
+        submissionsPage.elements.fileSearchName().should('have.text', 'File Search');
+        submissionsPage.elements.submissionDateText().should('have.text', 'Submission Date');
         submissionsPage.elements.fileSearchInput().should('exist');
         submissionsPage.elements.dateRangeInput().should('exist');
         submissionsPage.elements.penaltyDropdown().should('contain', 'Penalty');
-        submissionsPage.elements.reportPeriodDropdown().should('contain', 'Report Period');
-        submissionsPage.elements.fileTypeDropdown().should('contain', 'File Type');
-        submissionsPage.elements.statusDropdown().should('contain', 'Status');
+        submissionsPage.elements.stateDropdown().should('contain', 'State');
+        submissionsPage.elements.reportPeriodDropdownForSysadmin().should('contain', 'Report Period');
+        submissionsPage.elements.fileTypeDropdownForSysAdmin().should('contain', 'File Type');
+        submissionsPage.elements.statusDropdownForSysAdmin().should('contain', 'Status');
         submissionsPage.elements.penaltyDropdown().click();
         submissionsPage.elements.penaltyDropdownCompliance().should('have.text', 'Compliant0.00%');
         submissionsPage.elements.penaltyDropdownNonCompliance().each((option) => {
             expect(option.text()).to.be.oneOf(['Non-Compliant', '0.00%', 'All', '0.50%', '1.00%', '1.25%', '1.50%', '1.75%', '2.50%']);
         });
-        submissionsPage.elements.reportPeriodDropdown().click();
+
+        submissionsPage.elements.stateDropdownForSysAdmin().click();
+        submissionsPage.elements.stateDropDownOptionForSysAdmin().each((option) => {
+            expect(option.text()).to.be.oneOf(['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'Test State']);
+        });
+        submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
         submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().each((option) => {
             expect(option.text()).to.be.oneOf(['2010B', '2011A', '2011B', '2012A', '2012B', '2013A', '2013B', '2014A', '2014B', '2015A', '2015B', '2016A', '2016B', '2017A', '2017B', '2018A', '2018B', '2019A', '2019B', '2020A', '2020B', '2021A', '2021B', '2022A', '2022B', '2023A', '2023B', '2024A', '2024B', '2025A']);
         });
-        submissionsPage.elements.fileTypeDropdown().click();
+        submissionsPage.elements.fileTypeDropdownForSysAdmin().click();
         submissionsPage.elements.fileTypeDropdownOptionsForSysAdmin().each((option) => {
             expect(option.text()).to.be.oneOf(['Regular', 'Corrected', 'Subsequent', 'Test']);
         });
-        submissionsPage.elements.statusDropdown().click();
+        submissionsPage.elements.statusDropdownForSysAdmin().click();
         submissionsPage.elements.statusDropdownOptionsForSysAdmin().each((option) => {
             expect(option.text()).to.be.oneOf(['Hide Inactive Submissions']);
-        }); 
+        });
         commonPage.elements.clearFiltersBtn().should('contain', 'Clear Filters');
         commonPage.elements.refreshResultsBtn().should('contain', 'Refresh Results');
         submissionsPage.elements.fileNumberHeader().should('have.text', 'File Number');
-        submissionsPage.elements.reportPeriodHeader().should('have.text', 'Report Period');
-        submissionsPage.elements.submissionDateHeader().should('have.text', 'Submission Date');
+        cy.get(':nth-child(3) > .styles_tableHeader__mVxy6 > .styles_fieldName__kegXV').should('have.text', 'State');
+        submissionsPage.elements.reportPeriodHeaderForSysAdmin().should('have.text', 'Report Period');
+        submissionsPage.elements.submissionDateHeaderForSysAdmin().should('have.text', 'Submission Date');
         submissionsPage.elements.fileTypeHeader().should('have.text', 'File Type');
-        submissionsPage.elements.statusHeader().should('have.text', 'Status');
+        submissionsPage.elements.statusHeaderForSysAdmin().should('have.text', 'Status');
         submissionsPage.elements.complianceHeader().should('have.text', 'Compliance');
         submissionsPage.elements.penaltyHeader().should('have.text', 'Potential Penalty');
     });
@@ -77,41 +84,42 @@ describe("Default state User Submissions Page", function () {
             cy.get(option).click();
         })
     });
-    it.only("Verify the dropdown filters are working as expected", function () {
+    it("Verify the dropdown filters are working as expected", function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.firstTableLink().should('exist');
         submissionsPage.elements.penaltyDropdown().click();
         submissionsPage.elements.penaltyDropdownCompliance().eq(1).click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.penaltyTableData().should('have.text', 'Compliant');
+        submissionsPage.elements.penaltyTableDataForSysAdmin().should('have.text', 'Compliant');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.elements.reportPeriodDropdown().click();
-        submissionsPage.elements.reportPeriodDropdownOptions().eq(2).click();
+        submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
+        submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().eq(2).click();
+        submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.reportPeriodTableData().should('have.text', '2024A');
+        submissionsPage.elements.reportPeriodTableDataForSysAdmin().should('have.text', '2024A');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.elements.fileTypeDropdown().click();
-        submissionsPage.elements.fileTypeDropdownOptions().eq(2).click();
+        submissionsPage.elements.fileTypeDropdownForSysAdmin().click();
+        submissionsPage.elements.fileTypeDropdownOptionsForSysAdmin().eq(2).click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.fileTypeTableData().should('have.text', 'Subsequent');
+        submissionsPage.elements.fileTypeTableDataForSysAdmin().should('have.text', 'Subsequent');
     });
     it('Verify links are working as expected', function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.firstTableLink().click();
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
-        submissionsPage.elements.firstPenaltyLink().click();
+        submissionsPage.elements.firstPenaltyLinkForSysAdmin().click();
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
     });
     it("Verify the Refresh Results button is greyed out by default", function () {
         cy.visit('/User/Submissions');
         commonPage.elements.refreshResultsBtn().should('be.disabled');
-        submissionsPage.typeFileNumber('8488');
+        submissionsPage.typeFileNumberForSysAdmin('8488');
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
 
-    it("Verify Default State user is able to export current table", function () {
+    it("Verify System admin user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
         })
@@ -153,22 +161,22 @@ describe("Default state User Submissions Page", function () {
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.typeFileNumber('8488');
+        submissionsPage.typeFileNumberForSysAdmin('8488');
         commonPage.clickOnRefreshResultsBtn();
         submissionsPage.elements.firstTableLink().should('have.text', '8488');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.typeFileNumber('8488');
+        submissionsPage.typeFileNumberForSysAdmin('8488');
         commonPage.clickOnMagnifyingGlassSearchIcon();
         submissionsPage.elements.firstTableLink().should('have.text', '8488');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.typeFileNumber('8488');
-        submissionsPage.typeFileNumber('{enter}');
+        submissionsPage.typeFileNumberForSysAdmin('8488');
+        submissionsPage.typeFileNumberForSysAdmin('{enter}');
         submissionsPage.elements.firstTableLink().should('have.text', '8488');
         commonPage.clickOnClearFiltersBtn();
     });
     it("Verify the Error Loading Results message is displayed when inputting letters", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.typeFileNumber('abc');
+        submissionsPage.typeFileNumberForSysAdmin('abc');
         commonPage.clickOnRefreshResultsBtn();
         submissionsPage.getErrorHeader().should('have.text', 'Error Loading Results');
         submissionsPage.elements.errorText().should('have.text', 'We encountered an error while trying to load submission data. Refresh the page to try again. If the problem persists please contact the support line.');
@@ -188,9 +196,9 @@ describe("Default state User Submissions Page", function () {
     });
     it("Verify the table can be sorted by the Report Period header", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.elements.tableSecondHeader().click();
+        submissionsPage.elements.tableSecondHeaderForSysAdmin().click();
         submissionsPage.checkIsArraySorted(3, 'descending');
-        submissionsPage.elements.tableSecondHeader().click();
+        submissionsPage.elements.tableSecondHeaderForSysAdmin().click();
         submissionsPage.checkIsArraySorted(3, 'ascending');
     });
     it("Verify the table can be sorted by the submission Date header", function () {
@@ -202,9 +210,9 @@ describe("Default state User Submissions Page", function () {
     });
     it("Verify the table can be sorted by the File Type header", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.elements.tableFourthHeader().click();
+        submissionsPage.elements.tableFourthHeaderForSysAdmin().click();
         submissionsPage.checkIsArraySorted(5, 'descending');
-        submissionsPage.elements.tableFourthHeader().click();
+        submissionsPage.elements.tableFourthHeaderForSysAdmin().click();
         submissionsPage.checkIsArraySorted(5, 'ascending');
     });
     it("Verify the table can be sorted by the Compliance header", function () {
@@ -217,9 +225,9 @@ describe("Default state User Submissions Page", function () {
     it("Verify the table can be sorted by the Potential Penalty header", function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.tableSixthHeader().click();
-        submissionsPage.checkIsArraySorted(7, 'descending');
+        submissionsPage.checkIsArraySorted(8, 'descending');
         submissionsPage.elements.tableSixthHeader().click();
-        submissionsPage.checkIsArraySorted(7, 'ascending');
+        submissionsPage.checkIsArraySorted(8, 'ascending');
     });
 
 });

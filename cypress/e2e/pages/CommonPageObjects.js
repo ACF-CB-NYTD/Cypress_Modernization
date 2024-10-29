@@ -40,6 +40,7 @@ class CommonPageObjects {
     profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
     submissionsTab: () => cy.get(':nth-child(3) > [data-testid="default_link"]'), // Submissions tab
     exportCurrentTable: () => cy.get('div.styles_row___aqhD > button'), // Export Current table
+    clickOnSubmissionsTabForCBUser: () => cy.get(':nth-child(2) > [data-testid="default_link"]'),
   }
 
   verifyUrl(url) {
@@ -198,7 +199,10 @@ class CommonPageObjects {
     this.elements.submissionsTab().click();
   }
   clickOnExportCurrentTable() {
-    this.elements.exportCurrentTable().click({ force: true });
+    this.elements.exportCurrentTable().dblclick({ force: true });
+  }
+  clickOnSubmissionsTabForCBUser(){
+    this.elements.clickOnSubmissionsTabForCBUser().click();
   }
 
 }

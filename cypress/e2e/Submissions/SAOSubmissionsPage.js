@@ -3,9 +3,9 @@ import CommonPageObjects from "../pages/CommonPageObjects";
 const commonPage = new CommonPageObjects();
 import SubmissionsPageObjects from "../pages/SubmissionsPageObjects";
 const submissionsPage = new SubmissionsPageObjects();
-describe("Default state User Submissions Page", function () {
+describe("SAO user Submissions Page", function () {
     beforeEach(() => {
-        cy.login('cypress.default', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.sao', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify Submissions page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
@@ -13,8 +13,8 @@ describe("Default state User Submissions Page", function () {
         commonPage.clickOnSubmissionsTab();
         commonPage.verifyBreadCrumbs('Submissions');
         commonPage.elements.headerH3Text().should('have.text', 'Submissions');
-        submissionsPage.elements.fileSearchName().should('have.text', 'File Search'); 
-        submissionsPage.elements.submissionDateText().should('have.text', 'Submission Date'); 
+        submissionsPage.elements.fileSearchName().should('have.text', 'File Search');
+        submissionsPage.elements.submissionDateText().should('have.text', 'Submission Date');
         submissionsPage.elements.fileSearchInput().should('exist');
         submissionsPage.elements.dateRangeInput().should('exist');
         submissionsPage.elements.penaltyDropdown().should('contain', 'Penalty');
@@ -27,17 +27,17 @@ describe("Default state User Submissions Page", function () {
             expect(option.text()).to.be.oneOf(['Non-Compliant', '0.00%', 'All', '0.50%', '1.00%', '1.25%', '1.50%', '1.75%', '2.50%']);
         });
         submissionsPage.elements.reportPeriodDropdown().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.reportPeriodDropdownOptions().each((option) => {
             expect(option.text()).to.be.oneOf(['2010B', '2011A', '2011B', '2012A', '2012B', '2013A', '2013B', '2014A', '2014B', '2015A', '2015B', '2016A', '2016B', '2017A', '2017B', '2018A', '2018B', '2019A', '2019B', '2020A', '2020B', '2021A', '2021B', '2022A', '2022B', '2023A', '2023B', '2024A', '2024B', '2025A']);
         });
         submissionsPage.elements.fileTypeDropdown().click();
-        submissionsPage.elements.fileTypeDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.fileTypeDropdownOptions().each((option) => {
             expect(option.text()).to.be.oneOf(['Regular', 'Corrected', 'Subsequent', 'Test']);
         });
         submissionsPage.elements.statusDropdown().click();
-        submissionsPage.elements.statusDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.statusDropdownOptions().each((option) => {
             expect(option.text()).to.be.oneOf(['Hide Inactive Submissions']);
-        }); 
+        });
         commonPage.elements.clearFiltersBtn().should('contain', 'Clear Filters');
         commonPage.elements.refreshResultsBtn().should('contain', 'Refresh Results');
         submissionsPage.elements.fileNumberHeader().should('have.text', 'File Number');
@@ -77,7 +77,7 @@ describe("Default state User Submissions Page", function () {
             cy.get(option).click();
         })
     });
-    it.only("Verify the dropdown filters are working as expected", function () {
+    it("Verify the dropdown filters are working as expected", function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.firstTableLink().should('exist');
         submissionsPage.elements.penaltyDropdown().click();
@@ -111,7 +111,7 @@ describe("Default state User Submissions Page", function () {
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
 
-    it("Verify Default State user is able to export current table", function () {
+    it("Verify SAO user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
         })
