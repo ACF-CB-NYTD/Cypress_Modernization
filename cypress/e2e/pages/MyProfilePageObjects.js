@@ -6,12 +6,12 @@ class MyProfilePageObjects {
         dataExportText: () => cy.get('.styles_span__WV1T8 > p'), // This is the phone number for the id 
         email: () => cy.get(':nth-child(3) > p'), // This is the email  for the id
         emailForRegionalID: () => cy.get('.styles_frame__z_r5H > :nth-child(2) > p'), // This is the email  regional id
-        emailForTestStateMngID: () => cy.get('.styles_frame__z_r5H > :nth-child(2) > p'), // This is the email for test state mng id
+        emailForTestStateMngID: () => cy.get(':nth-child(3) > p'), // This is the email for test state mng id
         emailForTestStateSao: () => cy.get('.styles_frame__z_r5H > :nth-child(3) > p'), // This is the email for test state sao id
         emailForTestStateUser: () => cy.get('.styles_frame__z_r5H > :nth-child(2) > p'), // This is the email  regional id
         receivesEmailNotification: () => cy.get(':nth-child(4) > p'), // This locator will display if the user will receive notification or not
         receivesEmailNotificationForRegional: () => cy.get(':nth-child(3) > p'), // This locator will display if the user will receive notification or not
-        receivesEmailNotificationForTestStageMng: () => cy.get(':nth-child(3) > p'), // This locator will display if the user will receive notification or not
+        receivesEmailNotificationForTestStageMng: () => cy.get(':nth-child(4) > p'), // This locator will display if the user will receive notification or not
         receivesEmailNotificationForTestStatesao: () => cy.get(':nth-child(4) > p'), // This locator will display if the user will receive notification or not
         receivesEmailNotificationForTestState: () => cy.get(':nth-child(3) > p'), // This locator will display if the user will receive notification or not
         userType: () => cy.get('.styles_primaryRoleText__1f2Fo'), // This locator will the user type
@@ -29,6 +29,15 @@ class MyProfilePageObjects {
         requestStateAuthOfficialAccessBtnForSTestStateUser: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(2)'), // Request state authorization official access button for state user
         requestStateManagerAccessBtnForTestStateUser: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(1)'), // Request state authorization official access button for state user
         cancelBtn: () => cy.get('#cancel_button'), // Cancel btn on delete your account modal.
+        requestStateAuthorizedOfficialAccessBtn: () => cy.get('#main_body > div > main > div > span > div.styles_userInfo__1mErK > span > button'), //Request State Authorized official access
+        requestStateAuthorizedOfficialAccessModalText: () => cy.get('#elevationRequestTitle'), //Request State auth official access text on the modal
+        myStateCurrentlyHasStateAuthorizedOfficialRadioButton: () => cy.get('#description > div:nth-child(2) > label'), //My state currently has a State Authorized Official
+        myStateDoesNotCurrentlyHaveStateAuthorizedOfficial: () => cy.get('#description > div:nth-child(3) > label'), //My state does not currently have a State Authorized Official
+        cancelBtnForRequestStateAuthModal: () => cy.get('div > div > div > div > span > button.usa-button.usa-button--outline'), // Cancel btn on request state authorized official access.
+        requestStateAuthorizedOfficialAccessBtnDefaultState: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(2)'), //Request State Authorized official access
+        requestStateManagerAccessDefaultUser: () => cy.get('[data-testid="StateUserRequestElevationSpan"] > :nth-child(1)'), //Request State Authorized official access
+
+    
     }
 
     clickOnEditMyProfileButton() {
@@ -42,10 +51,23 @@ class MyProfilePageObjects {
     clickOnCancelButton() {
         this.elements.cancelBtn().click();
     }
+    clickOnCancelButtonForRequestStateAuthOfficialAccessModal() {
+        this.elements.cancelBtnForRequestStateAuthModal().click();
+    }
 
     clickOnDeleteMyAccount() {
         this.elements.deleteMyAccountBtn().click({ force: true });
         cy.wait(1000)
+    }
+    clickOnRequestStateAuthorizedOfficialAccessBtn() {
+        this.elements.requestStateAuthorizedOfficialAccessBtn().click();
+    }
+
+    clickOnRequestStateAuthorizedOfficialAccessBtnForStateUser() {
+        this.elements.requestStateAuthorizedOfficialAccessBtnDefaultState().click();
+    }
+    clickOnRequestStateManagerAccessForStateUser() {
+        this.elements.requestStateManagerAccessDefaultUser().click();
     }
 }
 export default MyProfilePageObjects;
