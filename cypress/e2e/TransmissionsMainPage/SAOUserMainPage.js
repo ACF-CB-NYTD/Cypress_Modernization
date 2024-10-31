@@ -117,7 +117,6 @@ describe("SAO User Transmission Page", function () {
         transmissionPage.elements.uploadBtn().should('have.text', 'Choose File');
 
 
-        // TODO - Make upload work
         const file = 'VVG1CX4.CFI.ST.A2024.S241018.T1541.xml';
         transmissionPage.elements.uploadInput().selectFile(`cypress/fixtures/${file}`, { force: true });
 
@@ -127,11 +126,10 @@ describe("SAO User Transmission Page", function () {
         transmissionPage.elements.reportPeriodSelect().should('have.value', '2024A');
         transmissionPage.elements.fileTypeSelect().select('Subsequent');
         transmissionPage.elements.fileTypeSelect().should('have.value', 'Subsequent');
-        // cy.get('div.usa-modal:visible').find('button.nytd-button--tertiary').should('have.text', 'Cancel').click();
         // transmissionPage.elements.uploadTransmissionBtn().click();
-        // cy.get('[data-testid="success_modal_h1"]').should('have.text', 'Success!');
-        // cy.get('[id="modal_subtitle_description"]').should('have.text', 'Your file was uploaded successfully.');
-        // cy.get('[id="success_modal_button"]').should('have.text', 'Return to Transmissions Page').click();
+        // transmissionPage.uploadSuccessHeader.should('have.text', 'Success!');
+        // transmissionPage.uploadSuccessText.should('have.text', 'Your file was uploaded successfully.');
+        // transmissionPage.uploadSuccessBtn.should('have.text', 'Return to Transmissions Page').click();
 
     });
     it("Verify SAO user can use the Submit Quick Action", function () {
@@ -185,9 +183,12 @@ describe("SAO User Transmission Page", function () {
         })
         cy.visit('/User/Transmissions');
         commonPage.elements.exportBtn().should('have.text', 'Export Current Table');
-        commonPage.elements.exportBtn().click({force:true});
-        commonPage.elements.exportBtn().click({force:true});
-        cy.verifyDownload('nytd_transmissions_2024-10-28T', { contains: true }, { timeout: 70000, interval: 900 });
+        commonPage.elements.exportBtn().click();
+        commonPage.elements.exportBtn().click();
+        const date = new Date();
+        const month = date.getMonth() + 1; // getMonth() returns month from 0-11, so add 1
+        const day = date.getDate();
+        cy.verifyDownload(`nytd_transmissions_2024-${month}-${day}T`, { contains: true }, { timeout: 70000, interval: 900 });
     });
     it("Verify the arrow dropdown button opens the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');
@@ -236,7 +237,6 @@ describe("SAO User Transmission Page", function () {
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Transmissions');
-        // Todo match uploaded file
         transmissionPage.typeFileNumber('8460');
         commonPage.clickOnRefreshResultsBtn();
         transmissionPage.elements.firstTableLink().should('have.text', '8460');

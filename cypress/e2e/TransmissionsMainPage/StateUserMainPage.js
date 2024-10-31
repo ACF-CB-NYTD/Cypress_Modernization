@@ -121,8 +121,12 @@ describe("State User Transmission Page", function () {
         })
         cy.visit('/User/Transmissions');
         commonPage.elements.exportBtn().should('have.text', 'Export Current Table');
-        commonPage.elements.exportBtn().click({force:true});
-        cy.verifyDownload('nytd_transmissions_2024-10-28T17_', { contains: true }, { timeout: 70000, interval: 900 });
+        commonPage.elements.exportBtn().click();
+        commonPage.elements.exportBtn().click();
+        const date = new Date();
+        const month = date.getMonth() + 1; // getMonth() returns month from 0-11, so add 1
+        const day = date.getDate();
+        cy.verifyDownload(`nytd_transmissions_2024-${month}-${day}T`, { contains: true }, { timeout: 70000, interval: 900 });
     });
     it("Verify the arrow dropdown button opens the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');

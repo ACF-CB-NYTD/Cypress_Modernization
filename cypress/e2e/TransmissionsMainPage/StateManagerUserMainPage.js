@@ -117,20 +117,19 @@ describe("State Manager User Transmission Page", function () {
         transmissionPage.elements.uploadBtn().should('have.text', 'Choose File');
 
 
-        // TODO - Make upload work
         const file = 'VVG1CX4.CFI.ST.A2024.S241018.T1541.xml';
         transmissionPage.elements.uploadInput().selectFile(`cypress/fixtures/${file}`, { force: true });
 
-        
+
 
         transmissionPage.elements.reportPeriodSelect().select('2024A');
         transmissionPage.elements.reportPeriodSelect().should('have.value', '2024A');
         transmissionPage.elements.fileTypeSelect().select('Subsequent');
         transmissionPage.elements.fileTypeSelect().should('have.value', 'Subsequent');
         // transmissionPage.elements.uploadTransmissionBtn().click();
-        // cy.get('[data-testid="success_modal_h1"]').should('have.text', 'Success!');
-        // cy.get('[id="modal_subtitle_description"]').should('have.text', 'Your file was uploaded successfully.');
-        // cy.get('[id="success_modal_button"]').should('have.text', 'Return to Transmissions Page').click();
+        // transmissionPage.uploadSuccessHeader.should('have.text', 'Success!');
+        // transmissionPage.uploadSuccessText.should('have.text', 'Your file was uploaded successfully.');
+        // transmissionPage.uploadSuccessBtn.should('have.text', 'Return to Transmissions Page').click();
 
     });
     it("Verify State Manager user can use the Submit Quick Action", function () {
@@ -154,7 +153,7 @@ describe("State Manager User Transmission Page", function () {
             transmissionPage.elements.submissionModal().find('[data-testid="button"]').should('have.text', 'Confirm Submit').click();
             transmissionPage.elements.successModalHeader().should('have.text', 'Success!');
             transmissionPage.elements.successModalText().should('have.text', `File ${fileNum.trim()} was successfully submitted.`);
-            transmissionPage.elements.successModalBtn(fileNum).should('have.text', 'Return to Transmissions Page').click({force:true});
+            transmissionPage.elements.successModalBtn(fileNum).should('have.text', 'Return to Transmissions Page').click({ force: true });
         });
 
     });
@@ -184,8 +183,12 @@ describe("State Manager User Transmission Page", function () {
         })
         cy.visit('/User/Transmissions');
         commonPage.elements.exportBtn().should('have.text', 'Export Current Table');
-        commonPage.elements.exportBtn().click({force:true});
-        cy.verifyDownload('nytd_transmissions_2024-10-28T17_', { contains: true }, { timeout: 70000, interval: 900 });
+        commonPage.elements.exportBtn().click();
+        commonPage.elements.exportBtn().click();
+        const date = new Date();
+        const month = date.getMonth() + 1; // getMonth() returns month from 0-11, so add 1
+        const day = date.getDate();
+        cy.verifyDownload(`nytd_transmissions_2024-${month}-${day}T`, { contains: true }, { timeout: 70000, interval: 900 });
     });
     it("Verify the arrow dropdown button opens the transmissions expanded view", function () {
         cy.visit('/User/Transmissions');
@@ -213,7 +216,7 @@ describe("State Manager User Transmission Page", function () {
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click();
-        transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({force:true});
+        transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({ force: true });
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click();
@@ -234,7 +237,6 @@ describe("State Manager User Transmission Page", function () {
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Transmissions');
-        // Todo match uploaded file
         transmissionPage.typeFileNumber('8460');
         commonPage.clickOnRefreshResultsBtn();
         transmissionPage.elements.firstTableLink().should('have.text', '8460');
