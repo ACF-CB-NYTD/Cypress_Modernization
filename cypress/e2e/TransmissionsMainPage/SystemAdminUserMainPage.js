@@ -225,14 +225,17 @@ describe("System Admin User Transmission Page", function () {
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.clickOnDQAElementLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=dqa&tab=element-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.clickOnRecordLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=dqa&tab=record-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.clickOnElementComplianceTotalLink();
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=compliance&tab=element-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.clickOnWorkflowStatusLink();   

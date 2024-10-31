@@ -148,14 +148,17 @@ describe("State User Transmission Page", function () {
         transmissionPage.elements.firstTransmissionArrowBtn().click();
         transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click({force:true});
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=dqa&tab=element-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click({force:true});
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=dqa&tab=record-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({force:true});
         commonPage.verifyUrl('/User/Transmissions/TransmissionDetail?');
+        commonPage.verifyUrl('&view=compliance&tab=element-level');
         transmissionPage.elements.returnBreadcrumb().click();
         transmissionPage.elements.firstTransmissionArrowBtn().click({force:true});
         transmissionPage.elements.transmissionDetails().children().eq(5).children().eq(1).click();
