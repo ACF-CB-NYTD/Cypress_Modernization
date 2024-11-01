@@ -3,29 +3,30 @@ class TransmissionPageObjects {
     elements = {
         fileSearchName: () => cy.get('[for="transmissionId"]'), // Name Search label
         fileSearchInput: () => cy.get('[id="transmissionId"]'), // Name Search input
-        dateRangeName: () => cy.get('[for="date-range-filter-fileReceivedDate"]'),
-        dateRangeInput: () => cy.get('[data-testid="date-range-picker"]'),
-        dateRangeBtn: () => cy.get('[data-testid="daterangepicker_calendar_button"]'),
-        penaltyDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('Penalty'),
-        reportPeriodDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('Report Period'),
-        fileTypeDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('File Type'),
-        stateDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('State'),
-        firstDropdownContent: () => cy.get(':nth-child(1) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'),
-        secondDropdownContent: () => cy.get(':nth-child(2) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'),
-        thirdDropdownContent: () => cy.get(':nth-child(3) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'),
-        fourthDropdownContent: () => cy.get(':nth-child(4) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'),
-        fileNumberHeader: () => cy.get('[name="transmissionId"]'),
-        reportPeriodHeader: () => cy.get('[name="reportingPeriod"]'),
-        transmissionDateHeader: () => cy.get('[name="fileReceivedDate"]'),
-        fileTypeHeader: () => cy.get('[name="transmissionType"]'),
-        complianceHeader: () => cy.get('[name="complianceStatus"]'),
-        penaltyHeader: () => cy.get('[name="potentialPenalty"]'),
-        tableFirstHeader: () => cy.get('[name="transmissionId"]'),
-        tableSecondHeader: () => cy.get('[name="reportingPeriod"]'),
-        tableThirdHeader: () => cy.get('[name="fileReceivedDate"]'),
-        tableFourthHeader: () => cy.get('[name="transmissionType"]'),
-        tableFifthHeader: () => cy.get('[name="complianceStatus"]'),
-        tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
+        dateRangeName: () => cy.get('[for="date-range-filter-fileReceivedDate"]'), // Date Range label
+        dateRangeInput: () => cy.get('[data-testid="date-range-picker"]'), // Date Range input
+        dateRangeBtn: () => cy.get('[data-testid="daterangepicker_calendar_button"]'), // Date Range button
+        penaltyDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('Penalty'), // Penalty dropdown
+        reportPeriodDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('Report Period'), //report period dropdown
+        fileTypeDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('File Type'), //file type dropdown
+        stateDropdown: () => cy.get('div.styles_buttonGroup__NYJPa', { timeout: 10000 }).contains('State'), //state dropdown
+        firstDropdownContent: () => cy.get(':nth-child(1) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'), //first dropdown content
+        secondDropdownContent: () => cy.get(':nth-child(2) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'), //second dropdown content
+        thirdDropdownContent: () => cy.get(':nth-child(3) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'), //third dropdown content
+        fourthDropdownContent: () => cy.get(':nth-child(4) > [data-testid="dropdown_div"] > .styles_dropdownContent__J4gLt'), //fourth dropdown content
+        fileNumberHeader: () => cy.get('[name="transmissionId"]'), // table header
+        reportPeriodHeader: () => cy.get('[name="reportingPeriod"]'), // table header
+        transmissionDateHeader: () => cy.get('[name="fileReceivedDate"]'), // table header
+        fileTypeHeader: () => cy.get('[name="transmissionType"]'), // table header
+        complianceHeader: () => cy.get('[name="complianceStatus"]'), // table header
+        penaltyHeader: () => cy.get('[name="potentialPenalty"]'), // table header
+        stateHeader: () => cy.get(':nth-child(3) > .styles_tableHeader__mVxy6 > .styles_fieldName__kegXV'),
+        // tableFirstHeader: () => cy.get('[name="transmissionId"]'),
+        // tableSecondHeader: () => cy.get('[name="reportingPeriod"]'),
+        // tableThirdHeader: () => cy.get('[name="fileReceivedDate"]'),
+        // tableFourthHeader: () => cy.get('[name="transmissionType"]'),
+        // tableFifthHeader: () => cy.get('[name="complianceStatus"]'),
+        // tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
         firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > .usa-link', { timeout: 10000 }),
         firstPenaltyLink: () => cy.get(':nth-child(1) > [align="center"] > .usa-link'),
         firstTransmissionArrowBtn: () => cy.get(':nth-child(1) > [style="width: 62px;"] > .nytd-icon-button', { timeout: 10000 }),
@@ -33,7 +34,7 @@ class TransmissionPageObjects {
         readyModalHeader: () => cy.get('[class="usa-modal__heading"]:visible'),
         readyModalText: () => cy.get('[class="usa-modal__content"]').find('[class="usa-prose"]:visible'),
         readyModalFooter: () => cy.get('[class="usa-modal__content"]').find('[data-testid="modalFooter"]:visible'),
-        downloadFileHeader : () => cy.get(':nth-child(7) > .styles_row__66FUN > .styles_title__ZGMcO'),
+        downloadFileHeader: () => cy.get(':nth-child(7) > .styles_row__66FUN > .styles_title__ZGMcO'),
         errorHeader: () => cy.get('.styles_heading__wNxLX', { timeout: 30000 }),
         errorText: () => cy.get('.styles_description__0DZVg'),
         errorRefreshBtn: () => cy.get('.styles_action__oJXCb'),
@@ -43,7 +44,7 @@ class TransmissionPageObjects {
         uploadModalLabels: () => cy.get('[class="usa-modal"]').find('[data-testid="label"]'),
         uploadConfirmationBtn: () => cy.get('button.styles_uploadButton__vdJ7F'),
         uploadBtn: () => cy.get('[id="chooseFile"]'),
-        uploadInput: () => cy.get('input[type=file]'),
+        uploadInput: () => cy.get('[id="uploadXML"]'),
         uploadSuccessHeader: () => cy.get('[data-testid="success_modal_h1"]'),
         uploadSuccessText: () => cy.get('[id="modal_subtitle_description"]'),
         uploadSuccessBtn: () => cy.get('[id="success_modal_button"]'),
@@ -54,7 +55,7 @@ class TransmissionPageObjects {
         quickActionDelete: () => cy.get('[class="nytd-button--secondary nytd-button--error styles_quickActionDelete__WUBjC"]').eq(0),
         submissionModal: () => cy.get('[id="submission_confirmation"] > .usa-modal-overlay > .styles_modal__wKLbX > .usa-modal__content > .usa-modal__main'),
         deleteModal: () => cy.get('[id="deletion_confirmation"] > .usa-modal-overlay > .styles_modal__wKLbX > .usa-modal__content > .usa-modal__main'),
-        successModal: () => cy.get('div.is-visible > .usa-modal-overlay > .usa-modal> .usa-modal__content > .usa-modal__main > .styles_modalOuterBox__XMA3b'),
+        successModal: () => cy.get('div.is-visible > .usa-modal-overlay > .usa-modal> .usa-modal__content > .usa-modal__main > .styles_modalOuterBox__XMA3b', { timeout: 10000 }),
         successModalHeader: () => this.elements.successModal().find('.styles_modalSuccessMessage__0PjOc'),
         successModalText: () => this.elements.successModal().find('.styles_iconSubtitleSpan__HkTlX > .styles_subtitle___RAKh'),
         successModalBtn: (fileNum) => cy.get(`[id="${fileNum.trim()}_modal_button"]`).eq(0),
@@ -65,12 +66,12 @@ class TransmissionPageObjects {
         this.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(0).click({ force: true });
     }
 
-    clickOnRecordLink () {
-        this.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click({force:true});
+    clickOnRecordLink() {
+        this.elements.transmissionDetails().children().eq(3).children().eq(1).find('a').eq(1).click({ force: true });
     }
-    
+
     clickOnElementComplianceTotalLink() {
-        this.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({force:true});
+        this.elements.transmissionDetails().children().eq(4).children().eq(1).find('a').click({ force: true });
     }
 
     clickOnWorkflowStatusLink() {
@@ -84,23 +85,33 @@ class TransmissionPageObjects {
     getTableData(sysadmin, column) {
         if (sysadmin) {
             switch (column) {
-                case 'Penalty':
-                    return cy.get('tbody > :nth-child(1) > :nth-child(7)', { timeout: 10000 });
+                case 'File Number':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(2)', { timeout: 10000 });
+                case 'State':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(3)', { timeout: 10000 });
                 case 'Report Period':
                     return cy.get('tbody > :nth-child(1) > :nth-child(4)', { timeout: 10000 });
                 case 'File Type':
                     return cy.get('tbody > :nth-child(1) > :nth-child(6)', { timeout: 10000 });
+                case 'Compliance':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(7)', { timeout: 10000 });
+                case 'Penalty':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(8)', { timeout: 10000 });
                 default:
                     return null;
             }
         } else {
             switch (column) {
-                case 'Penalty':
-                    return cy.get('tbody > :nth-child(1) > :nth-child(6)', { timeout: 10000 });
+                case 'File Number':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(2)', { timeout: 10000 });
                 case 'Report Period':
                     return cy.get('tbody > :nth-child(1) > :nth-child(3)', { timeout: 10000 });
                 case 'File Type':
                     return cy.get('tbody > :nth-child(1) > :nth-child(5)', { timeout: 10000 });
+                case 'Compliance':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(6)', { timeout: 10000 }); 
+                case 'Penalty':
+                    return cy.get('tbody > :nth-child(1) > :nth-child(7)', { timeout: 10000 });
                 default:
                     return null;
             }

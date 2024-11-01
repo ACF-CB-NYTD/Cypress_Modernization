@@ -79,7 +79,7 @@ describe("State User Transmission Page", function () {
         transmissionPage.elements.penaltyDropdown().click();
         transmissionPage.elements.firstDropdownContent().children().eq(0).children().eq(1).children().eq(1).click();
         commonPage.clickOnRefreshResultsBtn();
-        transmissionPage.getTableData(false, 'Penalty').should('have.text', 'Compliant');
+        transmissionPage.getTableData(false, 'Compliance').should('have.text', 'Compliant');
         commonPage.clickOnClearFiltersBtn();
         transmissionPage.elements.reportPeriodDropdown().click();
         transmissionPage.elements.secondDropdownContent().children().children().eq(1).children().eq(2).click();
@@ -208,45 +208,44 @@ describe("State User Transmission Page", function () {
     });
     it("Verify the table can be sorted by the File Number header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableFirstHeader().click();
+        transmissionPage.elements.fileNumberHeader().click();
         transmissionPage.checkIsArraySorted(2, 'descending');
-        transmissionPage.elements.tableFirstHeader().click();
+        transmissionPage.elements.fileNumberHeader().click();
         transmissionPage.checkIsArraySorted(2, 'ascending');
     });
     it("Verify the table can be sorted by the Report Period header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableSecondHeader().click();
+        transmissionPage.elements.reportPeriodHeader().click();
         transmissionPage.checkIsArraySorted(3, 'descending');
-        transmissionPage.elements.tableSecondHeader().click();
+        transmissionPage.elements.reportPeriodHeader().click();
         transmissionPage.checkIsArraySorted(3, 'ascending');
     });
     it("Verify the table can be sorted by the Transmission Date header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableThirdHeader().click();
+        transmissionPage.elements.transmissionDateHeader().click();
         transmissionPage.checkIsDateSorted(4, 'descending');
-        transmissionPage.elements.tableThirdHeader().click();
+        transmissionPage.elements.transmissionDateHeader().click();
         transmissionPage.checkIsDateSorted(4, 'ascending');
     });
     it("Verify the table can be sorted by the File Type header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableFourthHeader().click();
+        transmissionPage.elements.fileTypeHeader().click();
         transmissionPage.checkIsArraySorted(5, 'descending');
-        transmissionPage.elements.tableFourthHeader().click();
+        transmissionPage.elements.fileTypeHeader().click();
         transmissionPage.checkIsArraySorted(5, 'ascending');
     });
     it("Verify the table can be sorted by the Compliance header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableFifthHeader().click();
+        transmissionPage.elements.complianceHeader().click();
         transmissionPage.checkIsArraySorted(6, 'descending');
-        transmissionPage.elements.tableFifthHeader().click();
+        transmissionPage.elements.complianceHeader().click();
         transmissionPage.checkIsArraySorted(6, 'ascending');
     });
     it("Verify the table can be sorted by the Potential Penalty header", function () {
         cy.visit('/User/Transmissions');
-        transmissionPage.elements.tableSixthHeader().click();
+        transmissionPage.elements.penaltyHeader().click();
         transmissionPage.checkIsArraySorted(7, 'descending');
-        transmissionPage.elements.tableSixthHeader().click();
+        transmissionPage.elements.penaltyHeader().click();
         transmissionPage.checkIsArraySorted(7, 'ascending');
     });
-
 });
