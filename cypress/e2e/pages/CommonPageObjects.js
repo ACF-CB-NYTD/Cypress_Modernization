@@ -194,6 +194,4 @@ class CommonPageObjects {
   }
 
   }
-
-}
 export default CommonPageObjects;

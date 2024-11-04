@@ -33,7 +33,7 @@ describe("System admin user Submissions Page", function () {
             expect(option.text()).to.be.oneOf(['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia','Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming','Test State']);
         });
         submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.reportPeriodDropdownOptionsForCBCentral().each((option) => {
             expect(option.text()).to.be.oneOf(['2010B', '2011A', '2011B', '2012A', '2012B', '2013A', '2013B', '2014A', '2014B', '2015A', '2015B', '2016A', '2016B', '2017A', '2017B', '2018A', '2018B', '2019A', '2019B', '2020A', '2020B', '2021A', '2021B', '2022A', '2022B', '2023A', '2023B', '2024A', '2024B', '2025A']);
         });
         submissionsPage.elements.fileTypeDropdownForSysAdmin().click();
@@ -93,7 +93,7 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.penaltyTableDataForSysAdmin().should('have.text', 'Compliant');
         commonPage.clickOnClearFiltersBtn();
         submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().eq(2).click();
+        submissionsPage.elements.reportPeriodDropdownOptionsForCBCentral().eq(2).click();
         submissionsPage.elements.reportPeriodDropdownForSysadmin().click();
         commonPage.clickOnRefreshResultsBtn();
         submissionsPage.elements.reportPeriodTableDataForSysAdmin().should('have.text', '2024A');
@@ -208,6 +208,26 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.tableThirdHeader().click();
         submissionsPage.checkIsDateSorted(4, 'ascending');
     });
+
+    // it.only("Upload", function () {
+    //     cy.visit('/User.html');
+    //     commonPage.verifyUrl('/User');
+    //     cy.visit('/User');
+    //     commonPage.verifyUrl('/User');
+    //     cy.get(':nth-child(2) > [data-testid="default_link"]').click();
+    //     commonPage.verifyUrl('/User/Transmissions');
+    //     commonPage.verifyBreadCrumbs('Transmissions');
+    //     cy.get(':nth-child(2) > [data-testid="button"]').click();
+
+    //     cy.fixture('cypress/fixtures/il.xml', 'utf-8').then((fileContent)=>{
+    //         const blob = new Blob([fileContent],{type: 'application/xml'});
+    //         const file = new File([blob],'cypress/fixtures/il.xml',{type: 'application/xml'});
+    //         cy.get("input[type='file']").attachFile(file);
+    //     })
+// Please ignore this for now I am working to upload transmission so thats why I have this, as soon as I resolve it I will delete and push again
+
+    // });
+
     it("Verify the table can be sorted by the File Type header", function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.tableFourthHeaderForSysAdmin().click();
@@ -229,5 +249,4 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.tableSixthHeader().click();
         submissionsPage.checkIsArraySorted(8, 'ascending');
     });
-
 });

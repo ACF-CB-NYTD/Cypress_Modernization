@@ -13,17 +13,23 @@ class SubmissionsPageObjects {
         penaltyDropdownNonCompliance: () => cy.get('[data-testid="dropdown_wrapper"]').eq(0).find('[data-testid="fieldset"]').children().eq(2).children(),
         stateDropdown: () => cy.get(':nth-child(2) > .styles_button__uj25O', { timeout: 10000 }),
         reportPeriodDropdownForSysadmin: () => cy.get(':nth-child(3) > .styles_button__uj25O', { timeout: 10000 }),
+        reportPeriodDropdownForCBCentral: () => cy.get(':nth-child(3) > .styles_button__uj25O', { timeout: 10000 }),
         reportPeriodDropdown: () => cy.get('div.styles_buttonGroup__NYJPa > div:nth-child(2)', { timeout: 10000 }),
         reportPeriodDropdownOptions: () => cy.get('[data-testid="dropdown_wrapper"]').eq(1).find('[data-testid="fieldset"]').children().eq(1).children(),
         reportPeriodDropdownOptionsForSysAdmin: () => cy.get('[data-testid="dropdown_wrapper"]').eq(2).find('[data-testid="fieldset"]').children().eq(1).children(),
+        reportPeriodDropdownOptionsForCBCentral: () => cy.get('[data-testid="dropdown_wrapper"]').eq(2).find('[data-testid="fieldset"]').children().eq(1).children(),
         fileTypeDropdown: () => cy.get('div.styles_buttonGroup__NYJPa > div:nth-child(3)', { timeout: 10000 }),
         fileTypeDropdownForSysAdmin: () => cy.get(':nth-child(4) > .styles_button__uj25O', { timeout: 10000 }),
+        fileTypeDropdownForCBCentral: () => cy.get(':nth-child(4) > .styles_button__uj25O', { timeout: 10000 }),
         fileTypeDropdownOptions: () => cy.get('[data-testid="dropdown_wrapper"]').eq(2).find('[data-testid="fieldset"]').children().eq(1).children(),
         fileTypeDropdownOptionsForSysAdmin: () => cy.get('[data-testid="dropdown_wrapper"]').eq(3).find('[data-testid="fieldset"]').children().eq(1).children(),
+        fileTypeDropdownOptionsForCBCentral: () => cy.get('[data-testid="dropdown_wrapper"]').eq(3).find('[data-testid="fieldset"]').children().eq(1).children(),
         statusDropdown: () => cy.get(':nth-child(4) > .styles_button__uj25O', { timeout: 10000 }),
         statusDropdownForSysAdmin: () => cy.get(':nth-child(5) > .styles_button__uj25O', { timeout: 10000 }),
+        statusDropdownForCBCentral: () => cy.get(':nth-child(5) > .styles_button__uj25O', { timeout: 10000 }),
         statusDropdownOptions: () => cy.get('[data-testid="dropdown_wrapper"]').eq(3).find('[data-testid="fieldset"]').children().eq(1).children(),
         statusDropdownOptionsForSysAdmin: () => cy.get('[data-testid="dropdown_wrapper"]').eq(4).find('[data-testid="fieldset"]').children().eq(1).children(),
+        statusDropdownOptionsForCBCentral: () => cy.get('[data-testid="dropdown_wrapper"]').eq(4).find('[data-testid="fieldset"]').children().eq(1).children(),
         fileNumberHeader: () => cy.get('[name="transmissionId"]'),
         reportPeriodHeader: () => cy.get('[name="reportingPeriod"]'),
         submissionDateHeader: () => cy.get(':nth-child(4) > .styles_tableHeader__mVxy6 > .styles_fieldName__kegXV'),
@@ -33,10 +39,12 @@ class SubmissionsPageObjects {
         tableFirstHeader: () => cy.get('[name="transmissionId"]'),
         tableSecondHeader: () => cy.get('[name="reportingPeriod"]'),
         tableSecondHeaderForSysAdmin: () => cy.get('[name="state"]'),
+        tableSecondHeaderCBCentral: () => cy.get('[name="state"]'),
         tableThirdHeader: () => cy.get('[name="submittedDate"]'),
         tableFourthHeader: () => cy.get('[name="transmissionType"]'),
         tableThirdHeaderForSysAdmin: () => cy.get('[name="reportingPeriod"]'),
         tableFourthHeaderForSysAdmin: () => cy.get('[name="submittedDate"]'),
+        tableFourthHeaderForCBCentral: () => cy.get('[name="submittedDate"]'),
         tableFifthHeader: () => cy.get('[name="submissionStatus"]'),
         tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
         tableSixthHeaderForSysAdmin: () => cy.get('[name="potentialPenalty"]'),
@@ -63,21 +71,31 @@ class SubmissionsPageObjects {
         dqaRecordLevelLink: () => cy.get(':nth-child(2) > td > .usa-link'),
         elementComplianceTotalLink: () => cy.get(':nth-child(6) > .styles_table__QwgKU > tbody > tr > td > .usa-link'),
         reportPeriodHeaderForSysAdmin: () => cy.get("[name='reportingPeriod']"),
+        reportPeriodHeaderForCBCentral: () => cy.get("[name='reportingPeriod']"),
         submissionDateHeaderForSysAdmin: () => cy.get("[name='submittedDate']"),
+        submissionDateHeaderForCBCentral: () => cy.get("[name='submittedDate']"),
         statusHeaderForSysAdmin: () => cy.get("[name='submissionStatus']"),
+        statusHeaderForCBCentral: () => cy.get("[name='submissionStatus']"),
         stateDropdownForSysAdmin: () => cy.get(':nth-child(2) > .styles_button__uj25O'),
+        stateDropdownForCBCentral: () => cy.get(':nth-child(2) > .styles_button__uj25O'),
         stateDropDownOptionForSysAdmin: () => cy.get('[data-testid="dropdown_wrapper"]').eq(1).find('[data-testid="fieldset"]').children().eq(1).children(),
+        stateDropDownOptionForCBCentral: () => cy.get('[data-testid="dropdown_wrapper"]').eq(1).find('[data-testid="fieldset"]').children().eq(1).children(),
         penaltyTableDataForSysAdmin: () => cy.get('tbody > :nth-child(1) > :nth-child(8)'),
+        penaltyTableDataForCBCentral: () => cy.get('tbody > :nth-child(1) > :nth-child(8)'),
         reportPeriodTableDataForSysAdmin: () => cy.get('tbody > :nth-child(1) > :nth-child(4)'),
+        reportPeriodTableDataForCBCentral: () => cy.get('tbody > :nth-child(1) > :nth-child(4)'),
         fileTypeTableDataForSysAdmin: () => cy.get('tbody > :nth-child(1) > :nth-child(6)'),
+        fileTypeTableDataForCBCentral: () => cy.get('tbody > :nth-child(1) > :nth-child(6)'),
         firstPenaltyLinkForSysAdmin: () => cy.get(':nth-child(1) > :nth-child(9) > .usa-link'),
+        firstPenaltyLinkForCBCentral: () => cy.get(':nth-child(1) > :nth-child(9) > .usa-link'),
+        stateText: () => cy.get(':nth-child(3) > .styles_tableHeader__mVxy6 > .styles_fieldName__kegXV'),
     }
 
     typeFileNumber(fileNum) {
         this.elements.fileSearchInput().type(fileNum);
     }
 
-    typeFileNumberForSysAdmin(fileNum) {
+    typeFileNbr(fileNum) {
         this.elements.fileSearchInputForSysAdmin().type(fileNum);
     }
 
