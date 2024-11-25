@@ -5,12 +5,13 @@ import SubmissionsPageObjects from "../pages/SubmissionsPageObjects";
 const submissionsPage = new SubmissionsPageObjects();
 describe("System admin user Submissions Page", function () {
     beforeEach(() => {
-        cy.login('cypress.cb', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('cypress.cb', 'P@ssw0rd') // Login with session, implemented in commands.js
+        cy.wait(3000)
     });
     it("Verify Submissions page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.clickOnSubmissionsTabForCBUser();
+        commonPage.clickOnSubmissionTab();
         commonPage.verifyBreadCrumbs('Submissions');
         commonPage.elements.headerH3Text().should('have.text', 'Submissions');
         submissionsPage.elements.fileSearchName().should('have.text', 'File Search');
@@ -19,39 +20,39 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.dateRangeInput().should('exist');
         submissionsPage.elements.penaltyDropdown().should('contain', 'Penalty');
         submissionsPage.elements.stateDropdown().should('contain', 'State');
-        submissionsPage.elements.reportPeriodDropdownForCBCentral().should('contain', 'Report Period');
-        submissionsPage.elements.fileTypeDropdownForCBCentral().should('contain', 'File Type');
-        submissionsPage.elements.statusDropdownForCBCentral().should('contain', 'Status');
+        submissionsPage.elements.reportPeriodDropdownForFederal().should('contain', 'Report Period');
+        submissionsPage.elements.fileTypeDropdownForFederal().should('contain', 'File Type');
+        submissionsPage.elements.statusDropdownForFederal().should('contain', 'Status');
         submissionsPage.elements.penaltyDropdown().click();
         submissionsPage.elements.penaltyDropdownCompliance().should('have.text', 'Compliant0.00%');
         submissionsPage.elements.penaltyDropdownNonCompliance().each((option) => {
             expect(option.text()).to.be.oneOf(['Non-Compliant', '0.00%', 'All', '0.50%', '1.00%', '1.25%', '1.50%', '1.75%', '2.50%']);
         });
 
-        submissionsPage.elements.stateDropdownForCBCentral().click();
-        submissionsPage.elements.stateDropDownOptionForCBCentral().each((option) => {
+        submissionsPage.elements.stateDropdownForFederal().click();
+        submissionsPage.elements.stateDropDownOptionForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia', 'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'Test State']);
         });
-        submissionsPage.elements.reportPeriodDropdownForCBCentral().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForCBCentral().each((option) => {
+        submissionsPage.elements.reportPeriodDropdownForFederal().click();
+        submissionsPage.elements.reportPeriodDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['2010B', '2011A', '2011B', '2012A', '2012B', '2013A', '2013B', '2014A', '2014B', '2015A', '2015B', '2016A', '2016B', '2017A', '2017B', '2018A', '2018B', '2019A', '2019B', '2020A', '2020B', '2021A', '2021B', '2022A', '2022B', '2023A', '2023B', '2024A', '2024B', '2025A']);
         });
-        submissionsPage.elements.fileTypeDropdownForCBCentral().click();
-        submissionsPage.elements.fileTypeDropdownOptionsForCBCentral().each((option) => {
+        submissionsPage.elements.fileTypeDropdownForFederal().click();
+        submissionsPage.elements.fileTypeDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Regular', 'Corrected', 'Subsequent', 'Test']);
         });
-        submissionsPage.elements.statusDropdownForCBCentral().click();
-        submissionsPage.elements.statusDropdownOptionsForCBCentral().each((option) => {
+        submissionsPage.elements.statusDropdownForFederal().click();
+        submissionsPage.elements.statusDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Hide Inactive Submissions']);
         });
         commonPage.elements.clearFiltersBtn().should('contain', 'Clear Filters');
         commonPage.elements.refreshResultsBtn().should('contain', 'Refresh Results');
         submissionsPage.elements.fileNumberHeader().should('have.text', 'File Number');
         submissionsPage.elements.stateText().should('have.text', 'State');
-        submissionsPage.elements.reportPeriodHeaderForCBCentral().should('have.text', 'Report Period');
-        submissionsPage.elements.submissionDateHeaderForCBCentral().should('have.text', 'Submission Date');
+        submissionsPage.elements.reportPeriodHeaderForFederal().should('have.text', 'Report Period');
+        submissionsPage.elements.submissionDateHeaderForFederal().should('have.text', 'Submission Date');
         submissionsPage.elements.fileTypeHeader().should('have.text', 'File Type');
-        submissionsPage.elements.statusHeaderForCBCentral().should('have.text', 'Status');
+        submissionsPage.elements.statusHeaderForFederal().should('have.text', 'Status');
         submissionsPage.elements.complianceHeader().should('have.text', 'Compliance');
         submissionsPage.elements.penaltyHeader().should('have.text', 'Potential Penalty');
     });
@@ -90,25 +91,25 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.penaltyDropdown().click();
         submissionsPage.elements.penaltyDropdownCompliance().eq(1).click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.penaltyTableDataForCBCentral().should('have.text', 'Compliant');
+        submissionsPage.elements.penaltyTableDataForFederal().should('have.text', 'Compliant');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.elements.reportPeriodDropdownForCBCentral().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForCBCentral().eq(2).click();
-        submissionsPage.elements.reportPeriodDropdownForCBCentral().click();
+        submissionsPage.elements.reportPeriodDropdownForFederal().click();
+        submissionsPage.elements.reportPeriodDropdownOptionsForFederal().eq(2).click();
+        submissionsPage.elements.reportPeriodDropdownForFederal().click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.reportPeriodTableDataForCBCentral().should('have.text', '2024A');
+        submissionsPage.elements.reportPeriodTableDataForFederal().should('have.text', '2024A');
         commonPage.clickOnClearFiltersBtn();
-        submissionsPage.elements.fileTypeDropdownForCBCentral().click();
-        submissionsPage.elements.fileTypeDropdownOptionsForCBCentral().eq(2).click();
+        submissionsPage.elements.fileTypeDropdownForFederal().click();
+        submissionsPage.elements.fileTypeDropdownOptionsForFederal().eq(2).click();
         commonPage.clickOnRefreshResultsBtn();
-        submissionsPage.elements.fileTypeTableDataForCBCentral().should('have.text', 'Subsequent');
+        submissionsPage.elements.fileTypeTableDataForFederal().should('have.text', 'Subsequent');
     });
     it('Verify links are working as expected', function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.firstTableLink().click();
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
-        submissionsPage.elements.firstPenaltyLinkForCBCentral().click();
+        submissionsPage.elements.firstPenaltyLinkForFederal().click();
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
     });
@@ -195,9 +196,9 @@ describe("System admin user Submissions Page", function () {
     });
     it("Verify the table can be sorted by the Report Period header", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.elements.tableSecondHeaderCBCentral().click();
+        submissionsPage.elements.tableSecondHeaderFederal().click();
         submissionsPage.checkIsArraySorted(3, 'descending');
-        submissionsPage.elements.tableSecondHeaderCBCentral().click();
+        submissionsPage.elements.tableSecondHeaderFederal().click();
         submissionsPage.checkIsArraySorted(3, 'ascending');
     });
     it("Verify the table can be sorted by the submission Date header", function () {
@@ -209,9 +210,9 @@ describe("System admin user Submissions Page", function () {
     });
     it("Verify the table can be sorted by the File Type header", function () {
         cy.visit('/User/Submissions');
-        submissionsPage.elements.tableFourthHeaderForCBCentral().click();
+        submissionsPage.elements.tableFourthHeaderForFederal().click();
         submissionsPage.checkIsArraySorted(5, 'descending');
-        submissionsPage.elements.tableFourthHeaderForCBCentral().click();
+        submissionsPage.elements.tableFourthHeaderForFederal().click();
         submissionsPage.checkIsArraySorted(5, 'ascending');
     });
     it("Verify the table can be sorted by the Compliance header", function () {

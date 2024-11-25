@@ -38,11 +38,14 @@ class CommonPageObjects {
     twentyfiveResultsBtn: () => cy.get('[name="25"]'),
     fiftyResultsBtn: () => cy.get('[name="50"]'),
     profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
-    submissionsTab: () => cy.get(':nth-child(3) > [data-testid="default_link"]'), // Submissions tab
+    submissionsTab: () => cy.get(':nth-child(2) > [data-testid="default_link"]'), // Submissions tab
   }
 
   verifyUrl(url) {
     this.elements.url().should("include", url, {timeout: 10000});
+  }
+  clickOnSubmissionTab(){
+    this.elements.submissionsTab().click();
   }
 
   verifyBreadCrumbs(breadcrumb1,breadcrumb2,breadcrumb3){

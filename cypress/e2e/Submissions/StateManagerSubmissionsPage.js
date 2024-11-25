@@ -10,7 +10,7 @@ describe("State manager user Submissions Page", function () {
     it("Verify Submissions page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.clickOnSubmissionsTab();
+        commonPage.clickOnSubmissionTab();
         commonPage.verifyBreadCrumbs('Submissions');
         commonPage.elements.headerH3Text().should('have.text', 'Submissions');
         submissionsPage.elements.fileSearchName().should('have.text', 'File Search');

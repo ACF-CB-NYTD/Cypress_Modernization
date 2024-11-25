@@ -10,7 +10,7 @@ describe("Default state User Submissions Page", function () {
     it("Verify Submissions page buttons, text fields, dropdowns, and headers", function () {
         cy.visit('/User.html');
         commonPage.verifyUrl('/User');
-        commonPage.clickOnSubmissionsTab();
+        commonPage.clickOnSubmissionTab();
         commonPage.verifyBreadCrumbs('Submissions');
         commonPage.elements.headerH3Text().should('have.text', 'Submissions');
         submissionsPage.elements.fileSearchName().should('have.text', 'File Search'); 
@@ -27,15 +27,15 @@ describe("Default state User Submissions Page", function () {
             expect(option.text()).to.be.oneOf(['Non-Compliant', '0.00%', 'All', '0.50%', '1.00%', '1.25%', '1.50%', '1.75%', '2.50%']);
         });
         submissionsPage.elements.reportPeriodDropdown().click();
-        submissionsPage.elements.reportPeriodDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.reportPeriodDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['2010B', '2011A', '2011B', '2012A', '2012B', '2013A', '2013B', '2014A', '2014B', '2015A', '2015B', '2016A', '2016B', '2017A', '2017B', '2018A', '2018B', '2019A', '2019B', '2020A', '2020B', '2021A', '2021B', '2022A', '2022B', '2023A', '2023B', '2024A', '2024B', '2025A']);
         });
         submissionsPage.elements.fileTypeDropdown().click();
-        submissionsPage.elements.fileTypeDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.fileTypeDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Regular', 'Corrected', 'Subsequent', 'Test']);
         });
         submissionsPage.elements.statusDropdown().click();
-        submissionsPage.elements.statusDropdownOptionsForSysAdmin().each((option) => {
+        submissionsPage.elements.statusDropdownOptionsForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Hide Inactive Submissions']);
         }); 
         commonPage.elements.clearFiltersBtn().should('contain', 'Clear Filters');
