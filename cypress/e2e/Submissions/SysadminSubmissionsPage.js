@@ -27,7 +27,6 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.elements.penaltyDropdownNonCompliance().each((option) => {
             expect(option.text()).to.be.oneOf(['Non-Compliant', '0.00%', 'All', '0.50%', '1.00%', '1.25%', '1.50%', '1.75%', '2.50%']);
         });
-
         submissionsPage.elements.stateDropdownForFederal().click();
         submissionsPage.elements.stateDropDownOptionForFederal().each((option) => {
             expect(option.text()).to.be.oneOf(['Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia','Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina', 'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming','Test State']);
@@ -118,7 +117,6 @@ describe("System admin user Submissions Page", function () {
         submissionsPage.typeFileNumberForFederal('8488');
         commonPage.elements.refreshResultsBtn().should('not.be.disabled');
     });
-
     it("Verify System admin user is able to export current table", function () {
         Cypress.on('uncaught:exception', (err, runnable) => {
             return false
@@ -157,7 +155,6 @@ describe("System admin user Submissions Page", function () {
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
         submissionsPage.elements.firstSubmissionArrowBtn().click();
-
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Submissions');
