@@ -6,6 +6,7 @@ import HomePageObjects from "../e2e/pages/HomePageObjects";
 const homePage = new HomePageObjects();
 import MFAPageObjects from "../e2e/pages/MFAPageObjects";
 const mfaPage = new MFAPageObjects();
+require('cy-verify-downloads').addCustomCommand();
 
 Cypress.Commands.add('login', (username, password) => {
     cy.session([username, password], () => {
