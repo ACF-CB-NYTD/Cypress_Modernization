@@ -6,7 +6,13 @@ class CommonPageObjects {
     searchInput: () => cy.get('[data-testid="textInput"]'), // Search Input for user account to search for accounts
     refreshResultButton: () => cy.get('.nytd-button--secondary').contains('Refresh Results'), // Refresh result button to update the result
     WelcomeBtn: () => cy.get('.styles_navSection__cbCNb > .styles_liBox__gTXAi > [data-testid="default_link"]'), // Welcome button
-
+    transmissionsBtn: () => cy.get('a').contains('Transmissions'), // Transmissions navigation button
+    submissionsBtn: () => cy.get('a').contains('Submissions'), // Submissions navigation button
+    cohortManagementBtn: () => cy.get('a').contains('Cohort Management'), // Cohort Management navigation button
+    reportsBtn: () => cy.get('a').contains('Reports'), // Reports navigation button
+    dataExportBtn: () => cy.get('a').contains('Data Export'), // Data Export navigation button
+    samplingBtn: () => cy.get('a').contains('Sampling'), // Sampling navigation button
+    exportBtn: () => cy.get('.styles_button__T2X6A').contains('Export Current Table'),
     logOutBtn: () => cy.get('[data-testid="logout_button"]'), // Logout button
     headerH3Text: () => cy.get('#main_content'), // Header H3 text
     pageDescriptionText: () => cy.get('.styles_description__0k9k1'), // Page description text under the main content header
@@ -21,7 +27,6 @@ class CommonPageObjects {
     textAreaSelector: () => cy.get('[data-testid="textarea"]'), // Text area selector for User account request deny selection
     denyRequestBtn: () => cy.get('[data-testid="Deny New_user_button"]'), // Deny request button for user account request
     myProfileSelect: () => cy.get(':nth-child(1) > .styles_button__dXuFt'), // My profile option in account setting dropdown
-
     // Cancel Request Modal
     cancelRequestBtn: () => cy.get('[class="nytd-button--tertiary"]').contains("Cancel Request"), //Cancel Request button at the bottom left.
     cancelModalHeader: () => cy.get('[id="areYouSureTitle"]'), //Cancel modal header text
@@ -43,6 +48,11 @@ class CommonPageObjects {
     uploadNewTransmission: () => cy.get(':nth-child(2) > [data-testid="button"]'), // Upload new transmission button
     exportCurrentTable: () => cy.get('.styles_button__T2X6A'), // Export Current table
   
+  }
+
+  clickOnTransmissionsTab()
+  {
+    this.elements.transmissionsBtn().click();
   }
 
   verifyUrl(url) {
@@ -76,6 +86,20 @@ class CommonPageObjects {
     this.elements.logOutBtn().invoke("removeAttr", "target", "_blank").click();
   }
 
+  checkAllStates(stateList) {
+    const states = [
+      'Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California', 'Colorado', 'Connecticut', 'Delaware', 'District of Columbia', 'Florida', 'Georgia',
+      'Hawaii', 'Idaho', 'Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana', 'Maine', 'Maryland',
+      'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri', 'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey',
+      'New Mexico', 'New York', 'North Carolina', 'North Dakota', 'Ohio', 'Oklahoma', 'Oregon', 'Pennsylvania', 'Puerto Rico', 'Rhode Island', 'South Carolina',
+      'South Dakota', 'Tennessee', 'Texas', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin', 'Wyoming', 'Test State'
+    ];
+    let children = stateList;
+    states.forEach(state => {
+      children = children.should('contain', state);
+    });
+  }
+
   verifyPageIsScrollToTheTop() {
     cy.window().its('scrollY').should('equal', 0);
   }
@@ -89,7 +113,7 @@ class CommonPageObjects {
   }
 
   clickOnRefreshResultsBtn() {
-    this.elements.refreshResultsBtn().invoke("removeAttr", "target", "_blank").click();
+    this.elements.refreshResultsBtn().invoke("removeAttr", "target", "_blank").click({force:true});
   }
 
   clickOnMagnifyingGlassSearchIcon() {

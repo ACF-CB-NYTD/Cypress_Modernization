@@ -81,11 +81,6 @@ class UserAccountManagementObjects {
     this.elements.stateDropdown().click();
   }
 
-  checkAllStates() {
-    // To do add all states
-    this.elements.stateChildren().should('contain', 'Alabama');
-  }
-
   clickOnOtherFiltersDropdown() {
     this.elements.otherFiltersDropdown().invoke("removeAttr", "target", "_blank").click();
   }
