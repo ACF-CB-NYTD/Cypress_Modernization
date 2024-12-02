@@ -7,7 +7,7 @@ const submissionSummaryPage = new SubmissionSummaryPageObjects();
 describe("Default user Submissions summary Page", function () {
     beforeEach(() => {
         cy.login('cypress.default', 'P@ssw0rd1') // Login with session, implemented in commands.js
-        cy.wait(3000)
+        cy.wait(1000)
     });
     it("Verify Submissions Summary page details", function () {
         cy.visit('/User.html');
