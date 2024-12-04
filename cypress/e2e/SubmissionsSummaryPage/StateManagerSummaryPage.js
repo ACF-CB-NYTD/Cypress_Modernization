@@ -4,10 +4,9 @@ import SubmissionsPageObjects from "../pages/SubmissionsPageObjects";
 const submissionsPage = new SubmissionsPageObjects();
 import SubmissionSummaryPageObjects from "../pages/SubmissionSummaryPageObjects";
 const submissionSummaryPage = new SubmissionSummaryPageObjects();
-describe("Regional user Submissions summary Page", function () {
+describe("State manager user Submissions summary Page", function () {
     beforeEach(() => {
-        cy.login('cypress.regional', 'P@ssw0rd1') // Login with session, implemented in commands.js
-        cy.wait(3000)
+        cy.login('cypress.mgr', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify Submissions Summary page details", function () {
         cy.visit('/User.html');
@@ -69,12 +68,12 @@ describe("Regional user Submissions summary Page", function () {
         submissionSummaryPage.elements.dqaCardRecordLevel().click();
         commonPage.verifyUrl('&view=dqa&tab=record-level');
         submissionSummaryPage.clickSummaryBreadcrumb();
-        submissionSummaryPage.elements.seeDQAAdvisoryDetails().click();
+        submissionSummaryPage.elements.seeDQAAdvisoryDetails().should('include.text', 'See Data Quality Advisory Details').click();
         commonPage.verifyUrl('SubmissionDetail')
         submissionSummaryPage.elements.backToFileSummary().click();
     });
 
-    it.only("Verify the fields and links in the Compliance Report card", function () {
+    it("Verify the fields and links in the Compliance Report card", function () {
         cy.visit('/User/Submissions');
         submissionsPage.elements.firstSubmissionArrowBtn().click();
         submissionSummaryPage.elements.firstSubmissionsLink().click();
