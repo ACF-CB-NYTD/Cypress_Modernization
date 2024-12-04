@@ -43,7 +43,7 @@ class CommonPageObjects {
     twentyfiveResultsBtn: () => cy.get('[name="25"]'),
     fiftyResultsBtn: () => cy.get('[name="50"]'),
     profileName: () => cy.get('.styles_frame__z_r5H > :nth-child(1) > p'), // Profile name
-    submissionsTab: () => cy.get(':nth-child(2) > [data-testid="default_link"]'), // Submissions tab
+    submissionsTab: () => cy.get('.styles_liBox__gTXAi:nth-child(2) > a'), // Submissions tab
   }
 
   clickOnTransmissionsTab()
