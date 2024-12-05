@@ -42,6 +42,7 @@ class SubmissionsPageObjects {
         tableSixthHeader: () => cy.get('[name="potentialPenalty"]'),
         tableSixthHeaderForFederal: () => cy.get('[name="potentialPenalty"]'),
         firstTableLink: () => cy.get(':nth-child(1) > :nth-child(2) > .usa-link', { timeout: 10000 }),
+        lastTableLink: () => cy.get(':nth-child(7) > :nth-child(2) > .usa-link', { timeout: 10000 }),
         firstPenaltyLink: () => cy.get(':nth-child(1) > :nth-child(8) > .usa-link'),
         penaltyTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(7)', { timeout: 10000 }),
         reportPeriodTableData: () => cy.get('tbody > :nth-child(1) > :nth-child(3)', { timeout: 10000 }),
@@ -73,6 +74,9 @@ class SubmissionsPageObjects {
         fileTypeTableDataForFederal: () => cy.get('tbody > :nth-child(1) > :nth-child(6)'),
         firstPenaltyLinkForFederal: () => cy.get(':nth-child(1) > :nth-child(9) > .usa-link'),
         stateText: () => cy.get(':nth-child(3) > .styles_tableHeader__mVxy6 > .styles_fieldName__kegXV'),
+        firstSubmissionsLink: () => cy.get(':nth-child(3) > :nth-child(1) > :nth-child(2) > .usa-link'),
+        dqaLink: () => cy.get(':nth-child(1) > :nth-child(2) > .styles_spacer__EVKX1 > .styles_changeViewLink__aO_NF'),
+        firstDropdownContent: () => cy.get('#main_body > div.styles_container__P_y_P > main > div > div.styles_row__mKyNW > div.styles_filterSide__1acKy > div.styles_buttonGroup__NYJPa > div:nth-child(1) > div > div > fieldset > div:nth-child(2) > div > label'), //first dropdown content
     }
 
     typeFileNumber(fileNum) {
