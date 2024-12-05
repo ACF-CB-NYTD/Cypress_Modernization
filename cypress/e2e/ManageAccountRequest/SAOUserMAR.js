@@ -7,7 +7,7 @@ import userAccountRequestFormObjects from "../pages/UserAccountRequestFormObject
 const manageUserAccountRequestObjects = new ManageUserAccountRequestObjects();
 describe("SAO UAR Page Validations", function () {
     beforeEach(() => {
-        cy.login('cypress.sao', 'P@ssw0rd1') // Login with session, implemented in commands.js
+        cy.login('teststatesao', 'P@ssw0rd1') // Login with session, implemented in commands.js
     });
     it("Verify User Account Requests page buttons, text fields, checkboxes and dropdowns", function () {
         cy.visit('/User.html');
@@ -45,7 +45,7 @@ describe("SAO UAR Page Validations", function () {
     });
     it("Verify the date range pickers can be selected and the shown requests are within the range", function () {
         manageUserAccountRequestObjects.createStateUserRequest('State user', 'FName', 'test@gov.net');
-        cy.login('cypress.sao', 'P@ssw0rd1')
+        cy.login('teststateuser', 'P@ssw0rd1')
         cy.visit('/User/Account/Requests.html');
         manageUserAccountRequestObjects.inputRequestedDateRange();
         commonPage.clickOnRefreshResultBtn();
