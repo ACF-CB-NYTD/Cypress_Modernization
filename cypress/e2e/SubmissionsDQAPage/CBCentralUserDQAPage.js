@@ -7,7 +7,7 @@ const submissionsDQAObjects = new SubmissionsDQAObjects();
 describe("State User Submission Page", function () {
     beforeEach(() => {
         cy.login('cypress.cb', 'P@ssw0rd1') // Login with session, implemented in commands.js
-        cy.wait(3000)
+    
     });
     it("Verify Submission DQA page buttons, text fields, and headers", function () {
         cy.visit('/User.html');
