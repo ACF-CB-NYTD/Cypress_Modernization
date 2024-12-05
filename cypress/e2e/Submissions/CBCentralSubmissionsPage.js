@@ -156,6 +156,7 @@ describe("System admin user Submissions Page", function () {
         commonPage.verifyUrl('/User/Submissions/Summary?');
         submissionsPage.elements.returnBreadcrumb().click();
         submissionsPage.elements.firstSubmissionArrowBtn().click();
+
     });
     it("Verify the name search filters are working as expected", function () {
         cy.visit('/User/Submissions');

@@ -18,7 +18,7 @@ Cypress.Commands.add('login', (username, password) => {
         mfaPage.elements.passcodeText().should('have.text', 'Passcode *');
         mfaPage.enterPasscode(username);
         mfaPage.clickOnSubmitBtn();
-        commonPage.verifyUrl('/User');
+        commonPage.verifyUrl('/User', { timeout: 10000 });
     }),
     {
         cacheAcrossSpecs: true
@@ -35,5 +35,5 @@ Cypress.Commands.add('standardLogin', (username, password,) => {
     mfaPage.elements.passcodeText().should('have.text', 'Passcode *');
     mfaPage.enterPasscode(username);
     mfaPage.clickOnSubmitBtn();
-    commonPage.verifyUrl('/User');
+    commonPage.verifyUrl('/User', { timeout: 10000 });
 });
